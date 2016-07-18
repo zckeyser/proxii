@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Mappers\Proxii.cs" />
+    <Compile Include="Proxii.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

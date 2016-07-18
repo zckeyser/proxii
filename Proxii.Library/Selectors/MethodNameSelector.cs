@@ -7,16 +7,16 @@ namespace Proxii
 {
     public class MethodNameSelector : IInterceptorSelector
     {
-        private IEnumerable<string> _methodNames;
+        private readonly IEnumerable<string> _methodNames;
 
-        public MethodNameSelector(IEnumerable<string> methodNames)
+        public MethodNameSelector(params string[] methodNames)
         {
             _methodNames = methodNames;
         }
 
         public IInterceptor[] SelectInterceptors(Type type, MethodInfo method, IInterceptor[] interceptors)
         {
-            foreach(string methodName in _methodNames)
+            foreach(var methodName in _methodNames)
             {
                 // intercept the method if it has a public method with the correct name + args
                 if (type.GetMethod(methodName, method.GetGenericArguments()) != null)
