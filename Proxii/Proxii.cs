@@ -1,7 +1,8 @@
 ﻿using Castle.DynamicProxy;
-using Proxii.Selectors;
 using System;
 using System.Collections.Generic;
+using Proxii.Library.Interceptors;
+using Proxii.Library.Selectors;
 
 namespace Proxii
 {

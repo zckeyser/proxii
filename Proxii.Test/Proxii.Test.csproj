@@ -55,9 +55,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Integration\Interceptors\LoggingInterceptorTest.cs" />
+    <Compile Include="Integration\Interceptors\ExceptionInterceptorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Unit\Selectors\MethodNameSelectorTest.cs" />
+    <Compile Include="Util\TestClasses\Foo.cs" />
+    <Compile Include="Util\TestClasses\IFoo.cs" />
+    <Compile Include="Util\TestClasses\Logger.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Proxii.Library\Proxii.Library.csproj">
@@ -70,7 +73,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Util\" />
+    <Folder Include="Integration\Selectors\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

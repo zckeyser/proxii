@@ -1,8 +1,9 @@
 ﻿using Castle.DynamicProxy;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace Proxii
+namespace Proxii.Library.Interceptors
 {
     public class ExceptionInterceptor : IInterceptor
     {
@@ -15,7 +16,8 @@ namespace Proxii
         
         public ExceptionInterceptor()
         {
-            // do nothing -- we can add interceptions later
+	        Rethrow = false;
+	        // do nothing -- we can add interceptions later
         }
 
         /// <summary>
@@ -23,6 +25,7 @@ namespace Proxii
         /// </summary>
         public ExceptionInterceptor(Type exception, Action<Exception> onThrow)
         {
+	        Rethrow = false;
             AddCatch(exception, onThrow);
         }
 
@@ -31,7 +34,7 @@ namespace Proxii
             if (onThrow == null)
                 throw new ArgumentNullException("onThrow");
 
-            if (!exception.IsSubclassOf(typeof(Exception)))
+            if (!(Activator.CreateInstance(exception) is Exception))
                 throw new ArgumentException("exception must be a subclass of Exception");
 
             customCatches.Add(exception, onThrow);
@@ -45,23 +48,30 @@ namespace Proxii
             }
             catch(Exception e)
             {
-                foreach (var type in customCatches.Keys)
+				// only perform the custom catch if it's the right type
+                foreach (var type in customCatches.Keys.Where(type => e.GetType() == type || e.GetType().IsSubclassOf(type)))
                 {
-                    // only perform the custom catch if it's the right type
-                    if (e.GetType() == type)
-                    {
-                        var onCatch = customCatches[type];
+                    var onCatch = customCatches[type];
 
-                        onCatch(e);
+                    onCatch(e);
 
-                        if(!Rethrow)
-                            return;
-                    }
+	                if (!Rethrow)
+	                {
+		                if(invocation.Method.ReturnType != typeof(void))
+							invocation.ReturnValue = GetDefault(invocation.Method.ReturnType);
+
+		                return;
+	                }
                 }
 
                 // if we didn't hit anything, re-throw the exception
                 throw;
             }
         }
+
+	    private object GetDefault(Type type)
+	    {
+		    return type.IsValueType ? Activator.CreateInstance(type) : null;
+	    }
     }
 }

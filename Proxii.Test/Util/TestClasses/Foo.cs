@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace Proxii
+namespace Proxii.Test.Util
 {
     public class Foo : IFoo
     {
-        public void Bar()
+        public string Bar()
         {
-            Console.WriteLine("Bar");
+	        return "Bar";
         }
 
         public void Bazz()

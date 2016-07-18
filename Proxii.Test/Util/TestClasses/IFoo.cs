@@ -1,8 +1,8 @@
-﻿namespace Proxii
+﻿namespace Proxii.Test.Util
 {
     public interface IFoo
     {
-        void Bar();
+        string Bar();
         void Fizz();
         void Buzz();
         void Bazz();

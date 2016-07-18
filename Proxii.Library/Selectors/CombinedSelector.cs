@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Proxii.Selectors
+namespace Proxii.Library.Selectors
 {
     public class CombinedSelector : IInterceptorSelector
     {

@@ -3,7 +3,7 @@ using System.Reflection;
 using Castle.DynamicProxy;
 using System.Collections.Generic;
 
-namespace Proxii
+namespace Proxii.Library.Selectors
 {
     public class MethodNameSelector : IInterceptorSelector
     {
