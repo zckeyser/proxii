@@ -2,6 +2,7 @@
 using System.Reflection;
 using Castle.DynamicProxy;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Proxii.Library.Selectors
 {
@@ -16,12 +17,13 @@ namespace Proxii.Library.Selectors
 
         public IInterceptor[] SelectInterceptors(Type type, MethodInfo method, IInterceptor[] interceptors)
         {
-            foreach(var methodName in _methodNames)
-            {
-                // intercept the method if it has a public method with the correct name + args
-                if (type.GetMethod(methodName, method.GetGenericArguments()) != null)
-                    return interceptors;
-            }
+	        if (_methodNames.Any(name => name == method.Name) && type.GetMethod(method.Name) != null)
+	        {
+				// intercept the method if the targeted type has 
+				// a public method with the correct name
+				// and its name is contained in _methodNames
+				return interceptors;
+	        }
 
             // don't intercept the method
             return new IInterceptor[0];
