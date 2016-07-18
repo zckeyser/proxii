@@ -171,7 +171,43 @@ namespace Proxii.Test.Integration.Interceptors
 			Assert.IsNull(result1);
 			Assert.IsNull(result2);
 		}
-		
+
+		[TestMethod]
+		[ExpectedException(typeof(NullReferenceException))]
+		public void ExceptionInterceptor_NonMatchingThrowType()
+		{
+			var exceptionList = new List<Exception>();
+
+			var exceptionInterceptor = new ExceptionInterceptor(typeof(IndexOutOfRangeException), e => exceptionList.Add(e));
+			var interceptors = new IInterceptor[] { exceptionInterceptor };
+
+			var proxy = (IExceptionTest)_generator.CreateInterfaceProxyWithTarget(typeof(IExceptionTest), new ExceptionTest(), interceptors);
+
+			proxy.ThrowNullReferenceException();
+
+			Assert.Fail("Exception should have been re-thrown.");
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(NullReferenceException))]
+		public void ExceptionInterceptor_RethrowEnabled()
+		{
+			var exceptionList = new List<Exception>();
+
+			var exceptionInterceptor = new ExceptionInterceptor(typeof (NullReferenceException), e => exceptionList.Add(e))
+			{
+				Rethrow = true
+			};
+
+			var interceptors = new IInterceptor[] { exceptionInterceptor };
+
+			var proxy = (IExceptionTest)_generator.CreateInterfaceProxyWithTarget(typeof(IExceptionTest), new ExceptionTest(), interceptors);
+
+			proxy.ThrowNullReferenceException();
+
+			Assert.Fail("Exception should have been re-thrown.");
+		}
+
 		public interface IExceptionTest
 		{
 			void ThrowArgumentException();
