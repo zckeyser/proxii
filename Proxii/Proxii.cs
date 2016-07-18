@@ -6,15 +6,23 @@ using Proxii.Library.Selectors;
 
 namespace Proxii
 {
-    public class Proxii
+	public class Proxii
+	{
+		public static Proxii<T> Proxy<T>()
+		{
+			var interfaceType = typeof(T);
+
+			if (!interfaceType.IsInterface)
+				throw new ArgumentException("Proxii.Proxy<T>() must be called with an interface type");
+
+			return new Proxii<T>();
+		}
+	}
+
+    public class Proxii<T>
     {
         private readonly ProxyGenerator _generator = new ProxyGenerator();
-
-        /// <summary>
-        /// interface to proxy
-        /// </summary>
-        private readonly Type _toProxy;
-
+		
         /// <summary>
         /// implementation to target
         /// </summary>
@@ -30,41 +38,26 @@ namespace Proxii
         /// </summary>
         private readonly List<IInterceptorSelector> _selectors = new List<IInterceptorSelector>();
 
-        /// <summary>
-        /// combined selector created from the current state of _selectors
-        /// </summary>
-        private IInterceptorSelector Selector {
-            get
-            {
-                return new CombinedSelector(_selectors);
-            }
-        }
+	    /// <summary>
+	    /// combined selector created from the current state of _selectors
+	    /// </summary>
+	    private IInterceptorSelector Selector
+	    {
+		    get { return new CombinedSelector(_selectors); }
+	    }
 
-        public static Proxii Proxy<T>()
-        {
-	        var interfaceType = typeof (T);
-
-            if (!interfaceType.IsInterface)
-                throw new ArgumentException("Proxii.Proxy<T>() must be called with an interface type");
-
-            return new Proxii(interfaceType);
-        }
-
-        private Proxii(Type interfaceType)
-        {
-            _toProxy = interfaceType;
-        }
+	    internal Proxii() { }
 
 		/// <summary>
 		/// assigns a target type that implements the interface
 		/// that's being proxied to the Proxii
 		/// </summary>
-        public Proxii With<T>()
+        public Proxii<T> With<U>()
         {
-	        var implementationType = typeof (T);
+	        var implementationType = typeof (U);
 
 			// make sure the type implements our interface
-			if(!_toProxy.IsAssignableFrom(implementationType))
+			if(!typeof(T).IsAssignableFrom(implementationType))
 				throw new ArgumentException("Proxii.With<T>() must be called with a type that implements the interface of that proxy");
 
             _target = Activator.CreateInstance(implementationType);
@@ -76,12 +69,12 @@ namespace Proxii
 		/// assigns a target object that implements the interface
 		/// that's being proxied to the Proxii
 		/// </summary>
-	    public Proxii With(object target)
+	    public Proxii<T> With(object target)
 	    {
 			var implementationType = target.GetType();
 
 			// make sure the type implements our interface
-			if (!_toProxy.IsAssignableFrom(implementationType))
+			if (!typeof(T).IsAssignableFrom(implementationType))
 				throw new ArgumentException("Proxii.With<T>() must be called with a type that implements the interface of that proxy");
 
 			_target = target;
@@ -92,7 +85,7 @@ namespace Proxii
         /// <summary>
         /// perform a custom action when the given type of interception is caught
         /// </summary>
-        public Proxii Catch(Type exception, Action<Exception> onCatch)
+        public Proxii<T> Catch(Type exception, Action<Exception> onCatch)
         {
             if (!exception.IsSubclassOf(typeof(Exception)))
                 throw new ArgumentException("type passed to Catch() must be a subclass of Exception");
@@ -113,18 +106,18 @@ namespace Proxii
         /// <summary>
         /// only intercept methods with the given name
         /// </summary>
-        public Proxii ByMethodName(params string[] methodNames)
+        public Proxii<T> ByMethodName(params string[] methodNames)
         {
             _selectors.Add(new MethodNameSelector(methodNames));
 
             return this;
         }
 
-        public object Create()
+        public T Create()
         {
             var options = new ProxyGenerationOptions { Selector = Selector };
 
-            return _generator.CreateInterfaceProxyWithTarget(_toProxy, _target, options, _interceptors.ToArray());
+            return (T) _generator.CreateInterfaceProxyWithTarget(typeof(T), _target, options, _interceptors.ToArray());
         }
     }
 }
