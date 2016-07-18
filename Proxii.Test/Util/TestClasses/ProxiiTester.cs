@@ -17,5 +17,10 @@ namespace Proxii.Test.Util.TestClasses
 		{
 			return func();
 		}
+
+		public void Throw(Exception e)
+		{
+			throw e;
+		}
 	}
 }

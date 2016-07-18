@@ -12,5 +12,7 @@ namespace Proxii.Test.Util.TestClasses
 		void DoAction(Action action);
 
 		T DoFunc<T>(Func<T> func);
+
+		void Throw(Exception e);
 	}
 }

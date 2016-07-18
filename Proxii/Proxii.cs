@@ -103,6 +103,16 @@ namespace Proxii
             return this;
         }
 
+		/// <summary>
+		/// perform a custom action when the given type of interception is caught
+		/// </summary>
+		public Proxii<T> Catch<TException>(Action<Exception> onCatch)
+		{
+			var exception = typeof (TException);
+
+			return Catch(exception, onCatch);
+		}
+
         /// <summary>
         /// only intercept methods with the given name
         /// </summary>
