@@ -45,7 +45,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interceptors\AfterInvokeInterceptor.cs" />
+    <Compile Include="Interceptors\ArgumentInterceptor.cs" />
+    <Compile Include="Interceptors\BeforeInvokeInterceptor.cs" />
     <Compile Include="Interceptors\ExceptionInterceptor.cs" />
+    <Compile Include="Interceptors\ReturnValueInterceptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Selectors\CombinedSelector.cs" />
     <Compile Include="Selectors\MethodNameSelector.cs" />
