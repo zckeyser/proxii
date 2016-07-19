@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Proxii.Test.Util.TestClasses
 {
 	public class ProxiiTester : IProxiiTester
 	{
+        public const int IntRetVal = 10;
+        public const string StringRetVal = "foo";
+
 		public void DoAction(Action action)
 		{
 			action();
@@ -18,7 +17,22 @@ namespace Proxii.Test.Util.TestClasses
 			return func();
 		}
 
-		public void Throw(Exception e)
+        public int IntMethod()
+        {
+            return IntRetVal;
+        }
+
+        public void NoOp()
+        {
+            // do nothing
+        }
+
+        public string StringMethod()
+        {
+            return StringRetVal;
+        }
+
+        public void Throw(Exception e)
 		{
 			throw e;
 		}

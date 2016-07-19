@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Proxii.Test.Util.TestClasses
 {
@@ -14,5 +9,11 @@ namespace Proxii.Test.Util.TestClasses
 		T DoFunc<T>(Func<T> func);
 
 		void Throw(Exception e);
+
+        string StringMethod();
+
+        int IntMethod();
+
+        void NoOp();
 	}
 }

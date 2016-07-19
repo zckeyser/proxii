@@ -58,6 +58,7 @@
     <Compile Include="Integration\Interceptors\ExceptionInterceptorTest.cs" />
     <Compile Include="Integration\ProxiiTest.cs" />
     <Compile Include="Integration\Selectors\MethodNameSelectorTest.cs" />
+    <Compile Include="Integration\Selectors\ReturnTypeSelectorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Unit\Selectors\MethodNameSelectorTest.cs" />
     <Compile Include="Unit\Selectors\ReturnTypeSelectorTest.cs" />

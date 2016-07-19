@@ -94,23 +94,23 @@ namespace Proxii.Test.Unit.Selectors
             Assert.AreEqual(1, result.Length);
             Assert.IsInstanceOfType(result[0], typeof(LoggingInterceptor));
         }
+    }
 
-        internal class ReturnTypeSelectorTester
+    internal class ReturnTypeSelectorTester
+    {
+        public int IntMethod()
         {
-            public int IntMethod()
-            {
-                return 10;
-            }
+            return 10;
+        }
 
-            public string StringMethod()
-            {
-                return "foo";
-            }
+        public string StringMethod()
+        {
+            return "foo";
+        }
 
-            public void VoidMethod()
-            {
-                Console.WriteLine("foo");
-            }
+        public void VoidMethod()
+        {
+            Console.WriteLine("foo");
         }
     }
 }
