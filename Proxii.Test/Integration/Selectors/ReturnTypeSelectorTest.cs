@@ -15,10 +15,10 @@ namespace Proxii.Test.Integration.Selectors
         {
             var logger = new Logger();
             var selector = new ReturnTypeSelector(typeof(int));
-            var options = new ProxyGenerationOptions { Selector = new ReturnTypeSelector() };
+            var options = new ProxyGenerationOptions { Selector = selector };
             var interceptors = new IInterceptor[] { new LoggingInterceptor(logger) };
             
-            var proxy = (IProxiiTester) _generator.CreateInterfaceProxyWithTarget(typeof(IProxiiTester), new ProxiiTester(), interceptors);
+            var proxy = (IProxiiTester) _generator.CreateInterfaceProxyWithTarget(typeof(IProxiiTester), new ProxiiTester(), options, interceptors);
 
             var result = proxy.IntMethod();
 
@@ -37,10 +37,10 @@ namespace Proxii.Test.Integration.Selectors
         {
             var logger = new Logger();
             var selector = new ReturnTypeSelector(typeof(string));
-            var options = new ProxyGenerationOptions { Selector = new ReturnTypeSelector() };
+            var options = new ProxyGenerationOptions { Selector = selector };
             var interceptors = new IInterceptor[] { new LoggingInterceptor(logger) };
 
-            var proxy = (IProxiiTester)_generator.CreateInterfaceProxyWithTarget(typeof(IProxiiTester), new ProxiiTester(), interceptors);
+            var proxy = (IProxiiTester)_generator.CreateInterfaceProxyWithTarget(typeof(IProxiiTester), new ProxiiTester(), options, interceptors);
 
             var result = proxy.IntMethod();
 
@@ -58,10 +58,10 @@ namespace Proxii.Test.Integration.Selectors
         {
             var logger = new Logger();
             var selector = new ReturnTypeSelector(typeof(int), typeof(string));
-            var options = new ProxyGenerationOptions { Selector = new ReturnTypeSelector() };
+            var options = new ProxyGenerationOptions { Selector = selector };
             var interceptors = new IInterceptor[] { new LoggingInterceptor(logger) };
 
-            var proxy = (IProxiiTester)_generator.CreateInterfaceProxyWithTarget(typeof(IProxiiTester), new ProxiiTester(), interceptors);
+            var proxy = (IProxiiTester)_generator.CreateInterfaceProxyWithTarget(typeof(IProxiiTester), new ProxiiTester(), options, interceptors);
 
             var result1 = proxy.IntMethod();
             var result2 = proxy.StringMethod();
@@ -83,10 +83,10 @@ namespace Proxii.Test.Integration.Selectors
         {
             var logger = new Logger();
             var selector = new ReturnTypeSelector(typeof(long), typeof(double));
-            var options = new ProxyGenerationOptions { Selector = new ReturnTypeSelector() };
+            var options = new ProxyGenerationOptions { Selector = selector };
             var interceptors = new IInterceptor[] { new LoggingInterceptor(logger) };
 
-            var proxy = (IProxiiTester)_generator.CreateInterfaceProxyWithTarget(typeof(IProxiiTester), new ProxiiTester(), interceptors);
+            var proxy = (IProxiiTester)_generator.CreateInterfaceProxyWithTarget(typeof(IProxiiTester), new ProxiiTester(), options, interceptors);
 
             var result1 = proxy.IntMethod();
             var result2 = proxy.StringMethod();
@@ -106,10 +106,10 @@ namespace Proxii.Test.Integration.Selectors
         {
             var logger = new Logger();
             var selector = new ReturnTypeSelector(typeof(int));
-            var options = new ProxyGenerationOptions { Selector = new ReturnTypeSelector() };
+            var options = new ProxyGenerationOptions { Selector = selector };
             var interceptors = new IInterceptor[] { new LoggingInterceptor(logger), new LoggingInterceptor(logger) };
 
-            var proxy = (IProxiiTester)_generator.CreateInterfaceProxyWithTarget(typeof(IProxiiTester), new ProxiiTester(), interceptors);
+            var proxy = (IProxiiTester)_generator.CreateInterfaceProxyWithTarget(typeof(IProxiiTester), new ProxiiTester(), options, interceptors);
 
             var result = proxy.IntMethod();
 
@@ -129,10 +129,10 @@ namespace Proxii.Test.Integration.Selectors
         {
             var logger = new Logger();
             var selector = new ReturnTypeSelector(typeof(string));
-            var options = new ProxyGenerationOptions { Selector = new ReturnTypeSelector() };
+            var options = new ProxyGenerationOptions { Selector = selector };
             var interceptors = new IInterceptor[] { new LoggingInterceptor(logger), new LoggingInterceptor(logger) };
 
-            var proxy = (IProxiiTester)_generator.CreateInterfaceProxyWithTarget(typeof(IProxiiTester), new ProxiiTester(), interceptors);
+            var proxy = (IProxiiTester)_generator.CreateInterfaceProxyWithTarget(typeof(IProxiiTester), new ProxiiTester(), options, interceptors);
 
             var result = proxy.IntMethod();
 
