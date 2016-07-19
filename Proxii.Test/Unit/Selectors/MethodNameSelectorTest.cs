@@ -10,7 +10,7 @@ namespace Proxii.Test.Unit.Selectors
 	public class MethodNameSelectorTest
 	{
 		[TestMethod]
-		public void MethodNameSelector_NoFilter()
+		public void Unit_MethodNameSelector_NoFilter()
 		{
 			var type = typeof (string);
 			var method = type.GetMethods().First();
@@ -24,7 +24,7 @@ namespace Proxii.Test.Unit.Selectors
 		}
 
 		[TestMethod]
-		public void MethodNameSelector_OneFilter_HasMatch()
+		public void Unit_MethodNameSelector_OneFilter_HasMatch()
 		{
 			var type = typeof(string);
 			var method = type.GetMethods().First();
@@ -39,7 +39,7 @@ namespace Proxii.Test.Unit.Selectors
 		}
 
 		[TestMethod]
-		public void MethodNameSelector_OneFilter_NoMatches()
+		public void Unit_MethodNameSelector_OneFilter_NoMatches()
 		{
 			var type = typeof(string);
 			var method = type.GetMethods().First();
@@ -53,7 +53,7 @@ namespace Proxii.Test.Unit.Selectors
 		}
 
 		[TestMethod]
-		public void MethodNameSelector_MultipleFilters_HasMatch()
+		public void Unit_MethodNameSelector_MultipleFilters_HasMatch()
 		{
 			var type = typeof(string);
 			var method = type.GetMethods().First();
@@ -68,7 +68,7 @@ namespace Proxii.Test.Unit.Selectors
 		}
 
 		[TestMethod]
-		public void MethodNameSelector_MultipleFilters_NoMatches()
+		public void Unit_MethodNameSelector_MultipleFilters_NoMatches()
 		{
 			var type = typeof(string);
 			var method = type.GetMethods().First();
@@ -82,7 +82,7 @@ namespace Proxii.Test.Unit.Selectors
 		}
 
 		[TestMethod]
-		public void MethodNameSelector_MultipleInterceptors_HasMatch()
+		public void Unit_MethodNameSelector_MultipleInterceptors_HasMatch()
 		{
 			var type = typeof(string);
 			var method = type.GetMethods().First();
@@ -98,7 +98,7 @@ namespace Proxii.Test.Unit.Selectors
 		}
 
 		[TestMethod]
-		public void MethodNameSelector_MultipleInterceptors_NoMatches()
+		public void Unit_MethodNameSelector_MultipleInterceptors_NoMatches()
 		{
 			var type = typeof(string);
 			var method = type.GetMethods().First();

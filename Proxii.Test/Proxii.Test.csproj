@@ -60,6 +60,7 @@
     <Compile Include="Integration\Selectors\MethodNameSelectorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Unit\Selectors\MethodNameSelectorTest.cs" />
+    <Compile Include="Unit\Selectors\ReturnTypeSelectorTest.cs" />
     <Compile Include="Util\TestClasses\IProxiiTester.cs" />
     <Compile Include="Util\TestClasses\Logger.cs" />
     <Compile Include="Util\TestClasses\LoggingInterceptor.cs" />

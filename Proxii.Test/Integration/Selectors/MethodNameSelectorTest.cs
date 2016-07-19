@@ -12,7 +12,7 @@ namespace Proxii.Test.Integration.Selectors
 		private readonly ProxyGenerator _generator = new ProxyGenerator();
 
 		[TestMethod]
-		public void MethodNameSelector_NoFilter()
+		public void Integration_MethodNameSelector_NoFilter()
 		{
 			var logger = new Logger();
 			var interceptors = new IInterceptor[] { new LoggingInterceptor(logger) };
@@ -27,7 +27,7 @@ namespace Proxii.Test.Integration.Selectors
 		}
 
 		[TestMethod]
-		public void MethodNameSelector_OneFilter_HasMatch()
+		public void Integration_MethodNameSelector_OneFilter_HasMatch()
 		{
 			var logger = new Logger();
 			var interceptors = new IInterceptor[] { new LoggingInterceptor(logger) };
@@ -43,7 +43,7 @@ namespace Proxii.Test.Integration.Selectors
 		}
 
 		[TestMethod]
-		public void MethodNameSelector_OneFilter_NoMatches()
+		public void Integration_MethodNameSelector_OneFilter_NoMatches()
 		{
 			var logger = new Logger();
 			var interceptors = new IInterceptor[] { new LoggingInterceptor(logger) };
@@ -58,7 +58,7 @@ namespace Proxii.Test.Integration.Selectors
 		}
 
 		[TestMethod]
-		public void MethodNameSelector_MultipleFilters_HasMatch()
+		public void Integration_MethodNameSelector_MultipleFilters_HasMatch()
 		{
 			var logger = new Logger();
 			var interceptors = new IInterceptor[] { new LoggingInterceptor(logger) };
@@ -74,7 +74,7 @@ namespace Proxii.Test.Integration.Selectors
 		}
 
 		[TestMethod]
-		public void MethodNameSelector_MultipleFilters_NoMatches()
+		public void Integration_MethodNameSelector_MultipleFilters_NoMatches()
 		{
 			var logger = new Logger();
 			var interceptors = new IInterceptor[] { new LoggingInterceptor(logger) };
@@ -89,7 +89,7 @@ namespace Proxii.Test.Integration.Selectors
 		}
 
 		[TestMethod]
-		public void MethodNameSelector_MultipleInterceptors_HasMatch()
+		public void Integration_MethodNameSelector_MultipleInterceptors_HasMatch()
 		{
 			var logger = new Logger();
 			var interceptors = new IInterceptor[] { new LoggingInterceptor(logger), new LoggingInterceptor(logger) };
@@ -107,7 +107,7 @@ namespace Proxii.Test.Integration.Selectors
 		}
 
 		[TestMethod]
-		public void MethodNameSelector_MultipleInterceptors_NoMatches()
+		public void Integration_MethodNameSelector_MultipleInterceptors_NoMatches()
 		{
 			var logger = new Logger();
 			var interceptors = new IInterceptor[] { new LoggingInterceptor(logger), new LoggingInterceptor(logger) };

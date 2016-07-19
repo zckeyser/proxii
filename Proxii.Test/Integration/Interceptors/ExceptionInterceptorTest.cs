@@ -12,7 +12,7 @@ namespace Proxii.Test.Integration.Interceptors
 		private readonly ProxyGenerator _generator = new ProxyGenerator();
 
 		[TestMethod]
-		public void ExceptionInterceptor_NoException_VoidTargetMethod_SingleMethod()
+		public void Integration_ExceptionInterceptor_NoException_VoidTargetMethod_SingleMethod()
 		{
 			var exceptionList = new List<Exception>();
 
@@ -26,7 +26,7 @@ namespace Proxii.Test.Integration.Interceptors
 		}
 
 		[TestMethod]
-		public void ExceptionInterceptor_NoException_ReturningTargetMethod_SingleMethod()
+		public void Integration_ExceptionInterceptor_NoException_ReturningTargetMethod_SingleMethod()
 		{
 			var exceptionList = new List<Exception>();
 
@@ -41,7 +41,7 @@ namespace Proxii.Test.Integration.Interceptors
 		}
 
 		[TestMethod]
-		public void ExceptionInterceptor_NoException_MultipleMethods()
+		public void Integration_ExceptionInterceptor_NoException_MultipleMethods()
 		{
 			var exceptionList = new List<Exception>();
 
@@ -57,7 +57,7 @@ namespace Proxii.Test.Integration.Interceptors
 		}
 
 		[TestMethod]
-		public void ExceptionInterceptor_SingleException_VoidMethod()
+		public void Integration_ExceptionInterceptor_SingleException_VoidMethod()
 		{
 			var exceptionList = new List<Exception>();
 
@@ -74,7 +74,7 @@ namespace Proxii.Test.Integration.Interceptors
 		}
 
 		[TestMethod]
-		public void ExceptionInterceptor_MultipleExceptions_VoidMethod()
+		public void Integration_ExceptionInterceptor_MultipleExceptions_VoidMethod()
 		{
 			var exceptionList = new List<Exception>();
 
@@ -94,7 +94,7 @@ namespace Proxii.Test.Integration.Interceptors
 		}
 
 		[TestMethod]
-		public void ExceptionInterceptor_SingleException_ValueMethod()
+		public void Integration_ExceptionInterceptor_SingleException_ValueMethod()
 		{
 			var exceptionList = new List<Exception>();
 
@@ -112,7 +112,7 @@ namespace Proxii.Test.Integration.Interceptors
 		}
 
 		[TestMethod]
-		public void ExceptionInterceptor_MultipleExceptions_ValueMethod()
+		public void Integration_ExceptionInterceptor_MultipleExceptions_ValueMethod()
 		{
 			var exceptionList = new List<Exception>();
 
@@ -134,7 +134,7 @@ namespace Proxii.Test.Integration.Interceptors
 		}
 
 		[TestMethod]
-		public void ExceptionInterceptor_SingleException_ReferenceMethod()
+		public void Integration_ExceptionInterceptor_SingleException_ReferenceMethod()
 		{
 			var exceptionList = new List<Exception>();
 
@@ -151,7 +151,7 @@ namespace Proxii.Test.Integration.Interceptors
 		}
 
 		[TestMethod]
-		public void ExceptionInterceptor_MultipleExceptions_ReferenceMethod()
+		public void Integration_ExceptionInterceptor_MultipleExceptions_ReferenceMethod()
 		{
 			var exceptionList = new List<Exception>();
 
@@ -174,7 +174,7 @@ namespace Proxii.Test.Integration.Interceptors
 
 		[TestMethod]
 		[ExpectedException(typeof(NullReferenceException))]
-		public void ExceptionInterceptor_NonMatchingThrowType()
+		public void Integration_ExceptionInterceptor_NonMatchingThrowType()
 		{
 			var exceptionList = new List<Exception>();
 
@@ -190,7 +190,7 @@ namespace Proxii.Test.Integration.Interceptors
 
 		[TestMethod]
 		[ExpectedException(typeof(NullReferenceException))]
-		public void ExceptionInterceptor_RethrowEnabled()
+		public void Integration_ExceptionInterceptor_RethrowEnabled()
 		{
 			var exceptionList = new List<Exception>();
 
