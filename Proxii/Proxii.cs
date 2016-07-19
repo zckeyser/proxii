@@ -87,6 +87,9 @@ namespace Proxii
         #endregion
 
         #region Selectors
+        // TODO ByArgumentType?
+        // TODO Figure out more useful selectors
+
         /// <summary>
         /// only intercept methods with the given name
         /// </summary>
@@ -110,6 +113,11 @@ namespace Proxii
         #endregion
 
         #region Interceptors
+        // TODO before invocation hook
+        // TODO after invocation hook
+        // TODO return value manipulation
+        // TODO argument manipulation
+
         /// <summary>
         /// perform a custom action when the given type of interception is caught
         /// </summary>
