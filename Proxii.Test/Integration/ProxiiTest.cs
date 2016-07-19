@@ -8,7 +8,8 @@ namespace Proxii.Test.Integration
 	[TestClass]
 	public class ProxiiTest
 	{
-		[TestMethod]
+        #region Initialization
+        [TestMethod]
 		public void Proxii_WiresInterfaceToImpl_ByType()
 		{
 			var proxy = Proxii.Proxy<IProxiiTester>()
@@ -35,9 +36,11 @@ namespace Proxii.Test.Integration
 
 			Assert.AreEqual("bar", test[0]);
 		}
+        #endregion
 
-		[TestMethod]
-		public void Proxii_WithExceptionInterceptor_MatchingType_SingleCatch()
+        #region Catch
+        [TestMethod]
+		public void Proxii_Catch_MatchingType_SingleCatch()
 		{
 			var errors = new List<Exception>();
 
@@ -55,7 +58,7 @@ namespace Proxii.Test.Integration
 
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentException))]
-		public void Proxii_WithExceptionInterceptor_NonMatchingType_SingleCatch()
+		public void Proxii_Catch_NonMatchingType_SingleCatch()
 		{
 			var errors = new List<Exception>();
 
@@ -71,7 +74,7 @@ namespace Proxii.Test.Integration
 		}
 
 		[TestMethod]
-		public void Proxii_WithExceptionInterceptor_MatchingType_MultiCatch()
+		public void Proxii_Catch_MatchingType_MultiCatch()
 		{
 			var errors = new List<Exception>();
 
@@ -90,9 +93,9 @@ namespace Proxii.Test.Integration
 			Assert.IsInstanceOfType(errors[1], typeof(ArgumentNullException));
 		}
 
-		[TestMethod]
+        [TestMethod]
 		[ExpectedException(typeof(ArgumentException))]
-		public void Proxii_WithExceptionInterceptor_NonMatchingType_MultiCatch()
+		public void Proxii_Catch_NonMatchingType_MultiCatch()
 		{
 			var errors = new List<Exception>();
 
@@ -107,8 +110,10 @@ namespace Proxii.Test.Integration
 
 			Assert.Fail("Should have thrown a non-matching exception");
 		}
+        #endregion
 
-		[TestMethod]
+        #region ByMethodName
+        [TestMethod]
 		[ExpectedException(typeof(ArgumentException))]
 		public void Proxii_ByMethodName_NoValidNames()
 		{
@@ -202,5 +207,40 @@ namespace Proxii.Test.Integration
 
 			Assert.Fail("Should have thrown exception.");
 		}
-	}
+        #endregion
+
+        #region ByReturnType
+        [TestMethod]
+        public void Proxii_ByReturnType_SingleType_Matches()
+        {
+            var errors = new List<Exception>();
+            var proxy = Proxii.Proxy<IProxiiTester>()
+                .With<ProxiiTester>()
+                .Catch<Exception>(e => errors.Add(e))
+                .ByReturnType(typeof(void))
+                .Create();
+
+            proxy.Throw(new ArgumentException());
+
+            Assert.AreEqual(errors.Count, 1);
+            Assert.IsInstanceOfType(errors[0], typeof(ArgumentException));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Proxii_ByReturnType_SingleType_DoesNotMatch()
+        {
+            var errors = new List<Exception>();
+            var proxy = Proxii.Proxy<IProxiiTester>()
+                .With<ProxiiTester>()
+                .Catch<Exception>(e => errors.Add(e))
+                .ByReturnType(typeof(void))
+                .Create();
+
+            var result = proxy.ThrowWithReturn(new ArgumentException(), "foo");
+
+            Assert.Fail("ThrowWithReturn should not have been intercepted.");
+        }
+        #endregion
+    }
 }

@@ -10,6 +10,8 @@ namespace Proxii.Test.Util.TestClasses
 
 		void Throw(Exception e);
 
+        T ThrowWithReturn<T>(Exception e, T val);
+
         string StringMethod();
 
         int IntMethod();

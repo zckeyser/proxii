@@ -36,5 +36,10 @@ namespace Proxii.Test.Util.TestClasses
 		{
 			throw e;
 		}
+
+        public T ThrowWithReturn<T>(Exception e, T val)
+        {
+            throw e;
+        }
 	}
 }

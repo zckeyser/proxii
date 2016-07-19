@@ -21,6 +21,7 @@ namespace Proxii
 
     public class Proxii<T>
     {
+        #region Private Fields
         private readonly ProxyGenerator _generator = new ProxyGenerator();
 		
         /// <summary>
@@ -45,13 +46,15 @@ namespace Proxii
 	    {
 		    get { return new CombinedSelector(_selectors); }
 	    }
+        #endregion
 
-	    internal Proxii() { }
+        internal Proxii() { }
 
-		/// <summary>
-		/// assigns a target type that implements the interface
-		/// that's being proxied to the Proxii
-		/// </summary>
+        #region Initialization
+        /// <summary>
+        /// assigns a target type that implements the interface
+        /// that's being proxied to the Proxii
+        /// </summary>
         public Proxii<T> With<U>()
         {
 	        var implementationType = typeof (U);
@@ -81,13 +84,38 @@ namespace Proxii
 
 			return this;
 	    }
+        #endregion
 
+        #region Selectors
+        /// <summary>
+        /// only intercept methods with the given name
+        /// </summary>
+        public Proxii<T> ByMethodName(params string[] methodNames)
+        {
+            _selectors.Add(new MethodNameSelector(methodNames));
+
+            return this;
+        }
+
+        /// <summary>
+        /// only intercept methods that return one of the given types
+        /// void methods can be specified by passing typeof(void) as an argument
+        /// </summary>
+        public Proxii<T> ByReturnType(params Type[] types)
+        {
+            _selectors.Add(new ReturnTypeSelector(types));
+
+            return this;
+        }
+        #endregion
+
+        #region Interceptors
         /// <summary>
         /// perform a custom action when the given type of interception is caught
         /// </summary>
         public Proxii<T> Catch(Type exception, Action<Exception> onCatch)
         {
-            if (!exception.IsSubclassOf(typeof(Exception)))
+            if (exception != typeof(Exception) && !exception.IsSubclassOf(typeof(Exception)))
                 throw new ArgumentException("type passed to Catch() must be a subclass of Exception");
 
             if (onCatch == null)
@@ -112,16 +140,7 @@ namespace Proxii
 
 			return Catch(exception, onCatch);
 		}
-
-        /// <summary>
-        /// only intercept methods with the given name
-        /// </summary>
-        public Proxii<T> ByMethodName(params string[] methodNames)
-        {
-            _selectors.Add(new MethodNameSelector(methodNames));
-
-            return this;
-        }
+        #endregion
 
         public T Create()
         {
