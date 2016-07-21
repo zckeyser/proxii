@@ -23,6 +23,7 @@ namespace Proxii
     {
         // TODO add fixes for the "this" bug, maybe a default interceptor that's always there? 
         // https://github.com/castleproject/Core/blob/master/docs/dynamicproxy-leaking-this.md
+        
         #region Private Fields
         private readonly ProxyGenerator _generator = new ProxyGenerator();
 		
@@ -50,7 +51,9 @@ namespace Proxii
 	    }
         #endregion
 
+        #region Constructors
         internal Proxii() { }
+        #endregion
 
         #region Initialization
         /// <summary>
@@ -167,11 +170,13 @@ namespace Proxii
 		}
         #endregion
 
+        #region Finalization
         public T Create()
         {
             var options = new ProxyGenerationOptions { Selector = Selector };
 
             return (T) _generator.CreateInterfaceProxyWithTarget(typeof(T), _target, options, _interceptors.ToArray());
         }
+        #endregion
     }
 }
