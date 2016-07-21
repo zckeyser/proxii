@@ -21,6 +21,8 @@ namespace Proxii
 
     public class Proxii<T>
     {
+        // TODO add fixes for the "this" bug, maybe a default interceptor that's always there? 
+        // https://github.com/castleproject/Core/blob/master/docs/dynamicproxy-leaking-this.md
         #region Private Fields
         private readonly ProxyGenerator _generator = new ProxyGenerator();
 		
@@ -113,10 +115,25 @@ namespace Proxii
         #endregion
 
         #region Interceptors
-        // TODO before invocation hook
-        // TODO after invocation hook
-        // TODO return value manipulation
-        // TODO argument manipulation
+        // TODO ChangeReturnValue Interceptor
+        // TODO ChangeArgument Interceptor
+        // TODO ExecuteIf Interceptor
+
+        public Proxii<T> BeforeInvoke(Action beforeHook)
+        {
+            //TODO BeforeInvoke e2e tests
+            _interceptors.Add(new BeforeInvokeInterceptor(beforeHook));
+
+            return this;
+        }
+
+        public Proxii<T> AfterInvoke(Action afterHook)
+        {
+            //TODO AfterInvoke e2e tests
+            _interceptors.Add(new AfterInvokeInterceptor(afterHook));
+
+            return this;
+        }
 
         /// <summary>
         /// perform a custom action when the given type of interception is caught

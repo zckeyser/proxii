@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Proxii.Test.Util.TestClasses;
 
-namespace Proxii.Test.Integration
+namespace Proxii.Test.e2e
 {
 	[TestClass]
 	public class ProxiiTest
 	{
+        // TODO split into multiple classes
         #region Initialization
         [TestMethod]
 		public void Proxii_WiresInterfaceToImpl_ByType()
@@ -36,6 +37,46 @@ namespace Proxii.Test.Integration
 
 			Assert.AreEqual("bar", test[0]);
 		}
+        #endregion
+
+        #region AfterInvoke
+        [TestMethod]
+        public void Proxii_AfterInvoke_InvokesAfterMethodCall()
+        {
+            var tester = new InvokeHookTester();
+
+            // if this gets invoked before SetValue, this will not be the end value
+            Action afterHook = () => tester.Value = 10;
+
+            var proxy = Proxii.Proxy<IInvokeHookTester>()
+                .With(tester)
+                .AfterInvoke(afterHook)
+                .Create();
+
+            proxy.SetValue(15);
+
+            Assert.AreEqual(10, tester.Value);
+        }
+        #endregion
+
+        #region BeforeInvoke
+        [TestMethod]
+        public void Proxii_BeforeInvoke_InvokesAfterMethodCall()
+        {
+            var tester = new InvokeHookTester();
+
+            // if this gets invoked before SetValue, this will not be the end value
+            Action beforeHook = () => tester.Value = 10;
+
+            var proxy = Proxii.Proxy<IInvokeHookTester>()
+                .With(tester)
+                .BeforeInvoke(beforeHook)
+                .Create();
+
+            proxy.SetValue(15);
+
+            Assert.AreEqual(15, tester.Value);
+        }
         #endregion
 
         #region Catch
