@@ -1,17 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Castle.DynamicProxy;
 
 namespace Proxii.Library.Interceptors
 {
-	public class ReturnValueInterceptor : IInterceptor
+	public class ReturnValueInterceptor<T> : IInterceptor
 	{
+		private readonly Func<T, T> _onReturn;
+
+		public ReturnValueInterceptor(Func<T, T> onReturn)
+		{
+			_onReturn = onReturn;
+		}
+
 		public void Intercept(IInvocation invocation)
 		{
-			throw new NotImplementedException();
+			invocation.Proceed();
+
+			// only intercept the retval if it's the right type
+			if (invocation.Method.ReturnType == typeof(T))
+			{
+				invocation.ReturnValue = _onReturn((T) invocation.ReturnValue);
+			}
 		}
 	}
 }

@@ -118,13 +118,11 @@ namespace Proxii
         #endregion
 
         #region Interceptors
-        // TODO ChangeReturnValue Interceptor
         // TODO ChangeArgument Interceptor
         // TODO ExecuteIf Interceptor
 
         public Proxii<T> BeforeInvoke(Action beforeHook)
         {
-            //TODO BeforeInvoke e2e tests
             _interceptors.Add(new BeforeInvokeInterceptor(beforeHook));
 
             return this;
@@ -132,11 +130,17 @@ namespace Proxii
 
         public Proxii<T> AfterInvoke(Action afterHook)
         {
-            //TODO AfterInvoke e2e tests
             _interceptors.Add(new AfterInvokeInterceptor(afterHook));
 
             return this;
         }
+
+		public Proxii<T> ChangeReturnValue<TReturn>(Func<TReturn, TReturn> onReturn)
+	    {
+			_interceptors.Add(new ReturnValueInterceptor<TReturn>(onReturn));
+
+		    return this;
+	    }
 
         /// <summary>
         /// perform a custom action when the given type of interception is caught

@@ -55,10 +55,17 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="e2e\ProxiiAfterInvokeTest.cs" />
+    <Compile Include="e2e\ProxiiBeforeInvokeTest.cs" />
+    <Compile Include="e2e\ProxiiByMethodNameTest.cs" />
+    <Compile Include="e2e\ProxiiByReturnTypeTest.cs" />
+    <Compile Include="e2e\ProxiiCatchTest.cs" />
+    <Compile Include="e2e\ProxiiChangeReturnValueTest.cs" />
+    <Compile Include="e2e\ProxiiInitializationTest.cs" />
     <Compile Include="Integration\Interceptors\AfterInvokeInterceptorTest.cs" />
     <Compile Include="Integration\Interceptors\BeforeInvokeInterceptorTest.cs" />
     <Compile Include="Integration\Interceptors\ExceptionInterceptorTest.cs" />
-    <Compile Include="e2e\ProxiiTest.cs" />
+    <Compile Include="Integration\Interceptors\ReturnValueInterceptorTest.cs" />
     <Compile Include="Integration\Selectors\MethodNameSelectorTest.cs" />
     <Compile Include="Integration\Selectors\ReturnTypeSelectorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
