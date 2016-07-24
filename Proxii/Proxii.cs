@@ -60,15 +60,18 @@ namespace Proxii
         /// assigns a target type that implements the interface
         /// that's being proxied to the Proxii
         /// </summary>
-        public Proxii<T> With<U>()
+        public Proxii<T> With<U>() where U : T
         {
 	        var implementationType = typeof (U);
-
-			// make sure the type implements our interface
-			if(!typeof(T).IsAssignableFrom(implementationType))
-				throw new ArgumentException("Proxii.With<T>() must be called with a type that implements the interface of that proxy");
-
-            _target = Activator.CreateInstance(implementationType);
+            
+            try
+            {
+                _target = Activator.CreateInstance(implementationType);
+            } 
+            catch (Exception e)
+            {
+                throw new ArgumentException("Could not instantiate type " + implementationType.Name + " (Does it have a default constructor?)", e);
+            }
 
             return this;
         }
@@ -142,13 +145,12 @@ namespace Proxii
 		    return this;
 	    }
 
-        /// <summary>
-        /// perform a custom action when the given type of interception is caught
-        /// </summary>
-        public Proxii<T> Catch(Type exception, Action<Exception> onCatch)
-        {
-            if (exception != typeof(Exception) && !exception.IsSubclassOf(typeof(Exception)))
-                throw new ArgumentException("type passed to Catch() must be a subclass of Exception");
+		/// <summary>
+		/// perform a custom action when the given type of interception is caught
+		/// </summary>
+		public Proxii<T> Catch<TException>(Action<Exception> onCatch) where TException : Exception
+		{
+			var exception = typeof (TException);
 
             if (onCatch == null)
                 throw new ArgumentNullException("onCatch");
@@ -162,22 +164,14 @@ namespace Proxii
 
             return this;
         }
-
-		/// <summary>
-		/// perform a custom action when the given type of interception is caught
-		/// </summary>
-		public Proxii<T> Catch<TException>(Action<Exception> onCatch)
-		{
-			var exception = typeof (TException);
-
-			return Catch(exception, onCatch);
-		}
         #endregion
 
         #region Finalization
         public T Create()
         {
             var options = new ProxyGenerationOptions { Selector = Selector };
+
+            _interceptors.Add(new ThisInterceptor());
 
             return (T) _generator.CreateInterfaceProxyWithTarget(typeof(T), _target, options, _interceptors.ToArray());
         }

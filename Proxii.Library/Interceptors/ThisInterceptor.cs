@@ -9,9 +9,11 @@ namespace Proxii.Library.Interceptors
 	/// </summary>
 	public class ThisInterceptor : IInterceptor
 	{
+        //TODO test this
 		public void Intercept(IInvocation invocation)
 		{
 			invocation.Proceed();
+
 			if (invocation.ReturnValue == invocation.InvocationTarget)
 			{
 				invocation.ReturnValue = invocation.Proxy;
