@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using Proxii.Library.Interceptors;
 using Proxii.Library.Selectors;
-using System.Linq;
+using System.Reflection;
 
 namespace Proxii
 {
@@ -158,8 +158,21 @@ namespace Proxii
         #region Interceptors
         // TODO ChangeArgument Interceptor
         // TODO ExecuteIf Interceptor
-
         public Proxii<T> BeforeInvoke(Action beforeHook)
+        {
+            _interceptors.Add(new BeforeInvokeInterceptor(beforeHook));
+
+            return this;
+        }
+
+        public Proxii<T> BeforeInvoke(Action<MethodInfo> beforeHook)
+        {
+            _interceptors.Add(new BeforeInvokeInterceptor(beforeHook));
+
+            return this;
+        }
+
+        public Proxii<T> BeforeInvoke(Action<MethodInfo, object[]> beforeHook)
         {
             _interceptors.Add(new BeforeInvokeInterceptor(beforeHook));
 
@@ -173,7 +186,21 @@ namespace Proxii
             return this;
         }
 
-		public Proxii<T> ChangeReturnValue<TReturn>(Func<TReturn, TReturn> onReturn)
+        public Proxii<T> AfterInvoke(Action<MethodInfo> afterHook)
+        {
+            _interceptors.Add(new AfterInvokeInterceptor(afterHook));
+
+            return this;
+        }
+
+        public Proxii<T> AfterInvoke(Action<MethodInfo, object[]> afterHook)
+        {
+            _interceptors.Add(new AfterInvokeInterceptor(afterHook));
+
+            return this;
+        }
+
+        public Proxii<T> ChangeReturnValue<TReturn>(Func<TReturn, TReturn> onReturn)
 	    {
 			_interceptors.Add(new ReturnValueInterceptor<TReturn>(onReturn));
 
