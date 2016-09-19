@@ -18,7 +18,27 @@ namespace Proxii
 
 			return new Proxii<T>();
 		}
-	}
+
+        public static Proxii<TInterface> Proxy<TInterface, TImplementation>() where TImplementation : TInterface
+        {
+            var interfaceType = typeof(TInterface);
+
+            if (!interfaceType.IsInterface)
+                throw new ArgumentException("Proxii.Proxy<TInterface, TImplementation>() must be called with an interface type for TInterface");
+
+            return new Proxii<TInterface>().With<TImplementation>();
+        }
+
+        public static Proxii<T> Proxy<T>(T impl)
+        {
+            var interfaceType = typeof(T);
+
+            if (!interfaceType.IsInterface)
+                throw new ArgumentException("Proxii.Proxy<T>(T impl) must be called with an interface type for T");
+
+            return new Proxii<T>().With(impl);
+        }
+ 	}
 
     public class Proxii<T>
     {        
