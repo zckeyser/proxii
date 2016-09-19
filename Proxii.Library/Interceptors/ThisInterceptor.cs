@@ -9,7 +9,6 @@ namespace Proxii.Library.Interceptors
 	/// </summary>
 	public class ThisInterceptor : IInterceptor
 	{
-        //TODO test this
 		public void Intercept(IInvocation invocation)
 		{
 			invocation.Proceed();

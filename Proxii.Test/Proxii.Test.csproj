@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="e2e\ProxiiAfterInvokeTest.cs" />
     <Compile Include="e2e\ProxiiBeforeInvokeTest.cs" />
+    <Compile Include="e2e\ProxiiByArgumentTypeTest.cs" />
     <Compile Include="e2e\ProxiiByMethodNameTest.cs" />
     <Compile Include="e2e\ProxiiByReturnTypeTest.cs" />
     <Compile Include="e2e\ProxiiCatchTest.cs" />
@@ -66,11 +67,15 @@
     <Compile Include="Integration\Interceptors\BeforeInvokeInterceptorTest.cs" />
     <Compile Include="Integration\Interceptors\ExceptionInterceptorTest.cs" />
     <Compile Include="Integration\Interceptors\ReturnValueInterceptorTest.cs" />
+    <Compile Include="Integration\Selectors\ArgumentTypeSelectorTest.cs" />
     <Compile Include="Integration\Selectors\MethodNameSelectorTest.cs" />
     <Compile Include="Integration\Selectors\ReturnTypeSelectorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Unit\Selectors\ArgumentTypeSelectorTest.cs" />
     <Compile Include="Unit\Selectors\MethodNameSelectorTest.cs" />
     <Compile Include="Unit\Selectors\ReturnTypeSelectorTest.cs" />
+    <Compile Include="Util\TestClasses\ArgumentTypeSelectorTester.cs" />
+    <Compile Include="Util\TestClasses\IArgumentTypeSelectorTester.cs" />
     <Compile Include="Util\TestClasses\IInvokeHookTester.cs" />
     <Compile Include="Util\TestClasses\InvokeHookTester.cs" />
     <Compile Include="Util\TestClasses\IProxiiTester.cs" />

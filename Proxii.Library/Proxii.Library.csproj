@@ -52,6 +52,7 @@
     <Compile Include="Interceptors\ReturnValueInterceptor.cs" />
     <Compile Include="Interceptors\ThisInterceptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Selectors\ArgumentTypeSelector.cs" />
     <Compile Include="Selectors\CombinedSelector.cs" />
     <Compile Include="Selectors\MethodNameSelector.cs" />
     <Compile Include="Selectors\ReturnTypeSelector.cs" />

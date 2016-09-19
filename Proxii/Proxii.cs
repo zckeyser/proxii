@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Proxii.Library.Interceptors;
 using Proxii.Library.Selectors;
+using System.Linq;
 
 namespace Proxii
 {
@@ -20,10 +21,7 @@ namespace Proxii
 	}
 
     public class Proxii<T>
-    {
-        // TODO add fixes for the "this" bug, maybe a default interceptor that's always there? 
-        // https://github.com/castleproject/Core/blob/master/docs/dynamicproxy-leaking-this.md
-        
+    {        
         #region Private Fields
         private readonly ProxyGenerator _generator = new ProxyGenerator();
 		
@@ -95,8 +93,25 @@ namespace Proxii
         #endregion
 
         #region Selectors
-        // TODO ByArgumentType?
-        // TODO Figure out more useful selectors
+        /// <summary>
+        /// only intercept methods with the given argument signature
+        /// </summary>
+        /// <param name="argumentTypes">Argument types of method signatures to select (order-sensitive)</param>
+        public Proxii<T> ByArgumentType(params Type[] argumentTypes)
+        {
+            ArgumentTypeSelector selector = _selectors.Find(sel => sel is ArgumentTypeSelector) as ArgumentTypeSelector;
+
+            if (selector == null)
+            {
+                selector = new ArgumentTypeSelector();
+                selector.AddArgumentDefinition(argumentTypes);
+                _selectors.Add(selector);
+            }
+            else
+                selector.AddArgumentDefinition(argumentTypes);
+            
+            return this;
+        }
 
         /// <summary>
         /// only intercept methods with the given name
@@ -171,6 +186,7 @@ namespace Proxii
         {
             var options = new ProxyGenerationOptions { Selector = Selector };
 
+            // add interceptor to prevent "this" leaks
             _interceptors.Add(new ThisInterceptor());
 
             return (T) _generator.CreateInterfaceProxyWithTarget(typeof(T), _target, options, _interceptors.ToArray());
