@@ -156,8 +156,6 @@ namespace Proxii
         #endregion
 
         #region Interceptors
-        // TODO ChangeArgument Interceptor
-        // TODO ExecuteIf Interceptor
         public Proxii<T> BeforeInvoke(Action beforeHook)
         {
             _interceptors.Add(new BeforeInvokeInterceptor(beforeHook));

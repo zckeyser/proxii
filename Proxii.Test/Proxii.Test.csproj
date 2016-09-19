@@ -61,9 +61,11 @@
     <Compile Include="e2e\ProxiiByMethodNameTest.cs" />
     <Compile Include="e2e\ProxiiByReturnTypeTest.cs" />
     <Compile Include="e2e\ProxiiCatchTest.cs" />
+    <Compile Include="e2e\ProxiiChangeArgumentsTest.cs" />
     <Compile Include="e2e\ProxiiChangeReturnValueTest.cs" />
     <Compile Include="e2e\ProxiiInitializationTest.cs" />
     <Compile Include="Integration\Interceptors\AfterInvokeInterceptorTest.cs" />
+    <Compile Include="Integration\Interceptors\ArgumentInterceptorTest.cs" />
     <Compile Include="Integration\Interceptors\BeforeInvokeInterceptorTest.cs" />
     <Compile Include="Integration\Interceptors\ExceptionInterceptorTest.cs" />
     <Compile Include="Integration\Interceptors\ReturnValueInterceptorTest.cs" />
