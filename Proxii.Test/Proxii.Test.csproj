@@ -76,7 +76,9 @@
     <Compile Include="Unit\Selectors\ArgumentTypeSelectorTest.cs" />
     <Compile Include="Unit\Selectors\MethodNameSelectorTest.cs" />
     <Compile Include="Unit\Selectors\ReturnTypeSelectorTest.cs" />
+    <Compile Include="Util\TestClasses\ArgumentTester.cs" />
     <Compile Include="Util\TestClasses\ArgumentTypeSelectorTester.cs" />
+    <Compile Include="Util\TestClasses\IArgumentTester.cs" />
     <Compile Include="Util\TestClasses\IArgumentTypeSelectorTester.cs" />
     <Compile Include="Util\TestClasses\IInvokeHookTester.cs" />
     <Compile Include="Util\TestClasses\InvokeHookTester.cs" />
