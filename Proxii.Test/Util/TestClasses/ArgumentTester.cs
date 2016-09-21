@@ -4,76 +4,74 @@ namespace Proxii.Test.Util.TestClasses
 {
     public class ArgumentTester : IArgumentTester
     {
-        public Logger Logger { get; set; }
-
-        public void OneArg1(int a)
+        public int OneArg1(int a)
         {
-            Logger.Log(string.Format("{0}", a));
+            return a;
         }
 
-        public void OneArg2(string a)
+        public string OneArg2(string a)
         {
-            Logger.Log(string.Format("{0}", a));
+            return a;
         }
 
-        public void TwoArg1(int a, int b)
+        public int TwoArg1(int a, int b)
         {
-            Logger.Log(string.Format("{0}{1}", a, b));
+            return a + b;
         }
 
-        public void TwoArg2(string a, string b)
+        public string TwoArg2(string a, string b)
         {
-            Logger.Log(string.Format("{0}{1}", a, b));
+            return a + b;
         }
 
-        public void ThreeArg1(int a, int b, int c)
+        public int ThreeArg1(int a, int b, int c)
         {
-            Logger.Log(string.Format("{0}{1}{2}", a, b, c));
+            return a + b + c;
         }
 
-        public void ThreeArg2(string a, string b, string c)
+        public string ThreeArg2(string a, string b, string c)
         {
-            Logger.Log(string.Format("{0}{1}{2}", a, b, c));
+            return a + b + c;
         }
 
-        public void FourArg1(int a, int b, int c, int d)
+        public int FourArg1(int a, int b, int c, int d)
         {
-            Logger.Log(string.Format("{0}{1}{2}{3}", a, b, c, d));
+            return a + b + c + d;
         }
 
-        public void FourArg2(string a, string b, string c, string d)
+        public string FourArg2(string a, string b, string c, string d)
         {
-            Logger.Log(string.Format("{0}{1}{2}{3}", a, b, c, d));
+            return a + b + c + d;
         }
 
-        public void FiveArg1(int a, int b, int c, int d, int e)
+        public int FiveArg1(int a, int b, int c, int d, int e)
         {
-            Logger.Log(string.Format("{0}{1}{2}{3}{4}", a, b, c, d, e));
+            return a + b + c + d + e;
         }
 
-        public void FiveArg2(string a, string b, string c, string d, string e)
+        public string FiveArg2(string a, string b, string c, string d, string e)
         {
-            Logger.Log(string.Format("{0}{1}{2}{3}{4}", a, b, c, d, e));
+            return a + b + c + d + e;
         }
 
-        public void SixArg1(int a, int b, int c, int d, int e, int f)
+        public int SixArg1(int a, int b, int c, int d, int e, int f)
         {
-            Logger.Log(string.Format("{0}{1}{2}{3}{4}{5}", a, b, c, d, e, f));
+            return a + b + c + d + e + f;
         }
 
-        public void SixArg2(string a, string b, string c, string d, string e, string f)
+        public string SixArg2(string a, string b, string c, string d, string e, string f)
         {
-            Logger.Log(string.Format("{0}{1}{2}{3}{4}{5}", a, b, c, d, e, f));
+            return a + b + c + d + e + f;
         }
 
-        public void SevenArg1(int a, int b, int c, int d, int e, int f, int g)
+        public int SevenArg1(int a, int b, int c, int d, int e, int f, int g)
         {
-            Logger.Log(string.Format("{0}{1}{2}{3}{4}{5}{6}", a, b, c, d, e, f, g));
+            return a + b + c + d + e + f + g;
         }
 
-        public void SevenArg2(string a, string b, string c, string d, string e, string f, string g)
+        public string SevenArg2(string a, string b, string c, string d, string e, string f, string g)
         {
-            Logger.Log(string.Format("{0}{1}{2}{3}{4}{5}{6}", a, b, c, d, e, f, g));
+            return a + b + c + d + e + f + g;
         }
     }
 }

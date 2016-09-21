@@ -207,6 +207,55 @@ namespace Proxii
             return this;
         }
 
+        public Proxii<T> ChangeArguments<U>(Func<U, U> modifier)
+        {
+            _interceptors.Add(new ArgumentInterceptor<U>(modifier));
+
+            return this;
+        }
+
+        public Proxii<T> ChangeArguments<U1, U2>(Func<U1, U2, Tuple<U1, U2>> modifier)
+        {
+            _interceptors.Add(new ArgumentInterceptor<U1, U2>(modifier));
+
+            return this;
+        }
+
+        public Proxii<T> ChangeArguments<U1, U2, U3>(Func<U1, U2, U3, Tuple<U1, U2, U3>> modifier)
+        {
+            _interceptors.Add(new ArgumentInterceptor<U1, U2, U3>(modifier));
+
+            return this;
+        }
+
+        public Proxii<T> ChangeArguments<U1, U2, U3, U4>(Func<U1, U2, U3, U4, Tuple<U1, U2, U3, U4>> modifier)
+        {
+            _interceptors.Add(new ArgumentInterceptor<U1, U2, U3, U4>(modifier));
+
+            return this;
+        }
+
+        public Proxii<T> ChangeArguments<U1, U2, U3, U4, U5>(Func<U1, U2, U3, U4, U5, Tuple<U1, U2, U3, U4, U5>> modifier)
+        {
+            _interceptors.Add(new ArgumentInterceptor<U1, U2, U3, U4, U5>(modifier));
+
+            return this;
+        }
+
+        public Proxii<T> ChangeArguments<U1, U2, U3, U4, U5, U6>(Func<U1, U2, U3, U4, U5, U6, Tuple<U1, U2, U3, U4, U5, U6>> modifier)
+        {
+            _interceptors.Add(new ArgumentInterceptor<U1, U2, U3, U4, U5, U6>(modifier));
+
+            return this;
+        }
+
+        public Proxii<T> ChangeArguments<U1, U2, U3, U4, U5, U6, U7>(Func<U1, U2, U3, U4, U5, U6, U7, Tuple<U1, U2, U3, U4, U5, U6, U7>> modifier)
+        {
+            _interceptors.Add(new ArgumentInterceptor<U1, U2, U3, U4, U5, U6, U7>(modifier));
+
+            return this;
+        }
+
         public Proxii<T> ChangeReturnValue<TReturn>(Func<TReturn, TReturn> onReturn)
 	    {
 			_interceptors.Add(new ReturnValueInterceptor<TReturn>(onReturn));
