@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Proxii</id>
+    <version>1.0.0</version>
+    <title>Proxii</title>
+    <authors>Chris Keyser</authors>
+    <owners>Chris Keyser</owners>
+    <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://github.com/zckeyser/proxii</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Simple-to-use interface proxying library for C#</description>
+    <releaseNotes>Initial Release</releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>proxy proxii dynamicproxy interface behavior injection</tags>
+  </metadata>
+</package>
