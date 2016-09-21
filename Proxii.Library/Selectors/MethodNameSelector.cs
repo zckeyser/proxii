@@ -8,11 +8,16 @@ namespace Proxii.Library.Selectors
 {
     public class MethodNameSelector : IInterceptorSelector
     {
-        private readonly IEnumerable<string> _methodNames;
+        private readonly List<string> _methodNames;
 
         public MethodNameSelector(params string[] methodNames)
         {
-            _methodNames = methodNames;
+            _methodNames = methodNames.ToList();
+        }
+
+        public void AddNames(params string[] names)
+        {
+            _methodNames.AddRange(names);
         }
 
         public IInterceptor[] SelectInterceptors(Type type, MethodInfo method, IInterceptor[] interceptors)

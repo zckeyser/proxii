@@ -138,7 +138,16 @@ namespace Proxii
         /// </summary>
         public Proxii<T> ByMethodName(params string[] methodNames)
         {
-            _selectors.Add(new MethodNameSelector(methodNames));
+            var nameSelector = _selectors.Find(selector => selector is MethodNameSelector) as MethodNameSelector;
+
+            if(nameSelector != null)
+            {
+                nameSelector.AddNames(methodNames);
+            }
+            else
+            {
+                _selectors.Add(new MethodNameSelector(methodNames));
+            }
 
             return this;
         }

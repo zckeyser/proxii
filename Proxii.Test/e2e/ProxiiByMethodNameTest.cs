@@ -79,10 +79,15 @@ namespace Proxii.Test.e2e
 				.Create();
 
 			proxy.Throw(new ArgumentException());
+            proxy.DoAction(() =>
+            {
+                throw new ArgumentException();
+            });
 
-			Assert.AreEqual(1, errors.Count);
+			Assert.AreEqual(2, errors.Count);
 			Assert.IsInstanceOfType(errors[0], typeof(ArgumentException));
-		}
+            Assert.IsInstanceOfType(errors[1], typeof(ArgumentException));
+        }
 
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentException))]
@@ -102,5 +107,30 @@ namespace Proxii.Test.e2e
 
 			Assert.Fail("Should have thrown exception.");
 		}
+
+        [TestMethod]
+        public void Proxii_ByMethodName_MultipleCalls_MatchesBothCalls()
+        {
+            var errors = new List<Exception>();
+
+            Action<Exception> onCatch = e => errors.Add(e);
+
+            var proxy = Proxii.Proxy<IProxiiTester>()
+                .With<ProxiiTester>()
+                .Catch<ArgumentException>(onCatch)
+                .ByMethodName("DoAction")
+                .ByMethodName("Throw")
+                .Create();
+
+            proxy.Throw(new ArgumentException());
+            proxy.DoAction(() =>
+            {
+                throw new ArgumentException();
+            });
+
+            Assert.AreEqual(2, errors.Count);
+            Assert.IsInstanceOfType(errors[0], typeof(ArgumentException));
+            Assert.IsInstanceOfType(errors[1], typeof(ArgumentException));
+        }
 	}
 }
