@@ -70,7 +70,7 @@
     <Compile Include="Integration\Interceptors\BeforeInvokeInterceptorTest.cs" />
     <Compile Include="Integration\Interceptors\ExceptionInterceptorTest.cs" />
     <Compile Include="Integration\Interceptors\OnReturnInterceptorTest.cs" />
-    <Compile Include="Integration\Interceptors\ReturnValueInterceptorTest.cs" />
+    <Compile Include="Integration\Interceptors\ChangeReturnValueInterceptorTest.cs" />
     <Compile Include="Integration\Selectors\ArgumentTypeSelectorTest.cs" />
     <Compile Include="Integration\Selectors\MethodNameSelectorTest.cs" />
     <Compile Include="Integration\Selectors\ReturnTypeSelectorTest.cs" />

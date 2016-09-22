@@ -32,6 +32,11 @@ namespace Proxii.Test.Util.TestClasses
             return StringRetVal;
         }
 
+		public string Concat(string a, string b, string c)
+		{
+			return a + b + c;
+		}
+
         public void Throw(Exception e)
 		{
 			throw e;

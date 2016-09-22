@@ -290,7 +290,7 @@ namespace Proxii
 
         public Proxii<T> ChangeReturnValue<TReturn>(Func<TReturn, TReturn> onReturn)
 	    {
-			_interceptors.Add(new ReturnValueInterceptor<TReturn>(onReturn));
+			_interceptors.Add(new ChangeReturnValueInterceptor<TReturn>(onReturn));
 
 		    return this;
 	    }

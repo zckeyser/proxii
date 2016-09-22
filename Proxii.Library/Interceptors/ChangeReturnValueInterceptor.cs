@@ -3,11 +3,11 @@ using Castle.DynamicProxy;
 
 namespace Proxii.Library.Interceptors
 {
-	public class ReturnValueInterceptor<T> : IInterceptor
+	public class ChangeReturnValueInterceptor<T> : IInterceptor
 	{
 		private readonly Func<T, T> _onReturn;
 
-		public ReturnValueInterceptor(Func<T, T> onReturn)
+		public ChangeReturnValueInterceptor(Func<T, T> onReturn)
 		{
 			_onReturn = onReturn;
 		}

@@ -16,6 +16,8 @@ namespace Proxii.Test.Util.TestClasses
 
         int IntMethod();
 
+		string Concat(string a, string b, string c);
+
         void NoOp();
 	}
 }

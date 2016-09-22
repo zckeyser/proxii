@@ -7,15 +7,15 @@ using Proxii.Test.Util.TestClasses;
 namespace Proxii.Test.Integration.Interceptors
 {
 	[TestClass]
-	public class ReturnValueInterceptorTest
+	public class ChangeReturnValueInterceptorTest
 	{
 		private readonly ProxyGenerator _generator = new ProxyGenerator();
 
 		[TestMethod]
-		public void Integration_ReturnValueInterceptor_NonMatchingType()
+		public void Integration_ChangeReturnValueInterceptor_NonMatchingType()
 		{
 			Func<int, int> changeInt = i => i * 10;
-			var interceptors = new IInterceptor[] { new ReturnValueInterceptor<int>(changeInt) };
+			var interceptors = new IInterceptor[] { new ChangeReturnValueInterceptor<int>(changeInt) };
 
 			var proxy = (IProxiiTester)_generator.CreateInterfaceProxyWithTarget(typeof(IProxiiTester), new ProxiiTester(), interceptors);
 
@@ -26,10 +26,10 @@ namespace Proxii.Test.Integration.Interceptors
 		}
 
 		[TestMethod]
-		public void Integration_ReturnValueInterceptor_MatchingType()
+		public void Integration_ChangeReturnValueInterceptor_MatchingType()
 		{
 			Func<int, int> changeInt = i => i * 10;
-			var interceptors = new IInterceptor[] { new ReturnValueInterceptor<int>(changeInt) };
+			var interceptors = new IInterceptor[] { new ChangeReturnValueInterceptor<int>(changeInt) };
 
 			var proxy = (IProxiiTester)_generator.CreateInterfaceProxyWithTarget(typeof(IProxiiTester), new ProxiiTester(), interceptors);
 
