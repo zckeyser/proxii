@@ -49,6 +49,7 @@
     <Compile Include="Interceptors\ArgumentInterceptor.cs" />
     <Compile Include="Interceptors\BeforeInvokeInterceptor.cs" />
     <Compile Include="Interceptors\ExceptionInterceptor.cs" />
+    <Compile Include="Interceptors\OnReturnInterceptor.cs" />
     <Compile Include="Interceptors\ReturnValueInterceptor.cs" />
     <Compile Include="Interceptors\ThisInterceptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

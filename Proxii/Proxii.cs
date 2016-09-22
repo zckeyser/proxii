@@ -207,6 +207,38 @@ namespace Proxii
             return this;
         }
 
+        public Proxii<T> OnReturn<U>(Action<U> onReturn)
+        {
+            // return value handler
+            _interceptors.Add(new OnReturnInterceptor<U>(onReturn));
+
+            return this;
+        }
+
+        public Proxii<T> OnReturn<U>(Action<U, MethodInfo> onReturn)
+        {
+            // return value and method info handler
+            _interceptors.Add(new OnReturnInterceptor<U>(onReturn));
+
+            return this;
+        }
+
+        public Proxii<T> OnReturn<U>(Action<U, object[]> onReturn)
+        {
+            // return value and arguments handler
+            _interceptors.Add(new OnReturnInterceptor<U>(onReturn));
+
+            return this;
+        }
+
+        public Proxii<T> OnReturn<U>(Action<U, MethodInfo, object[]> onReturn)
+        {
+            // return value, method info, and arguments handler
+            _interceptors.Add(new OnReturnInterceptor<U>(onReturn));
+
+            return this;
+        }
+
         public Proxii<T> ChangeArguments<U>(Func<U, U> modifier)
         {
             _interceptors.Add(new ArgumentInterceptor<U>(modifier));

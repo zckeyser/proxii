@@ -1,3 +1,9 @@
+# 1.1.0
+Added OnReturn interceptor - hook an action into the values/method being returned from. Has options to hook in with the return value, MethodInfo of the called function and the arguments the function was called with.
+
+# 1.0.1
+Changed ByMethodName to be stackable
+
 # 1.0.0
 Initial release, including the following:
 ### Initialization
@@ -15,6 +21,3 @@ Initial release, including the following:
     ByArgumentType - filter by what argument types a function takes
     ByMethodName - filter by the name of the method being called
     ByReturnType - filter by return type
-
-# 1.0.1
-Changed ByMethodName to be stackable
