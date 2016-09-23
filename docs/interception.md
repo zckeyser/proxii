@@ -1,9 +1,8 @@
 # Interception Methods
 These are methods which allow you to hook in new behavior in some way on any methods called on the proxy object. To limit what methods get intercepted, you can use [selection]() methods.
 
-## AfterInvoke
+###### AfterInvoke
 Provides three different ways to hook an action after the intercepted function has been invoked. Depending on what the signature of the action passed into `AfterInvoke` is, you can call a function with either no arguments, the `MethodInfo` of the intercepted function, or the `MethodInfo` *and* an array of the arguments passed into the function.
-
 ```csharp
 interface IFoo
 {
@@ -39,9 +38,8 @@ var methodInfoArgsProxy = Proxii.Proxy<IFoo, Foo>()
 methodInfoArgsProxy.Bar(1, 2, 3); // logs "Bar is hit by 1 2 3"
 ```
 
-## BeforeInvoke
+### BeforeInvoke
 Functionally, BeforeInvoke is equivalent to AfterInvoke except that the given hook is called *before* the method being intercepted is invoked.
-
 ```csharp
 interface IFoo
 {
@@ -77,9 +75,8 @@ var methodInfoArgsProxy = Proxii.Proxy<IFoo, Foo>()
 methodInfoArgsProxy.Bar(1, 2, 3); // logs "Bar is hit by 1 2 3"
 ```
 
-# OnReturn
+### OnReturn
 Hooks into the function on return using the passed in Action. There are four versions of this function, which all pass different information into the action. All of the overloads differ only in the signature of the Action they take, and as such the information passed in. The data that can be passed out is: return value, MethodInfo and arguments. The overload parameter types are: Action<T>, Action<T, MethodInfo>, Action<T, object[]>, Action<T, MethodInfo, object[]> where T is the type of return value you'd like to intercept. Only functions with return types matching the given action will be intercepted.
-
 ```csharp
 interface IFoo
 {
@@ -125,9 +122,8 @@ var returnWithArgsProxy = Proxii.Proxy()<IFoo, Foo>
 returnWithArgsProxy.Concat("foo", "bar", "buzz"); // logs "returned foobarbuzz from Concat with input foo bar buzz"
 ```
 
-## Catch
+### Catch
 Executes the given handler when any of the given kind of exceptions are thrown from inside intercepted functions.
-
 ```csharp
 interface IFoo
 {
@@ -143,9 +139,8 @@ proxy.ThrowArgumentException(); // logs "Caught an exception :("
 proxy.ThrowIndexOutOfRangeException(); // doesn't get caught -- crashes
 ```
 
-## ChangeArguments
+### ChangeArguments
 Changes the arguments of any intercepted function which matches the signature of the given function. The given function must take all of the arguments as input and output a tuple of all the modified arguments as output. Order of the original argument types must be maintained in the output tuple.
-
 ```csharp
 interface IFoo
 {
@@ -177,9 +172,8 @@ multiArgProxy.ReturnInt(1); // returns 1
 multiArgProxy.Add(2, 2); // returns 12
 ```
 
-## ChangeReturnValue
+### ChangeReturnValue
 Changes the return value of any intercepted function which matches the input type of the given function. The given function must output the same type it takes in.
-
 ```csharp
 interface IFoo
 {

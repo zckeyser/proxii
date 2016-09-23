@@ -1,7 +1,7 @@
 # Selection Methods
 Selection methods filter what methods get intercepted, which is useful if you only want to proxy some methods from an interface while others act normally. Each selector can be stacked with multiple calls to accept multiple different criteria for a single selector.
 
-## ByArgumentType
+### ByArgumentType
 Only intercept arguments with the given argument types (order-sensitive).
 ```csharp
 IFoo proxy = Proxii.Proxy<IFoo, Foo>()
@@ -14,7 +14,7 @@ proxy.Buzz(10L, 1.0); // logs nothing
 proxy.Bazz("foobar", 10); // logs nothing -- incorrect argument order
 ```
 
-## ByMethodName
+### ByMethodName
 Only intercept methods with one of the given names.
 
 ```csharp
@@ -28,7 +28,7 @@ proxy.Buzz(); // logs "I'm hit!"
 proxy.Bazz(); // logs nothing
 ```
 
-## ByReturnType
+### ByReturnType
 Only intercept methods with the given return type.
 
 ```csharp
@@ -47,7 +47,7 @@ proxy.Bar(); // logs "I'm hit!"
 proxy.Buzz(); // logs nothing
 ```
 
-## Combining Selectors
+### Combining Selectors
 You can stack multiple instances of the same selector to allow multiple of whatever is being selected to pass through. Stacking selectors works for any of the selectors. If multiple different selectors are used, functions must match all of the given selectors to be used.
 
 ```csharp
