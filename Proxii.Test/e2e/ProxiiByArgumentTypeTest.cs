@@ -12,8 +12,7 @@ namespace Proxii.Test.e2e
         {
             var logger = new Logger();
 
-            var proxy = Proxii.Proxy<IArgumentTypeSelectorTester>()
-                              .With<ArgumentTypeSelectorTester>()
+            var proxy = Proxii.Proxy<IArgumentTypeSelectorTester, ArgumentTypeSelectorTester>()
                               .Catch<ArgumentException>((e) => logger.Log("throw"))
                               .ByArgumentType(typeof(Action<string>), typeof(string))
                               .Create();
@@ -37,10 +36,9 @@ namespace Proxii.Test.e2e
         {
             var logger = new Logger();
 
-            var proxy = Proxii.Proxy<IArgumentTypeSelectorTester>()
-                              .With<ArgumentTypeSelectorTester>()
-                              .Catch<ArgumentException>((e) => logger.Log("throw"))
-                              .ByArgumentType(typeof(Action<int>), typeof(string))
+            var proxy = Proxii.Proxy<IArgumentTypeSelectorTester, ArgumentTypeSelectorTester>()
+                              .Catch<ArgumentOutOfRangeException>((e) => logger.Log("throw"))
+                              .ByArgumentType(typeof(Action<string>), typeof(string))
                               .Create();
 
             proxy.DoActionStringArg(
@@ -58,11 +56,10 @@ namespace Proxii.Test.e2e
         {
             var logger = new Logger();
 
-            var proxy = Proxii.Proxy<IArgumentTypeSelectorTester>()
-                              .With<ArgumentTypeSelectorTester>()
+            var proxy = Proxii.Proxy<IArgumentTypeSelectorTester, ArgumentTypeSelectorTester>()
                               .Catch<ArgumentException>((e) => logger.Log("throw"))
-                              .ByArgumentType(typeof(Action<string>), typeof(string))
                               .ByArgumentType(typeof(Action<string, int>), typeof(string), typeof(int))
+                              .ByArgumentType(typeof(Action<string>), typeof(string))
                               .Create();
 
             proxy.DoActionStringArg(
@@ -95,11 +92,9 @@ namespace Proxii.Test.e2e
         {
             var logger = new Logger();
 
-            var proxy = Proxii.Proxy<IArgumentTypeSelectorTester>()
-                              .With<ArgumentTypeSelectorTester>()
+           var proxy = Proxii.Proxy<IArgumentTypeSelectorTester, ArgumentTypeSelectorTester>()
                               .Catch<ArgumentException>((e) => logger.Log("throw"))
-                              .ByArgumentType(typeof(Action<long>), typeof(string))
-                              .ByArgumentType(typeof(Action<long, int>), typeof(string), typeof(int))
+                              .ByArgumentType(typeof(Action<string>), typeof(string))
                               .Create();
 
             proxy.DoActionStringArg(

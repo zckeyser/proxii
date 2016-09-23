@@ -16,8 +16,7 @@ namespace Proxii.Test.e2e
 			// if this gets invoked before SetValue, this will not be the end value
 			Action afterHook = () => tester.Value = 10;
 
-			var proxy = Proxii.Proxy<IInvokeHookTester>()
-				.With(tester)
+			var proxy = Proxii.Proxy<IInvokeHookTester>(tester)
 				.AfterInvoke(afterHook)
 				.Create();
 
@@ -38,8 +37,7 @@ namespace Proxii.Test.e2e
                 logger.Log(method.Name);
             };
 
-            var proxy = Proxii.Proxy<IInvokeHookTester>()
-                .With(tester)
+            var proxy = Proxii.Proxy<IInvokeHookTester>(tester)
                 .AfterInvoke(afterHook)
                 .Create();
 
@@ -67,8 +65,7 @@ namespace Proxii.Test.e2e
                 logger.Log(args[0].ToString());
             };
 
-            var proxy = Proxii.Proxy<IInvokeHookTester>()
-                .With(tester)
+            var proxy = Proxii.Proxy<IInvokeHookTester>(tester)
                 .AfterInvoke(afterHook)
                 .Create();
 

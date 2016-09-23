@@ -14,8 +14,7 @@ namespace Proxii.Test.e2e
 			var errors = new List<Exception>();
 
 			Action<Exception> onCatch = e => errors.Add(e);
-			var proxy = Proxii.Proxy<IProxiiTester>()
-				.With<ProxiiTester>()
+			var proxy = Proxii.Proxy<IProxiiTester, ProxiiTester>()
 				.Catch<ArgumentException>(onCatch)
 				.Create();
 
@@ -32,12 +31,11 @@ namespace Proxii.Test.e2e
 			var errors = new List<Exception>();
 
 			Action<Exception> onCatch = e => errors.Add(e);
-			var proxy = Proxii.Proxy<IProxiiTester>()
-				.With<ProxiiTester>()
-				.Catch<IndexOutOfRangeException>(onCatch)
-				.Create();
+            var proxy = Proxii.Proxy<IProxiiTester, ProxiiTester>()
+                .Catch<ArgumentOutOfRangeException>(onCatch)
+                .Create();
 
-			proxy.Throw(new ArgumentException());
+            proxy.Throw(new ArgumentException());
 
 			Assert.Fail("Should have thrown a non-matching exception");
 		}
@@ -48,8 +46,7 @@ namespace Proxii.Test.e2e
 			var errors = new List<Exception>();
 
 			Action<Exception> onCatch = e => errors.Add(e);
-			var proxy = Proxii.Proxy<IProxiiTester>()
-				.With<ProxiiTester>()
+			var proxy = Proxii.Proxy<IProxiiTester, ProxiiTester>()
 				.Catch<ArgumentException>(onCatch)
 				.Catch<ArgumentNullException>(onCatch)
 				.Create();
@@ -69,8 +66,7 @@ namespace Proxii.Test.e2e
 			var errors = new List<Exception>();
 
 			Action<Exception> onCatch = e => errors.Add(e);
-			var proxy = Proxii.Proxy<IProxiiTester>()
-				.With<ProxiiTester>()
+			var proxy = Proxii.Proxy<IProxiiTester, ProxiiTester>()
 				.Catch<IndexOutOfRangeException>(onCatch)
 				.Catch<NullReferenceException>(onCatch)
 				.Create();

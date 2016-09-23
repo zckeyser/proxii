@@ -47,6 +47,7 @@ namespace Proxii.Library.Interceptors
         {
             invocation.Proceed();
 
+            // make sure a matching type was returned -- if not we don't intercept it
             if (invocation.Method.ReturnType != typeof(T))
                 return;
 

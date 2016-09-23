@@ -12,8 +12,7 @@ namespace Proxii.Test.e2e
 		{
 			Func<int, int> changeInt = i => i * 10;
 
-			var proxy = Proxii.Proxy<IProxiiTester>()
-				.With<ProxiiTester>()
+			var proxy = Proxii.Proxy<IProxiiTester, ProxiiTester>()
 				.ChangeReturnValue(changeInt)
 				.Create();
 			
@@ -28,12 +27,11 @@ namespace Proxii.Test.e2e
 		{
 			Func<int, int> changeInt = i => i * 10;
 
-			var proxy = Proxii.Proxy<IProxiiTester>()
-				.With<ProxiiTester>()
-				.ChangeReturnValue(changeInt)
-				.Create();
+            var proxy = Proxii.Proxy<IProxiiTester, ProxiiTester>()
+                .ChangeReturnValue(changeInt)
+                .Create();
 
-			var result = proxy.IntMethod();
+            var result = proxy.IntMethod();
 			const int expected = ProxiiTester.IntRetVal * 10;
 
 			Assert.AreEqual(expected, result);

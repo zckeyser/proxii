@@ -16,8 +16,7 @@ namespace Proxii.Test.e2e
 
 			Action<Exception> onCatch = e => errors.Add(e);
 
-			var proxy = Proxii.Proxy<IProxiiTester>()
-				.With<ProxiiTester>()
+			var proxy = Proxii.Proxy<IProxiiTester, ProxiiTester>()
 				.Catch<ArgumentException>(onCatch)
 				.ByMethodName()
 				.Create();
@@ -34,13 +33,12 @@ namespace Proxii.Test.e2e
 
 			Action<Exception> onCatch = e => errors.Add(e);
 
-			var proxy = Proxii.Proxy<IProxiiTester>()
-				.With<ProxiiTester>()
-				.Catch<ArgumentException>(onCatch)
-				.ByMethodName("Throw")
-				.Create();
+            var proxy = Proxii.Proxy<IProxiiTester, ProxiiTester>()
+                .Catch<ArgumentException>(onCatch)
+                .ByMethodName("Throw")
+                .Create();
 
-			proxy.Throw(new ArgumentException());
+            proxy.Throw(new ArgumentException());
 
 			Assert.AreEqual(1, errors.Count);
 			Assert.IsInstanceOfType(errors[0], typeof(ArgumentException));
@@ -54,13 +52,12 @@ namespace Proxii.Test.e2e
 
 			Action<Exception> onCatch = e => errors.Add(e);
 
-			var proxy = Proxii.Proxy<IProxiiTester>()
-				.With<ProxiiTester>()
-				.Catch<ArgumentException>(onCatch)
-				.ByMethodName("DoActions")
-				.Create();
+            var proxy = Proxii.Proxy<IProxiiTester, ProxiiTester>()
+                .Catch<ArgumentException>(onCatch)
+                .ByMethodName("DoAction")
+                .Create();
 
-			proxy.Throw(new ArgumentException());
+            proxy.Throw(new ArgumentException());
 
 			Assert.Fail("Should have thrown exception.");
 		}
@@ -72,13 +69,12 @@ namespace Proxii.Test.e2e
 
 			Action<Exception> onCatch = e => errors.Add(e);
 
-			var proxy = Proxii.Proxy<IProxiiTester>()
-				.With<ProxiiTester>()
-				.Catch<ArgumentException>(onCatch)
-				.ByMethodName("DoAction", "Throw")
-				.Create();
+            var proxy = Proxii.Proxy<IProxiiTester, ProxiiTester>()
+                .Catch<ArgumentException>(onCatch)
+                .ByMethodName("Throw", "DoAction")
+                .Create();
 
-			proxy.Throw(new ArgumentException());
+            proxy.Throw(new ArgumentException());
             proxy.DoAction(() =>
             {
                 throw new ArgumentException();
@@ -97,13 +93,12 @@ namespace Proxii.Test.e2e
 
 			Action<Exception> onCatch = e => errors.Add(e);
 
-			var proxy = Proxii.Proxy<IProxiiTester>()
-				.With<ProxiiTester>()
-				.Catch<ArgumentException>(onCatch)
-				.ByMethodName("DoAction", "DoFunc")
-				.Create();
+            var proxy = Proxii.Proxy<IProxiiTester, ProxiiTester>()
+                .Catch<ArgumentException>(onCatch)
+                .ByMethodName("DoAction", "DoFunc")
+                .Create();
 
-			proxy.Throw(new ArgumentException());
+            proxy.Throw(new ArgumentException());
 
 			Assert.Fail("Should have thrown exception.");
 		}
@@ -115,11 +110,10 @@ namespace Proxii.Test.e2e
 
             Action<Exception> onCatch = e => errors.Add(e);
 
-            var proxy = Proxii.Proxy<IProxiiTester>()
-                .With<ProxiiTester>()
+            var proxy = Proxii.Proxy<IProxiiTester, ProxiiTester>()
                 .Catch<ArgumentException>(onCatch)
-                .ByMethodName("DoAction")
                 .ByMethodName("Throw")
+                .ByMethodName("DoAction")
                 .Create();
 
             proxy.Throw(new ArgumentException());

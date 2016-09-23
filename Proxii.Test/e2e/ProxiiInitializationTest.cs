@@ -9,9 +9,7 @@ namespace Proxii.Test.e2e
 		[TestMethod]
 		public void Proxii_WiresInterfaceToImpl_ByType()
 		{
-			var proxy = Proxii.Proxy<IProxiiTester>()
-				.With<ProxiiTester>()
-				.Create();
+			var proxy = Proxii.Proxy<IProxiiTester, ProxiiTester>().Create();
 
 			var test = new[] { "foo" };
 
@@ -23,9 +21,7 @@ namespace Proxii.Test.e2e
 		[TestMethod]
 		public void Proxii_WiresInterfaceToImpl_ByObject()
 		{
-			var proxy = Proxii.Proxy<IProxiiTester>()
-				.With(new ProxiiTester())
-				.Create();
+			var proxy = Proxii.Proxy<IProxiiTester>(new ProxiiTester()).Create();
 
 			var test = new[] { "foo" };
 
