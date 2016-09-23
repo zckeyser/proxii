@@ -9,15 +9,6 @@ namespace Proxii
 {
 	public class Proxii
 	{
-        [Obsolete("Usage of Proxy<T>() is no longer going to be supported in 1.2.0, use Proxy<TInterface, TImplementation>() or Proxy<T>(T impl)")]
-        public static Proxii<T> Proxy<T>()
-        {
-            if (!typeof(T).IsInterface)
-                throw new ArgumentException("Proxii.Proxy<T>() must be called with an interface type for T");
-
-            return new Proxii<T>();
-        }
-
         /// <summary>
         /// Proxy TInterface to an instance of TImplementation
         ///
@@ -87,8 +78,7 @@ namespace Proxii
         /// assigns a target type that implements the interface
         /// that's being proxied to the Proxii
         /// </summary>
-        [Obsolete("Usage of Proxii.With is no longer going to be supported in 1.2.0, instead use Proxii.Proxy<TInterface, TImplementation>()")]
-        public Proxii<T> With<U>() where U : T
+        internal Proxii<T> With<U>() where U : T
         {
 	        var implementationType = typeof (U);
 
@@ -108,8 +98,7 @@ namespace Proxii
 		/// assigns a target object that implements the interface
 		/// that's being proxied to the Proxii
 		/// </summary>
-        [Obsolete("Usage of Proxii.With is no longer going to be supported in 1.2.0, instead use Proxii.Proxy<T>(object impl)")]
-	    public Proxii<T> With(object target)
+        internal Proxii<T> With(object target)
 	    {
 			var implementationType = target.GetType();
 
