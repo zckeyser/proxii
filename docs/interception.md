@@ -77,6 +77,54 @@ var methodInfoArgsProxy = Proxii.Proxy<IFoo, Foo>()
 methodInfoArgsProxy.Bar(1, 2, 3); // logs "Bar is hit by 1 2 3"
 ```
 
+# OnReturn
+Hooks into the function on return using the passed in Action. There are four versions of this function, which all pass different information into the action. All of the overloads differ only in the signature of the Action they take, and as such the information passed in. The data that can be passed out is: return value, MethodInfo and arguments. The overload parameter types are: Action<T>, Action<T, MethodInfo>, Action<T, object[]>, Action<T, MethodInfo, object[]> where T is the type of return value you'd like to intercept. Only functions with return types matching the given action will be intercepted.
+
+```csharp
+interface IFoo
+{
+    // concatenate 3 strings without adding a delimiter
+    // e.g. Concat("foo", "bar", "buzz") => "foobarbuzz"
+    string Concat(string a, string b, string c);
+}
+
+// hook with return value
+Action<string> onReturnOnly = (s) => Console.WriteLine("returned {0}", s);
+
+var returnProxy = Proxii.Proxy()<IFoo, Foo>
+                        .OnReturn(onReturnOnly)
+                        .Create();
+
+returnProxy.Concat("foo", "bar", "buzz"); // logs "returned foobarbuzz"
+
+// hook with return value and method information
+Action<string, MethodInfo> onReturnWithMethod = (s, method) => Console.WriteLine("returned {0} from {1}", s, method.Name);
+
+var returnWithMethodProxy = Proxii.Proxy()<IFoo, Foo>
+                                  .OnReturn(onReturnWithMethod)
+                                  .Create();
+
+returnWithMethodProxy.Concat("foo", "bar", "buzz"); // logs "returned foobarbuzz from Concat"
+
+// hook with return value and arguments
+Action<string, object[]> onReturnWithArgs = (s, args) => Console.WriteLine("returned {0} with input {1}", s, args.Select(arg => arg.ToString()).Aggregate("", (total, next) => total + next + " ")).Trim();
+
+var returnWithArgsProxy = Proxii.Proxy()<IFoo, Foo>
+                                .OnReturn(onReturnWithArgs)
+                                .Create();
+
+returnWithArgsProxy.Concat("foo", "bar", "buzz"); // logs "returned foobarbuzz with input foo bar buzz"
+
+// hook with return value, method info and arguments
+Action<string, MethodInfo, object[]> onReturnWithArgs = (s, method, args) => Console.WriteLine("returned {0} from {1} with input {2}", s, method.Name, args.Select(arg => arg.ToString()).Aggregate("", (total, next) => total + next + " ")).Trim();
+
+var returnWithArgsProxy = Proxii.Proxy()<IFoo, Foo>
+                                .OnReturn(onReturnWithArgs)
+                                .Create();
+
+returnWithArgsProxy.Concat("foo", "bar", "buzz"); // logs "returned foobarbuzz from Concat with input foo bar buzz"
+```
+
 ## Catch
 Executes the given handler when any of the given kind of exceptions are thrown from inside intercepted functions.
 
