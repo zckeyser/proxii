@@ -27,7 +27,8 @@ namespace Proxii.Test.Integration.Interceptors
 			const string expected = ProxiiTester.StringRetVal;
 	        var history = logger.GetHistory();
 
-			Assert.AreEqual(expected, history[0]);
+            Assert.AreEqual(1, history.Count);
+            Assert.AreEqual(expected, history[0]);
         }
 
 		[TestMethod]
@@ -60,6 +61,7 @@ namespace Proxii.Test.Integration.Interceptors
 			const string expected = ProxiiTester.StringRetVal + " returned from StringMethod";
 			var history = logger.GetHistory();
 
+            Assert.AreEqual(1, history.Count);
 			Assert.AreEqual(expected, history[0]);
 		}
 
@@ -93,7 +95,8 @@ namespace Proxii.Test.Integration.Interceptors
 			const string expected = "foobarbuzz returned when called with foo bar buzz";
 			var history = logger.GetHistory();
 
-			Assert.AreEqual(expected, history[0]);
+            Assert.AreEqual(1, history.Count);
+            Assert.AreEqual(expected, history[0]);
 		}
 
 		[TestMethod]
@@ -123,10 +126,11 @@ namespace Proxii.Test.Integration.Interceptors
 			var proxy = (IProxiiTester)_generator.CreateInterfaceProxyWithTarget(typeof(IProxiiTester), new ProxiiTester(), interceptors);
 
 			proxy.Concat("foo", "bar", "buzz");
-			const string expected = "foobarbuzz returned from Concat when called with foo bar buzz";
+			const string expected = "foobarbuzz returned when Concat was called with foo bar buzz";
 			var history = logger.GetHistory();
 
-			Assert.AreEqual(expected, history[0]);
+            Assert.AreEqual(1, history.Count);
+            Assert.AreEqual(expected, history[0]);
 	    }
 
 		[TestMethod]

@@ -47,13 +47,16 @@ namespace Proxii.Library.Interceptors
         {
             invocation.Proceed();
 
-			if (_returnAction != null && typeof(T) == _returnAction.GetMethodInfo().ReturnType)
+            if (invocation.Method.ReturnType != typeof(T))
+                return;
+
+			if (_returnAction != null)
                 _returnAction((T)invocation.ReturnValue);
-			else if (_returnMethodInfoAction != null && typeof(T) == _returnMethodInfoAction.GetMethodInfo().ReturnType)
+			else if (_returnMethodInfoAction != null)
                 _returnMethodInfoAction((T)invocation.ReturnValue, invocation.Method);
-			else if (_returnArgsAction != null && typeof(T) == _returnArgsAction.GetMethodInfo().ReturnType)
+			else if (_returnArgsAction != null)
                 _returnArgsAction((T)invocation.ReturnValue, invocation.Arguments);
-            else if(_returnMethodInfoArgsAction != null && typeof(T) == _returnMethodInfoArgsAction.GetMethodInfo().ReturnType)
+            else
                 _returnMethodInfoArgsAction((T)invocation.ReturnValue, invocation.Method, invocation.Arguments);
         }
     }
