@@ -1,3 +1,9 @@
+# 1.2.0
+Removed empty Proxii.Proxy<T>() method and hid .With() methods -- use the non-empty Proxii.Proxy() methods instead
+
+# 1.1.1
+Deprecated empty Proxy<T>() call and .With() in favor of the new convenience methods -- these will be removed in 1.2.0
+
 # 1.1.0
 Added OnReturn interceptor - hook an action into the values/method being returned from. Has options to hook in with the return value, MethodInfo of the called function and the arguments the function was called with.
 
