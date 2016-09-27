@@ -18,7 +18,7 @@ namespace Proxii.Test.e2e
 				.Catch<ArgumentException>(onCatch)
 				.Create();
 
-			proxy.Throw(new ArgumentException());
+			proxy.ThrowAction(new ArgumentException());
 
 			Assert.AreEqual(1, errors.Count);
 			Assert.IsInstanceOfType(errors[0], typeof(ArgumentException));
@@ -35,7 +35,7 @@ namespace Proxii.Test.e2e
                 .Catch<ArgumentOutOfRangeException>(onCatch)
                 .Create();
 
-            proxy.Throw(new ArgumentException());
+            proxy.ThrowAction(new ArgumentException());
 
 			Assert.Fail("Should have thrown a non-matching exception");
 		}
@@ -51,8 +51,8 @@ namespace Proxii.Test.e2e
 				.Catch<ArgumentNullException>(onCatch)
 				.Create();
 
-			proxy.Throw(new ArgumentException());
-			proxy.Throw(new ArgumentNullException());
+			proxy.ThrowAction(new ArgumentException());
+			proxy.ThrowAction(new ArgumentNullException());
 
 			Assert.AreEqual(2, errors.Count);
 			Assert.IsInstanceOfType(errors[0], typeof(ArgumentException));
@@ -71,7 +71,7 @@ namespace Proxii.Test.e2e
 				.Catch<NullReferenceException>(onCatch)
 				.Create();
 
-			proxy.Throw(new ArgumentException());
+			proxy.ThrowAction(new ArgumentException());
 
 			Assert.Fail("Should have thrown a non-matching exception");
 		}

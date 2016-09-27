@@ -21,7 +21,7 @@ namespace Proxii.Test.e2e
 				.ByMethodName()
 				.Create();
 
-			proxy.Throw(new ArgumentException());
+			proxy.ThrowAction(new ArgumentException());
 
 			Assert.Fail("Should have thrown exception.");
 		}
@@ -35,10 +35,10 @@ namespace Proxii.Test.e2e
 
             var proxy = Proxii.Proxy<IProxiiTester, ProxiiTester>()
                 .Catch<ArgumentException>(onCatch)
-                .ByMethodName("Throw")
+                .ByMethodName("ThrowAction")
                 .Create();
 
-            proxy.Throw(new ArgumentException());
+            proxy.ThrowAction(new ArgumentException());
 
 			Assert.AreEqual(1, errors.Count);
 			Assert.IsInstanceOfType(errors[0], typeof(ArgumentException));
@@ -57,7 +57,7 @@ namespace Proxii.Test.e2e
                 .ByMethodName("DoAction")
                 .Create();
 
-            proxy.Throw(new ArgumentException());
+            proxy.ThrowAction(new ArgumentException());
 
 			Assert.Fail("Should have thrown exception.");
 		}
@@ -71,10 +71,10 @@ namespace Proxii.Test.e2e
 
             var proxy = Proxii.Proxy<IProxiiTester, ProxiiTester>()
                 .Catch<ArgumentException>(onCatch)
-                .ByMethodName("Throw", "DoAction")
+                .ByMethodName("ThrowAction", "DoAction")
                 .Create();
 
-            proxy.Throw(new ArgumentException());
+            proxy.ThrowAction(new ArgumentException());
             proxy.DoAction(() =>
             {
                 throw new ArgumentException();
@@ -98,7 +98,7 @@ namespace Proxii.Test.e2e
                 .ByMethodName("DoAction", "DoFunc")
                 .Create();
 
-            proxy.Throw(new ArgumentException());
+            proxy.ThrowAction(new ArgumentException());
 
 			Assert.Fail("Should have thrown exception.");
 		}
@@ -112,11 +112,11 @@ namespace Proxii.Test.e2e
 
             var proxy = Proxii.Proxy<IProxiiTester, ProxiiTester>()
                 .Catch<ArgumentException>(onCatch)
-                .ByMethodName("Throw")
+                .ByMethodName("ThrowAction")
                 .ByMethodName("DoAction")
                 .Create();
 
-            proxy.Throw(new ArgumentException());
+            proxy.ThrowAction(new ArgumentException());
             proxy.DoAction(() =>
             {
                 throw new ArgumentException();

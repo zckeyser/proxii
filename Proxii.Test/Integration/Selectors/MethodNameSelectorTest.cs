@@ -78,7 +78,7 @@ namespace Proxii.Test.Integration.Selectors
 		{
 			var logger = new Logger();
 			var interceptors = new IInterceptor[] { new LoggingInterceptor(logger) };
-			var options = new ProxyGenerationOptions { Selector = new MethodNameSelector("DoFunc", "Throw") };
+			var options = new ProxyGenerationOptions { Selector = new MethodNameSelector("DoFunc", "ThrowAction") };
 			var proxy = (IProxiiTester)_generator.CreateInterfaceProxyWithTarget(typeof(IProxiiTester), new ProxiiTester(), options, interceptors);
 
 			proxy.DoAction(() => Console.Write("foo"));
@@ -111,7 +111,7 @@ namespace Proxii.Test.Integration.Selectors
 		{
 			var logger = new Logger();
 			var interceptors = new IInterceptor[] { new LoggingInterceptor(logger), new LoggingInterceptor(logger) };
-			var options = new ProxyGenerationOptions { Selector = new MethodNameSelector("DoFunc", "Throw") };
+			var options = new ProxyGenerationOptions { Selector = new MethodNameSelector("DoFunc", "ThrowAction") };
 			var proxy = (IProxiiTester)_generator.CreateInterfaceProxyWithTarget(typeof(IProxiiTester), new ProxiiTester(), options, interceptors);
 
 			proxy.DoAction(() => Console.Write("foo"));

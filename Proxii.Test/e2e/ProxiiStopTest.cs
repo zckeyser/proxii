@@ -21,7 +21,7 @@ namespace Proxii.Test.e2e
         public void Integration_StopMethodInterceptor_VoidMethod()
         {
             // should get blocked and do nothing, so if this doesn't fail it works
-            proxy.Throw(new ArgumentException());
+            proxy.ThrowAction(new ArgumentException());
         }
 
         [TestMethod]

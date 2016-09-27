@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Castle.DynamicProxy;
 using Proxii.Library.Interceptors;
 using Proxii.Library.Selectors;
@@ -22,15 +21,8 @@ namespace Proxii.Library.Other
             if(!typeof(TInterface).IsInterface)
                 throw new ArgumentException("TInterface must be an interface to be proxied");
 
-            // by default only intercept property setters
+            // intercept setter patterns plus any other patterns we were given
             var selector = new MethodNamePatternSelector(PropertySetPattern);
-
-            // if we were given more patterns to block for a freeze stop those too
-            if (alternatePatterns.Any())
-            {
-                foreach(var pattern in alternatePatterns)
-                    selector.AddPattern(pattern);
-            }
 
             // anything we're intercepting we're just blocking,
             // so no need to worry about "this" leaks

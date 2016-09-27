@@ -1,6 +1,7 @@
 ﻿using Castle.DynamicProxy;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Proxii.Library.Interceptors;
 using Proxii.Library.Selectors;
 using System.Reflection;
@@ -163,6 +164,21 @@ namespace Proxii
             {
                 _selectors.Add(new MethodNameSelector(methodNames));
             }
+
+            return this;
+        }
+
+        /// <summary>
+        /// only interceept methods which match one of the given regex patterns
+        /// </summary>
+        public Proxii<T> ByMethodNamePattern(params string[] patterns)
+        {
+            var selector = _selectors.Find(s => s is MethodNamePatternSelector) as MethodNamePatternSelector;
+
+            if (selector != null)
+                selector.AddPatterns(patterns);
+            else
+                _selectors.Add(new MethodNamePatternSelector(patterns));
 
             return this;
         }

@@ -11,14 +11,14 @@ namespace Proxii.Library.Selectors
     {
         private List<string > Patterns { get; set; }
 
-        public MethodNamePatternSelector(string pattern)
+        public MethodNamePatternSelector(params string[] patterns)
         {
-            Patterns = new List<string> { pattern };
+            Patterns = new List<string>(patterns);
         }
 
-        public void AddPattern(string pattern)
+        public void AddPatterns(params string[] patterns)
         {
-            Patterns.Add(pattern);
+            Patterns.AddRange(patterns);
         }
 
         public IInterceptor[] SelectInterceptors(Type type, MethodInfo method, IInterceptor[] interceptors)

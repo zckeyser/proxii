@@ -8,9 +8,9 @@ namespace Proxii.Test.Util.TestClasses
 
 		T DoFunc<T>(Func<T> func);
 
-		void Throw(Exception e);
+		void ThrowAction(Exception e);
 
-        T ThrowWithReturn<T>(Exception e, T val);
+        T ThrowFunc<T>(Exception e, T val);
 
         string StringMethod();
 

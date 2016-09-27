@@ -37,12 +37,12 @@ namespace Proxii.Test.Util.TestClasses
 			return a + b + c;
 		}
 
-        public void Throw(Exception e)
+        public void ThrowAction(Exception e)
 		{
 			throw e;
 		}
 
-        public T ThrowWithReturn<T>(Exception e, T val)
+        public T ThrowFunc<T>(Exception e, T val)
         {
             throw e;
         }

@@ -17,7 +17,7 @@ namespace Proxii.Test.e2e
 				.ByReturnType(typeof(void))
 				.Create();
 
-			proxy.Throw(new ArgumentException());
+			proxy.ThrowAction(new ArgumentException());
 
 			Assert.AreEqual(errors.Count, 1);
 			Assert.IsInstanceOfType(errors[0], typeof(ArgumentException));
@@ -33,9 +33,9 @@ namespace Proxii.Test.e2e
                 .ByReturnType(typeof(void))
                 .Create();
 
-            var result = proxy.ThrowWithReturn(new ArgumentException(), "foo");
+            var result = proxy.ThrowFunc(new ArgumentException(), "foo");
 
-			Assert.Fail("ThrowWithReturn should not have been intercepted.");
+			Assert.Fail("ThrowFunc should not have been intercepted.");
 		}
 	}
 }
