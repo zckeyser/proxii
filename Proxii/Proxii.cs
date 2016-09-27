@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Proxii.Library.Interceptors;
 using Proxii.Library.Selectors;
 using System.Reflection;
+using Proxii.Library.Other;
 
 namespace Proxii
 {
@@ -37,6 +38,20 @@ namespace Proxii
                 throw new ArgumentException("Proxii.Proxy<T>(T impl) must be called with an interface type for T");
 
             return new Proxii<T>().With(impl);
+        }
+
+        /// <summary>
+        /// Freezes an object, blocking all calls to its
+        /// property setters, as well as any other methods
+        /// specified in the string params
+        /// </summary>
+        /// <param name="obj"> object to freeze </param>
+        /// <param name="alternatePatterns">alternate patterns to freeze methods other than Property setters</param>
+        /// <returns></returns>
+	    public TInterface Freeze<TInterface, TImplementation>(TImplementation obj, params string[] alternatePatterns)
+            where TImplementation : TInterface where TInterface : class
+        {
+            return FrozenProxy.Freeze<TInterface, TImplementation>(obj, alternatePatterns);
         }
  	}
 
