@@ -412,7 +412,7 @@ namespace Proxii
 			var exception = typeof (TException);
 
             if (onCatch == null)
-                throw new ArgumentNullException("onCatch");
+                throw new ArgumentNullException(nameof(onCatch));
 
             var exceptionInterceptor = _interceptors.Find(interceptor => interceptor is ExceptionInterceptor) as ExceptionInterceptor;
 
@@ -420,6 +420,18 @@ namespace Proxii
                 exceptionInterceptor.AddCatch(exception, onCatch);
             else
                 _interceptors.Add(new ExceptionInterceptor(exception, onCatch));
+
+            return this;
+        }
+
+        /// <summary>
+        /// prevent the execution of all methods caught by this interceptor
+        /// 
+        /// causes methods that return things to return their defaults (null for reference types)
+        /// </summary>
+        public Proxii<T> Stop()
+        {
+            _interceptors.Add(new StopMethodInterceptor());
 
             return this;
         }
