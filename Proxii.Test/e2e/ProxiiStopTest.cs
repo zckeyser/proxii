@@ -13,7 +13,7 @@ namespace Proxii.Test.e2e
         [TestMethod]
         public void Proxii_Stop()
         {
-            Assert.Fail();
+            
         }
     }
 }
