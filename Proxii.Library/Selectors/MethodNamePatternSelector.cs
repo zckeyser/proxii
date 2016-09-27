@@ -9,7 +9,7 @@ namespace Proxii.Library.Selectors
 {
     public class MethodNamePatternSelector : IInterceptorSelector
     {
-        private List<string > Patterns { get; set; }
+        private List<string> Patterns { get; }
 
         public MethodNamePatternSelector(params string[] patterns)
         {

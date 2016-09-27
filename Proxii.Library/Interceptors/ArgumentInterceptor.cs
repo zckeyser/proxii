@@ -11,7 +11,7 @@ namespace Proxii.Library.Interceptors
     /// </summary>
 	public class ArgumentInterceptor<T> : IInterceptor
 	{
-        Func<T, T> _modifier;
+        private readonly Func<T, T> _modifier;
 
         public ArgumentInterceptor(Func<T, T> modifier)
         {
@@ -39,7 +39,7 @@ namespace Proxii.Library.Interceptors
     /// </summary>
 	public class ArgumentInterceptor<T1, T2> : IInterceptor
     {
-        Func<T1, T2, Tuple<T1, T2>> _modifier;
+        private readonly Func<T1, T2, Tuple<T1, T2>> _modifier;
 
         public ArgumentInterceptor(Func<T1, T2, Tuple<T1, T2>> modifier)
         {
@@ -69,7 +69,7 @@ namespace Proxii.Library.Interceptors
     /// </summary>
 	public class ArgumentInterceptor<T1, T2, T3> : IInterceptor
     {
-        Func<T1, T2, T3, Tuple<T1, T2, T3>> _modifier;
+        private readonly Func<T1, T2, T3, Tuple<T1, T2, T3>> _modifier;
 
         public ArgumentInterceptor(Func<T1, T2, T3, Tuple<T1, T2, T3>> modifier)
         {
@@ -101,7 +101,7 @@ namespace Proxii.Library.Interceptors
     /// </summary>
 	public class ArgumentInterceptor<T1, T2, T3, T4> : IInterceptor
     {
-        Func<T1, T2, T3, T4, Tuple<T1, T2, T3, T4>> _modifier;
+        private readonly Func<T1, T2, T3, T4, Tuple<T1, T2, T3, T4>> _modifier;
 
         public ArgumentInterceptor(Func<T1, T2, T3, T4, Tuple<T1, T2, T3, T4>> modifier)
         {
@@ -135,7 +135,7 @@ namespace Proxii.Library.Interceptors
     /// </summary>
 	public class ArgumentInterceptor<T1, T2, T3, T4, T5> : IInterceptor
     {
-        Func<T1, T2, T3, T4, T5, Tuple<T1, T2, T3, T4, T5>> _modifier;
+        private readonly Func<T1, T2, T3, T4, T5, Tuple<T1, T2, T3, T4, T5>> _modifier;
 
         public ArgumentInterceptor(Func<T1, T2, T3, T4, T5, Tuple<T1, T2, T3, T4, T5>> modifier)
         {
@@ -171,7 +171,7 @@ namespace Proxii.Library.Interceptors
     /// </summary>
 	public class ArgumentInterceptor<T1, T2, T3, T4, T5, T6> : IInterceptor
     {
-        Func<T1, T2, T3, T4, T5, T6, Tuple<T1, T2, T3, T4, T5, T6>> _modifier;
+        private readonly Func<T1, T2, T3, T4, T5, T6, Tuple<T1, T2, T3, T4, T5, T6>> _modifier;
 
         public ArgumentInterceptor(Func<T1, T2, T3, T4, T5, T6, Tuple<T1, T2, T3, T4, T5, T6>> modifier)
         {
@@ -209,7 +209,7 @@ namespace Proxii.Library.Interceptors
     /// </summary>
 	public class ArgumentInterceptor<T1, T2, T3, T4, T5, T6, T7> : IInterceptor
     {
-        Func<T1, T2, T3, T4, T5, T6, T7, Tuple<T1, T2, T3, T4, T5, T6, T7>> _modifier;
+        private readonly Func<T1, T2, T3, T4, T5, T6, T7, Tuple<T1, T2, T3, T4, T5, T6, T7>> _modifier;
 
         public ArgumentInterceptor(Func<T1, T2, T3, T4, T5, T6, T7, Tuple<T1, T2, T3, T4, T5, T6, T7>> modifier)
         {

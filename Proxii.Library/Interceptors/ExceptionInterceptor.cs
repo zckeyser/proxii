@@ -7,7 +7,7 @@ namespace Proxii.Library.Interceptors
 {
     public class ExceptionInterceptor : IInterceptor
     {
-        private readonly Dictionary<Type, Action<Exception>> customCatches = new Dictionary<Type, Action<Exception>>();
+        private readonly Dictionary<Type, Action<Exception>> _customCatches = new Dictionary<Type, Action<Exception>>();
 
         /// <summary>
         /// throw the exception after performing the custom action
@@ -37,7 +37,7 @@ namespace Proxii.Library.Interceptors
             if (!(Activator.CreateInstance(exception) is Exception))
                 throw new ArgumentException("exception must be a subclass of Exception");
 
-            customCatches.Add(exception, onThrow);
+            _customCatches.Add(exception, onThrow);
         }
 
         public void Intercept(IInvocation invocation)
@@ -49,9 +49,9 @@ namespace Proxii.Library.Interceptors
             catch(Exception e)
             {
 				// only perform the custom catch if it's the right type
-                foreach (var type in customCatches.Keys.Where(type => e.GetType() == type || e.GetType().IsSubclassOf(type)))
+                foreach (var type in _customCatches.Keys.Where(type => e.GetType() == type || e.GetType().IsSubclassOf(type)))
                 {
-                    var onCatch = customCatches[type];
+                    var onCatch = _customCatches[type];
 
                     onCatch(e);
 
