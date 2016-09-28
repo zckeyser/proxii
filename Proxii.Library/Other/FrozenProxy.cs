@@ -26,9 +26,7 @@ namespace Proxii.Library.Other
 
             selector.AddPatterns(alternatePatterns);
 
-            // anything we're intercepting we're just blocking,
-            // so no need to worry about "this" leaks
-            var interceptors = new IInterceptor[] { new StopMethodInterceptor() };
+            var interceptors = new IInterceptor[] { new StopMethodInterceptor(), new ThisInterceptor() };
 
             var proxy = _generator.CreateInterfaceProxyWithTarget(obj, new ProxyGenerationOptions {Selector = selector},
                 interceptors);
