@@ -1,7 +1,7 @@
 # Interception Methods
 These are methods which allow you to hook in new behavior in some way on any methods called on the proxy object. To limit what methods get intercepted, you can use [selection]() methods.
 
-## AfterInvoke
+## AfterInvoke(Action action), AfterInvoke(Action<MethodInfo> action), AfterInvoke(Action<MethodInfo, object[]> action)
 Provides three different ways to hook an action after the intercepted function has been invoked. Depending on what the signature of the action passed into `AfterInvoke` is, you can call a function with either no arguments, the `MethodInfo` of the intercepted function, or the `MethodInfo` *and* an array of the arguments passed into the function.
 ```csharp
 interface IFoo
@@ -38,7 +38,7 @@ var methodInfoArgsProxy = Proxii.Proxy<IFoo, Foo>()
 methodInfoArgsProxy.Bar(1, 2, 3); // logs "Bar is hit by 1 2 3"
 ```
 
-## BeforeInvoke
+## BeforeInvoke(Action action), BeforeInvoke(Action<MethodInfo> action), BeforeInvoke(Action<MethodInfo, object[]> action)
 Functionally, BeforeInvoke is equivalent to AfterInvoke except that the given hook is called *before* the method being intercepted is invoked.
 ```csharp
 interface IFoo
@@ -75,7 +75,74 @@ var methodInfoArgsProxy = Proxii.Proxy<IFoo, Foo>()
 methodInfoArgsProxy.Bar(1, 2, 3); // logs "Bar is hit by 1 2 3"
 ```
 
-## OnReturn
+## Catch<T>(Action<Exception> onCatch) where T : Exception
+Executes the given handler when any of the given kind of exceptions are thrown from inside intercepted functions.
+```csharp
+interface IFoo
+{
+    void ThrowArgumentException();
+    void ThrowIndexOutOfRangeException();
+}
+
+var proxy = Proxii.Proxy<IFoo, Foo>()
+                .Catch<ArgumentException>((e) => Console.WriteLine("Caught an exception :("))
+                .Create();
+
+proxy.ThrowArgumentException(); // logs "Caught an exception :("
+proxy.ThrowIndexOutOfRangeException(); // doesn't get caught -- crashes
+```
+
+## ChangeArguments(Func<T, T> modifier), ChangeArguments(Func<T1, T2, Tuple<T1, T2>> modifier)
+Changes the arguments of any intercepted function which matches the signature of the given function. The given function must take all of the arguments as input and output a tuple of all the modified arguments as output. Order of the original argument types must be maintained in the output tuple.
+```csharp
+interface IFoo
+{
+    int ReturnInt(int n); // returns given argument unchanged
+    int Add(int a, int b); // returns a + b
+}
+
+// modifying a single argument
+Func<int, int> singleArgModifier = (n) => n + 1;
+
+var singleArgProxy = Proxii.Proxy<IFoo, Foo>()
+                        .ChangeArguments(singleArgModifier)
+                        .Create();
+
+singleArgProxy.ReturnInt(1); // returns 2
+singleArgProxy.Add(2, 2); // returns 4
+
+// modifying multiple arguments
+Func<int, int, Tuple<int, int>> multiArgModifier = (a, b)  =>
+    {
+        return Tuple.Create(a * 2, b * 4);
+    };
+
+var multiArgProxy = Proxii.Proxy<IFoo, Foo>()
+                        .ChangeArguments(multiArgModifier)
+                        .Create();
+
+multiArgProxy.ReturnInt(1); // returns 1
+multiArgProxy.Add(2, 2); // returns 12
+```
+
+## ChangeReturnValue(Func<T, T> modifier)
+Changes the return value of any intercepted function which matches the input type of the given function. The given function must output the same type it takes in.
+```csharp
+interface IFoo
+{
+    int Add(int a, int b);
+}
+
+Func<int, int> modifier = (n) => n * 10;
+
+var proxy = Proxii.Proxy<IFoo, Foo>()
+                        .ChangeReturnValue(modifier)
+                        .Create();
+
+proxy.Add(2, 2); // 40
+```
+
+## OnReturn(Action<T> onReturn)
 Hooks into the function on return using the passed in Action. There are four versions of this function, which all pass different information into the action. All of the overloads differ only in the signature of the Action they take, and as such the information passed in. The data that can be passed out is: return value, MethodInfo and arguments. The overload parameter types are: Action<T>, Action<T, MethodInfo>, Action<T, object[]>, Action<T, MethodInfo, object[]> where T is the type of return value you'd like to intercept. Only functions with return types matching the given action will be intercepted.
 ```csharp
 interface IFoo
@@ -122,69 +189,11 @@ var returnWithArgsProxy = Proxii.Proxy()<IFoo, Foo>
 returnWithArgsProxy.Concat("foo", "bar", "buzz"); // logs "returned foobarbuzz from Concat with input foo bar buzz"
 ```
 
-## Catch
-Executes the given handler when any of the given kind of exceptions are thrown from inside intercepted functions.
+## Stop()
+Prevent the execution of all intercepted methods on this proxy.
 ```csharp
-interface IFoo
-{
-    void ThrowArgumentException();
-    void ThrowIndexOutOfRangeException();
-}
+var proxy = Proxii.Proxy<IFoo, Foo>().ByMethodName("Bar").Stop();
 
-var proxy = Proxii.Proxy<IFoo, Foo>()
-                .Catch<ArgumentException>((e) => Console.WriteLine("Caught an exception :("))
-                .Create();
-
-proxy.ThrowArgumentException(); // logs "Caught an exception :("
-proxy.ThrowIndexOutOfRangeException(); // doesn't get caught -- crashes
-```
-
-## ChangeArguments
-Changes the arguments of any intercepted function which matches the signature of the given function. The given function must take all of the arguments as input and output a tuple of all the modified arguments as output. Order of the original argument types must be maintained in the output tuple.
-```csharp
-interface IFoo
-{
-    int ReturnInt(int n); // returns given argument unchanged
-    int Add(int a, int b); // returns a + b
-}
-
-// modifying a single argument
-Func<int, int> singleArgModifier = (n) => n + 1;
-
-var singleArgProxy = Proxii.Proxy<IFoo, Foo>()
-                        .ChangeArguments(singleArgModifier)
-                        .Create();
-
-singleArgProxy.ReturnInt(1); // returns 2
-singleArgProxy.Add(2, 2); // returns 4
-
-// modifying multiple arguments
-Func<int, int, Tuple<int, int>> multiArgModifier = (a, b)  =>
-    {
-        return Tuple.Create(a * 2, b * 4);
-    };
-
-var multiArgProxy = Proxii.Proxy<IFoo, Foo>()
-                        .ChangeArguments(multiArgModifier)
-                        .Create();
-
-multiArgProxy.ReturnInt(1); // returns 1
-multiArgProxy.Add(2, 2); // returns 12
-```
-
-## ChangeReturnValue
-Changes the return value of any intercepted function which matches the input type of the given function. The given function must output the same type it takes in.
-```csharp
-interface IFoo
-{
-    int Add(int a, int b);
-}
-
-Func<int, int> modifier = (n) => n * 10;
-
-var proxy = Proxii.Proxy<IFoo, Foo>()
-                        .ChangeReturnValue(modifier)
-                        .Create();
-
-proxy.Add(2, 2); // 40
+proxy.Bar(); // does nothing
+proxy.Buzz(); // acts normally
 ```

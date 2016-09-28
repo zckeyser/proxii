@@ -1,3 +1,8 @@
+# 1.3.0
+ - new interception method `Proxii<T>.Stop()` prevents the execution of intercepted methods
+ - new selection method `Proxii<T>.ByMethodNamePattern(params string[] patterns)` allows the selection of methods via a regex pattern on their name
+ - new utility method `Proxii.Freeze<T>(T obj, params string[] patterns)` allows the freezing of an object, such that any property setters and methods that match a given pattern will not be executed.
+
 # 1.2.0
  - Removed empty Proxii.Proxy<T>() method and hid .With() methods -- use the non-empty Proxii.Proxy() methods instead
  - Added context comments for all of the functions in Proxii<T>
@@ -13,7 +18,7 @@
 
 # 1.0.0
  - Initial release, including the following:
- 
+
 ### Initialization
      - Interface to type
      - Interface to object

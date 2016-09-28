@@ -32,4 +32,6 @@ proxy.Bar(); // will log "Calling from foo!" to console before executing bar
 proxy.Buzz(); // will not log anything
 ```
 
-For a more in-depth look at the library, see the full list of [initialization](https://github.com/zckeyser/proxii/blob/master/docs/initialization.md), [interception](https://github.com/zckeyser/proxii/blob/master/docs/interception.md) and [selection](https://github.com/zckeyser/proxii/blob/master/docs/selection.md) methods.
+For a more in-depth look at the library, see the full list of [initialization](https://github.com/zckeyser/proxii/blob/master/docs/initialization.md), [interception](https://github.com/zckeyser/proxii/blob/master/docs/interception.md), and [selection](https://github.com/zckeyser/proxii/blob/master/docs/selection.md) methods.
+
+Proxii also has some other useful [utility](https://github.com/zckeyser/proxii/blob/master/docs/utility.md) methods.
