@@ -49,10 +49,10 @@ namespace Proxii
         /// <param name="obj"> object to freeze </param>
         /// <param name="alternatePatterns">alternate patterns to freeze methods other than Property setters</param>
         /// <returns></returns>
-	    public TInterface Freeze<TInterface, TImplementation>(TImplementation obj, params string[] alternatePatterns)
-            where TImplementation : TInterface where TInterface : class
+	    public static TInterface Freeze<TInterface>(TInterface obj, params string[] alternatePatterns)
+            where TInterface : class
         {
-            return FrozenProxy.Freeze<TInterface, TImplementation>(obj, alternatePatterns);
+            return FrozenProxy.Freeze(obj, alternatePatterns);
         }
  	}
 

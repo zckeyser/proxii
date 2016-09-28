@@ -15,8 +15,8 @@ namespace Proxii.Library.Other
         private const string PropertySetPattern = "^set_";
         private static readonly ProxyGenerator _generator = new ProxyGenerator();
 
-        public static TInterface Freeze<TInterface, TImplementation>(TImplementation obj, params string[] alternatePatterns) 
-            where TImplementation : TInterface where TInterface : class
+        public static TInterface Freeze<TInterface>(TInterface obj, params string[] alternatePatterns) 
+            where TInterface : class
         {
             if(!typeof(TInterface).IsInterface)
                 throw new ArgumentException("TInterface must be an interface to be proxied");
@@ -24,11 +24,13 @@ namespace Proxii.Library.Other
             // intercept setter patterns plus any other patterns we were given
             var selector = new MethodNamePatternSelector(PropertySetPattern);
 
+            selector.AddPatterns(alternatePatterns);
+
             // anything we're intercepting we're just blocking,
             // so no need to worry about "this" leaks
             var interceptors = new IInterceptor[] { new StopMethodInterceptor() };
 
-            var proxy = _generator.CreateInterfaceProxyWithTarget<TInterface>(obj, new ProxyGenerationOptions {Selector = selector},
+            var proxy = _generator.CreateInterfaceProxyWithTarget(obj, new ProxyGenerationOptions {Selector = selector},
                 interceptors);
 
             return proxy;

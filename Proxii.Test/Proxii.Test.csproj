@@ -86,8 +86,10 @@
     <Compile Include="Unit\Selectors\ReturnTypeSelectorTest.cs" />
     <Compile Include="Util\TestClasses\ArgumentTester.cs" />
     <Compile Include="Util\TestClasses\ArgumentTypeSelectorTester.cs" />
+    <Compile Include="Util\TestClasses\FreezeTester.cs" />
     <Compile Include="Util\TestClasses\IArgumentTester.cs" />
     <Compile Include="Util\TestClasses\IArgumentTypeSelectorTester.cs" />
+    <Compile Include="Util\TestClasses\IFreezeTester.cs" />
     <Compile Include="Util\TestClasses\IInvokeHookTester.cs" />
     <Compile Include="Util\TestClasses\InvokeHookTester.cs" />
     <Compile Include="Util\TestClasses\IProxiiTester.cs" />
