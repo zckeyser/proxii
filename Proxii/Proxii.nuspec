@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Proxii</id>
-    <version>1.3.0</version>
+    <version>1.4.0</version>
     <title>Proxii</title>
     <authors>Chris Keyser</authors>
     <owners>Chris Keyser</owners>
@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/zckeyser/proxii</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Simple-to-use interface proxying library for C#</description>
-    <releaseNotes>Added ByMethodNamePattern, Stop and Freeze methods</releaseNotes>
+    <releaseNotes>Added Proxii.Group to allow grouping of selectors and interceptors (see https://github.com/zckeyser/proxii/blob/master/docs/grouping.md)</releaseNotes>
     <copyright>Copyright 2016</copyright>
     <tags>proxy proxii dynamicproxy interface behavior injection</tags>
   </metadata>

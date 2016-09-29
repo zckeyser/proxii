@@ -1,10 +1,13 @@
+# 1.4.0
+ - Added grouping method `Proxii.Group` to allow grouping of selectors and interceptors on an object, so you can isolate the affects of an interceptor(s) to a given group of selectors. See the documentation [here](https://github.com/zckeyser/proxii/blob/master/docs/grouping.md).
+
 # 1.3.1
- - fixed bug where `Proxii.Freeze` was leaking "this"
+ - Fixed bug where `Proxii.Freeze` was leaking "this"
 
 # 1.3.0
- - new interception method `Proxii<T>.Stop()` prevents the execution of intercepted methods
- - new selection method `Proxii<T>.ByMethodNamePattern(params string[] patterns)` allows the selection of methods via a regex pattern on their name
- - new utility method `Proxii.Freeze<T>(T obj, params string[] patterns)` allows the freezing of an object, such that any property setters and methods that match a given pattern will not be executed.
+ - Added new interception method `Proxii<T>.Stop()` prevents the execution of intercepted methods
+ - Added new selection method `Proxii<T>.ByMethodNamePattern(params string[] patterns)` allows the selection of methods via a regex pattern on their name
+ - Added new utility method `Proxii.Freeze<T>(T obj, params string[] patterns)` allows the freezing of an object, such that any property setters and methods that match a given pattern will not be executed.
 
 # 1.2.0
  - Removed empty `Proxii.Proxy<T>()` method and hid `.With()` methods -- use the non-empty `Proxii.Proxy()` methods instead
