@@ -492,13 +492,13 @@ namespace Proxii
             // create the chain of Proxiis for grouping, 
             // with the items in this Proxii being added last
             // so that they're applied universally
-            T proxy = null;
+            var proxy = (T) _target;
 
             foreach (var proxii in _additionalProxiis)
             {
                 // if this is the first proxy in the chain, attach it to our actual object
                 // otherwise attach it to the most recently created proxy
-                proxii._target = proxy ?? _target;
+                proxii._target = proxy;
 
                 proxy = proxii.Create();
             }

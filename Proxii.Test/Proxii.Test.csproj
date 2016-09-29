@@ -65,6 +65,7 @@
     <Compile Include="e2e\ProxiiChangeArgumentsTest.cs" />
     <Compile Include="e2e\ProxiiChangeReturnValueTest.cs" />
     <Compile Include="e2e\ProxiiFreezeTest.cs" />
+    <Compile Include="e2e\ProxiiGroupTest.cs" />
     <Compile Include="e2e\ProxiiInitializationTest.cs" />
     <Compile Include="e2e\ProxiiOnReturnTest.cs" />
     <Compile Include="e2e\ProxiiStopTest.cs" />
