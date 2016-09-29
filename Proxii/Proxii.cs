@@ -1,7 +1,6 @@
 ﻿using Castle.DynamicProxy;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Proxii.Library.Interceptors;
 using Proxii.Library.Selectors;
 using System.Reflection;
@@ -18,7 +17,7 @@ namespace Proxii
         /// If a non-default constructor is desired, pass in an implementation object
         /// as an argument instead of an implementation type as a typeparam
         /// </summary>
-        public static Proxii<TInterface> Proxy<TInterface, TImplementation>() where TImplementation : TInterface
+        public static Proxii<TInterface> Proxy<TInterface, TImplementation>() where TImplementation : TInterface where TInterface : class
         {
             var interfaceType = typeof(TInterface);
 
@@ -31,7 +30,7 @@ namespace Proxii
         /// <summary>
         /// Proxy interface T to given object
         /// </summary>
-        public static Proxii<T> Proxy<T>(T impl)
+        public static Proxii<T> Proxy<T>(T impl) where T : class
         {
             var interfaceType = typeof(T);
 
@@ -57,6 +56,7 @@ namespace Proxii
  	}
 
     public class Proxii<T>
+        where T : class
     {
         #region Private Fields
         private static readonly ProxyGenerator _generator = new ProxyGenerator();
@@ -79,14 +79,37 @@ namespace Proxii
 	    /// <summary>
 	    /// combined selector created from the current state of _selectors
 	    /// </summary>
-	    private IInterceptorSelector Selector
-	    {
-		    get { return new CombinedSelector(_selectors); }
-	    }
+	    private IInterceptorSelector Selector => new CombinedSelector(_selectors);
+
+        /// <summary>
+        /// holds additional Proxii layers created with Group()
+        /// </summary>
+        private readonly List<Proxii<T>> _additionalProxiis = new List<Proxii<T>>();
         #endregion
 
         #region Constructors
         internal Proxii() { }
+        #endregion
+
+        #region Grouping
+        /// <summary>
+        /// group together Proxii interceptors/selectors such that the given
+        /// selectors only apply to the given interceptors and vice versa
+        /// </summary>
+        /// <param name="configAction">Action to configure the Proxii sub-group</param>
+        public Proxii<T> Group(Action<Proxii<T>> configAction)
+        {
+            // make a new proxy with the current target
+            var proxy = new Proxii<T>().With(_target);
+
+            // configure the proxy as requested
+            configAction(proxy);
+
+            // add it to the list of proxies to combine in Create
+            _additionalProxiis.Add(proxy);
+
+            return this;
+        }
         #endregion
 
         #region Initialization
@@ -457,7 +480,7 @@ namespace Proxii
         /// <summary>
         /// Create the actual proxy object
         ///
-        /// This should be called at the end of every chain of Proxii<T> calls
+        /// This should be called at the end of every chain of Proxii calls
         /// </summary>
         public T Create()
         {
@@ -466,7 +489,21 @@ namespace Proxii
             // add interceptor to prevent "this" leaks
             _interceptors.Add(new ThisInterceptor());
 
-            return (T) _generator.CreateInterfaceProxyWithTarget(typeof(T), _target, options, _interceptors.ToArray());
+            // create the chain of Proxiis for grouping, 
+            // with the items in this Proxii being added last
+            // so that they're applied universally
+            T proxy = null;
+
+            foreach (var proxii in _additionalProxiis)
+            {
+                // if this is the first proxy in the chain, attach it to our actual object
+                // otherwise attach it to the most recently created proxy
+                proxii._target = proxy ?? _target;
+
+                proxy = proxii.Create();
+            }
+
+            return (T) _generator.CreateInterfaceProxyWithTarget(typeof(T), proxy, options, _interceptors.ToArray());
         }
         #endregion
     }
