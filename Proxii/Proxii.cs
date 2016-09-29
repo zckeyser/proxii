@@ -96,14 +96,14 @@ namespace Proxii
         /// group together Proxii interceptors/selectors such that the given
         /// selectors only apply to the given interceptors and vice versa
         /// </summary>
-        /// <param name="configAction">Action to configure the Proxii sub-group</param>
-        public Proxii<T> Group(Action<Proxii<T>> configAction)
+        /// <param name="configFunction">Func to configure the Proxii sub-group</param>
+        public Proxii<T> Group(Func<Proxii<T>, Proxii<T>> configFunction)
         {
             // make a new proxy with the current target
             var proxy = new Proxii<T>().With(_target);
 
             // configure the proxy as requested
-            configAction(proxy);
+            proxy = configFunction(proxy);
 
             // add it to the list of proxies to combine in Create
             _additionalProxiis.Add(proxy);
