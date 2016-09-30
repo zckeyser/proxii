@@ -11,8 +11,7 @@ Install-Package Proxii
 To use Proxii, you first need to have whatever object you'd like to proxy over behind an interface. A simple example of creating a proxy over an interface is as follows:
 
 ```csharp
-var proxy = Proxii.Proxy<IFoo>()
-                  .With<Foo>()
+var proxy = Proxii.Proxy<IFoo, Foo>()
                   .BeforeInvoke(() => Console.WriteLine("Calling from foo!"))
                   .Create();
 
@@ -22,8 +21,7 @@ proxy.Bar(); // will log "Calling from foo!" to console before executing Bar
 In addition, you can filter what methods from the interface get intercepted using the built-in selector methods, such as in the following example:
 
 ```csharp
-var proxy = Proxii.Proxy<IFoo>()
-                  .With<Foo>()
+var proxy = Proxii.Proxy<IFoo, Foo>()
                   .BeforeInvoke(() => Console.WriteLine("Calling from foo!"))
                   .ByMethodName("Bar")
                   .Create();
