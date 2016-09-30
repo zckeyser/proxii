@@ -16,7 +16,7 @@ namespace Proxii.Test.Integration.Interceptors
 		{
 			var exceptionList = new List<Exception>();
 
-			var interceptors = new IInterceptor[] { new ExceptionInterceptor(typeof(Exception), e => exceptionList.Add(e)) };
+			var interceptors = new IInterceptor[] { new ExceptionInterceptor<Exception>(e => exceptionList.Add(e)) };
 
 			var proxy = (IExceptionTest) _generator.CreateInterfaceProxyWithTarget(typeof (IExceptionTest), new ExceptionTest(), interceptors);
 
@@ -30,7 +30,7 @@ namespace Proxii.Test.Integration.Interceptors
 		{
 			var exceptionList = new List<Exception>();
 
-			var interceptors = new IInterceptor[] { new ExceptionInterceptor(typeof(Exception), e => exceptionList.Add(e)) };
+			var interceptors = new IInterceptor[] { new ExceptionInterceptor<Exception>(e => exceptionList.Add(e)) };
 
 			var proxy = (IExceptionTest)_generator.CreateInterfaceProxyWithTarget(typeof(IExceptionTest), new ExceptionTest(), interceptors);
 
@@ -45,7 +45,7 @@ namespace Proxii.Test.Integration.Interceptors
 		{
 			var exceptionList = new List<Exception>();
 
-			var interceptors = new IInterceptor[] { new ExceptionInterceptor(typeof(Exception), e => exceptionList.Add(e)) };
+			var interceptors = new IInterceptor[] { new ExceptionInterceptor<Exception>(e => exceptionList.Add(e)) };
 
 			var proxy = (IExceptionTest)_generator.CreateInterfaceProxyWithTarget(typeof(IExceptionTest), new ExceptionTest(), interceptors);
 
@@ -61,7 +61,7 @@ namespace Proxii.Test.Integration.Interceptors
 		{
 			var exceptionList = new List<Exception>();
 
-			var exceptionInterceptor = new ExceptionInterceptor(typeof(Exception), e => exceptionList.Add(e));
+			var exceptionInterceptor = new ExceptionInterceptor<Exception>(e => exceptionList.Add(e));
 
 			var interceptors = new IInterceptor[] { exceptionInterceptor };
 
@@ -74,31 +74,11 @@ namespace Proxii.Test.Integration.Interceptors
 		}
 
 		[TestMethod]
-		public void Integration_ExceptionInterceptor_MultipleExceptions_VoidMethod()
-		{
-			var exceptionList = new List<Exception>();
-
-			var exceptionInterceptor = new ExceptionInterceptor(typeof(ArgumentException), e => exceptionList.Add(e));
-			exceptionInterceptor.AddCatch(typeof(IndexOutOfRangeException), e => exceptionList.Add(e));
-
-			var interceptors = new IInterceptor[] { exceptionInterceptor };
-
-			var proxy = (IExceptionTest)_generator.CreateInterfaceProxyWithTarget(typeof(IExceptionTest), new ExceptionTest(), interceptors);
-
-			proxy.ThrowArgumentException();
-			proxy.ThrowIndexOutOfRangeException();
-
-			Assert.AreEqual(2, exceptionList.Count);
-			Assert.IsInstanceOfType(exceptionList[0], typeof(ArgumentException));
-			Assert.IsInstanceOfType(exceptionList[1], typeof(IndexOutOfRangeException));
-		}
-
-		[TestMethod]
 		public void Integration_ExceptionInterceptor_SingleException_ValueMethod()
 		{
 			var exceptionList = new List<Exception>();
 
-			var exceptionInterceptor = new ExceptionInterceptor(typeof(InvalidOperationException), e => exceptionList.Add(e));
+			var exceptionInterceptor = new ExceptionInterceptor<InvalidOperationException>(e => exceptionList.Add(e));
 
 			var interceptors = new IInterceptor[] { exceptionInterceptor };
 
@@ -112,33 +92,11 @@ namespace Proxii.Test.Integration.Interceptors
 		}
 
 		[TestMethod]
-		public void Integration_ExceptionInterceptor_MultipleExceptions_ValueMethod()
-		{
-			var exceptionList = new List<Exception>();
-
-			var exceptionInterceptor = new ExceptionInterceptor(typeof(InvalidOperationException), e => exceptionList.Add(e));
-			exceptionInterceptor.AddCatch(typeof(FormatException), e => exceptionList.Add(e));
-
-			var interceptors = new IInterceptor[] { exceptionInterceptor };
-
-			var proxy = (IExceptionTest)_generator.CreateInterfaceProxyWithTarget(typeof(IExceptionTest), new ExceptionTest(), interceptors);
-
-			var result1 = proxy.ThrowInvalidOperationException();
-			var result2 = proxy.ThrowFormatException();
-
-			Assert.AreEqual(2, exceptionList.Count);
-			Assert.IsInstanceOfType(exceptionList[0], typeof(InvalidOperationException));
-			Assert.IsInstanceOfType(exceptionList[1], typeof(FormatException));
-			Assert.AreEqual(0, result1);
-			Assert.AreEqual(false, result2);
-		}
-
-		[TestMethod]
 		public void Integration_ExceptionInterceptor_SingleException_ReferenceMethod()
 		{
 			var exceptionList = new List<Exception>();
 
-			var exceptionInterceptor = new ExceptionInterceptor(typeof(NullReferenceException), e => exceptionList.Add(e));
+			var exceptionInterceptor = new ExceptionInterceptor<NullReferenceException>(e => exceptionList.Add(e));
 			var interceptors = new IInterceptor[] { exceptionInterceptor };
 			
 			var proxy = (IExceptionTest)_generator.CreateInterfaceProxyWithTarget(typeof(IExceptionTest), new ExceptionTest(), interceptors);
@@ -149,36 +107,14 @@ namespace Proxii.Test.Integration.Interceptors
 			Assert.IsInstanceOfType(exceptionList[0], typeof(NullReferenceException));
 			Assert.IsNull(result);
 		}
-
-		[TestMethod]
-		public void Integration_ExceptionInterceptor_MultipleExceptions_ReferenceMethod()
-		{
-			var exceptionList = new List<Exception>();
-
-			var exceptionInterceptor = new ExceptionInterceptor(typeof(NullReferenceException), e => exceptionList.Add(e));
-			exceptionInterceptor.AddCatch(typeof(ArgumentNullException), e => exceptionList.Add(e));
-
-			var interceptors = new IInterceptor[] { exceptionInterceptor };
-
-			var proxy = (IExceptionTest)_generator.CreateInterfaceProxyWithTarget(typeof(IExceptionTest), new ExceptionTest(), interceptors);
-
-			var result1 = proxy.ThrowNullReferenceException();
-			var result2 = proxy.ThrowArgumentNullException();
-
-			Assert.AreEqual(2, exceptionList.Count);
-			Assert.IsInstanceOfType(exceptionList[0], typeof(NullReferenceException));
-			Assert.IsInstanceOfType(exceptionList[1], typeof(ArgumentNullException));
-			Assert.IsNull(result1);
-			Assert.IsNull(result2);
-		}
-
+        
 		[TestMethod]
 		[ExpectedException(typeof(NullReferenceException))]
 		public void Integration_ExceptionInterceptor_NonMatchingThrowType()
 		{
 			var exceptionList = new List<Exception>();
 
-			var exceptionInterceptor = new ExceptionInterceptor(typeof(IndexOutOfRangeException), e => exceptionList.Add(e));
+			var exceptionInterceptor = new ExceptionInterceptor<IndexOutOfRangeException>(e => exceptionList.Add(e));
 			var interceptors = new IInterceptor[] { exceptionInterceptor };
 
 			var proxy = (IExceptionTest)_generator.CreateInterfaceProxyWithTarget(typeof(IExceptionTest), new ExceptionTest(), interceptors);
@@ -194,7 +130,7 @@ namespace Proxii.Test.Integration.Interceptors
 		{
 			var exceptionList = new List<Exception>();
 
-			var exceptionInterceptor = new ExceptionInterceptor(typeof (NullReferenceException), e => exceptionList.Add(e))
+			var exceptionInterceptor = new ExceptionInterceptor<NullReferenceException>(e => exceptionList.Add(e))
 			{
 				Rethrow = true
 			};

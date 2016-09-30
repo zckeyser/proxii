@@ -60,20 +60,20 @@ namespace Proxii.Test.Unit.Selectors
         public void Unit_ReturnTypeSelector_MultipleInterceptors_Matches()
         {
             var selector = new ReturnTypeSelector(typeof(int));
-            var interceptors = new IInterceptor[] { new LoggingInterceptor(new Logger()), new ExceptionInterceptor() };
+            var interceptors = new IInterceptor[] { new LoggingInterceptor(new Logger()), new NullInterceptor() };
 
             var result = selector.SelectInterceptors(typeof(ReturnTypeSelectorTester), typeof(ReturnTypeSelectorTester).GetMethod("IntMethod"), interceptors);
 
             Assert.AreEqual(2, result.Length);
             Assert.IsInstanceOfType(result[0], typeof(LoggingInterceptor));
-            Assert.IsInstanceOfType(result[1], typeof(ExceptionInterceptor));
+            Assert.IsInstanceOfType(result[1], typeof(NullInterceptor));
         }
 
         [TestMethod]
         public void Unit_ReturnTypeSelector_MultipleInterceptors_DoesNotMatch()
         {
             var selector = new ReturnTypeSelector(typeof(string));
-            var interceptors = new IInterceptor[] { new LoggingInterceptor(new Logger()), new ExceptionInterceptor() };
+            var interceptors = new IInterceptor[] { new LoggingInterceptor(new Logger()), new NullInterceptor() };
 
             var result = selector.SelectInterceptors(typeof(ReturnTypeSelectorTester), typeof(ReturnTypeSelectorTester).GetMethod("IntMethod"), interceptors);
 

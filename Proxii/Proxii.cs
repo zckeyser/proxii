@@ -8,7 +8,7 @@ using Proxii.Library.Other;
 
 namespace Proxii
 {
-	public class Proxii
+	public static class Proxii
 	{
         /// <summary>
         /// Proxy TInterface to an instance of TImplementation
@@ -45,7 +45,7 @@ namespace Proxii
         /// property setters, as well as any other methods
         /// specified in the string params
         /// </summary>
-        /// <param name="obj"> object to freeze </param>
+        /// <param name="obj"> object to freeze</param>
         /// <param name="alternatePatterns">alternate patterns to freeze methods other than Property setters</param>
         /// <returns></returns>
 	    public static TInterface Freeze<TInterface>(TInterface obj, params string[] alternatePatterns)
@@ -55,7 +55,7 @@ namespace Proxii
         }
  	}
 
-    public class Proxii<T>
+    public sealed class Proxii<T>
         where T : class
     {
         #region Private Fields
@@ -127,7 +127,7 @@ namespace Proxii
             }
             catch (Exception e)
             {
-                throw new ArgumentException("Could not instantiate type " + implementationType.Name + " (Does it have a default constructor?)", e);
+                throw new ArgumentException($"Could not instantiate type {implementationType.Name} (Does it have a default constructor?)", e);
             }
 
             return this;
@@ -143,7 +143,7 @@ namespace Proxii
 
 			// make sure the type implements our interface
 			if (!typeof(T).IsAssignableFrom(implementationType))
-				throw new ArgumentException("Proxii.With<T>() must be called with a type that implements the interface of that proxy");
+				throw new ArgumentException("Proxii.With<T>() must be called with an object that implements the interface of that proxy");
 
 			_target = target;
 
@@ -158,7 +158,7 @@ namespace Proxii
         /// <param name="argumentTypes">Argument types of method signatures to select (order-sensitive)</param>
         public Proxii<T> ByArgumentType(params Type[] argumentTypes)
         {
-            ArgumentTypeSelector selector = _selectors.Find(sel => sel is ArgumentTypeSelector) as ArgumentTypeSelector;
+            var selector = _selectors.Find(sel => sel is ArgumentTypeSelector) as ArgumentTypeSelector;
 
             if (selector == null)
             {
@@ -180,13 +180,9 @@ namespace Proxii
             var nameSelector = _selectors.Find(selector => selector is MethodNameSelector) as MethodNameSelector;
 
             if(nameSelector != null)
-            {
                 nameSelector.AddNames(methodNames);
-            }
             else
-            {
                 _selectors.Add(new MethodNameSelector(methodNames));
-            }
 
             return this;
         }
@@ -446,19 +442,13 @@ namespace Proxii
 		/// <summary>
 		/// Perform a custom action when the given type of interception is caught.
 		/// </summary>
-		public Proxii<T> Catch<TException>(Action<Exception> onCatch) where TException : Exception
+		public Proxii<T> Catch<TException>(Action<Exception> onCatch) 
+            where TException : Exception
 		{
-			var exception = typeof (TException);
-
             if (onCatch == null)
                 throw new ArgumentNullException(nameof(onCatch));
 
-            var exceptionInterceptor = _interceptors.Find(interceptor => interceptor is ExceptionInterceptor) as ExceptionInterceptor;
-
-            if (exceptionInterceptor != null)
-                exceptionInterceptor.AddCatch(exception, onCatch);
-            else
-                _interceptors.Add(new ExceptionInterceptor(exception, onCatch));
+            _interceptors.Add(new ExceptionInterceptor<TException>(onCatch));
 
             return this;
         }
@@ -471,6 +461,17 @@ namespace Proxii
         public Proxii<T> Stop()
         {
             _interceptors.Add(new StopMethodInterceptor());
+
+            return this;
+        }
+
+        /// <summary>
+        /// throws a NullReferenceException whenever an intercepted method gets a null argument
+        /// </summary>
+        /// <returns></returns>
+        public Proxii<T> NoNullArguments()
+        {
+            _interceptors.Add(new NullInterceptor());
 
             return this;
         }

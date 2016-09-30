@@ -19,7 +19,7 @@ namespace Proxii.Test.Integration.Selectors
             var logger = new Logger();
             
             var selector = new MethodNamePatternSelector();
-            var interceptors = new IInterceptor[] { new ExceptionInterceptor(typeof(ArgumentNullException), e => logger.Log("foo")) };
+            var interceptors = new IInterceptor[] { new ExceptionInterceptor<ArgumentNullException>(e => logger.Log("foo")) };
 
             var proxy =
                 (IProxiiTester)
@@ -36,7 +36,7 @@ namespace Proxii.Test.Integration.Selectors
             var logger = new Logger();
 
             var selector = new MethodNamePatternSelector("^Thr.*");
-            var interceptors = new IInterceptor[] { new ExceptionInterceptor(typeof(ArgumentNullException), e => logger.Log("foo")) };
+            var interceptors = new IInterceptor[] { new ExceptionInterceptor<ArgumentNullException>(e => logger.Log("foo")) };
 
             var proxy =
                 (IProxiiTester)
@@ -59,7 +59,7 @@ namespace Proxii.Test.Integration.Selectors
             var logger = new Logger();
 
             var selector = new MethodNamePatternSelector("^Thr$");
-            var interceptors = new IInterceptor[] { new ExceptionInterceptor(typeof(ArgumentNullException), e => logger.Log("foo")) };
+            var interceptors = new IInterceptor[] { new ExceptionInterceptor<ArgumentNullException>(e => logger.Log("foo")) };
 
             var proxy =
                 (IProxiiTester)
@@ -78,7 +78,7 @@ namespace Proxii.Test.Integration.Selectors
             var logger = new Logger();
 
             var selector = new MethodNamePatternSelector("^Thr.*");
-            var interceptors = new IInterceptor[] { new ExceptionInterceptor(typeof(ArgumentNullException), e => logger.Log("foo")) };
+            var interceptors = new IInterceptor[] { new ExceptionInterceptor<ArgumentNullException>(e => logger.Log("foo")) };
 
             var proxy =
                 (IProxiiTester)
@@ -103,7 +103,7 @@ namespace Proxii.Test.Integration.Selectors
             var logger = new Logger();
 
             var selector = new MethodNamePatternSelector("^Thr$");
-            var interceptors = new IInterceptor[] { new ExceptionInterceptor(typeof(ArgumentNullException), e => logger.Log("foo")) };
+            var interceptors = new IInterceptor[] { new ExceptionInterceptor<ArgumentNullException>(e => logger.Log("foo")) };
 
             var proxy =
                 (IProxiiTester)

@@ -1,43 +1,26 @@
 ﻿using Castle.DynamicProxy;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Proxii.Library.Interceptors
 {
-    public class ExceptionInterceptor : IInterceptor
+    public class ExceptionInterceptor<T> : IInterceptor
+        where T : Exception
     {
-        private readonly Dictionary<Type, Action<Exception>> _customCatches = new Dictionary<Type, Action<Exception>>();
+        private readonly Action<T> onCatch;
 
         /// <summary>
         /// throw the exception after performing the custom action
         /// </summary>
         public bool Rethrow { get; set; }
-        
-        public ExceptionInterceptor()
-        {
-	        Rethrow = false;
-	        // do nothing -- we can add interceptions later
-        }
 
         /// <summary>
         /// Initialize with a custom catch
         /// </summary>
-        public ExceptionInterceptor(Type exception, Action<Exception> onThrow)
+        public ExceptionInterceptor(Action<T> onCatch, bool rethrow = false)
         {
-	        Rethrow = false;
-            AddCatch(exception, onThrow);
-        }
+	        Rethrow = rethrow;
 
-        public void AddCatch(Type exception, Action<Exception> onThrow)
-        {
-            if (onThrow == null)
-                throw new ArgumentNullException("onThrow");
-
-            if (!(Activator.CreateInstance(exception) is Exception))
-                throw new ArgumentException("exception must be a subclass of Exception");
-
-            _customCatches.Add(exception, onThrow);
+            this.onCatch = onCatch;
         }
 
         public void Intercept(IInvocation invocation)
@@ -46,30 +29,19 @@ namespace Proxii.Library.Interceptors
             {
                 invocation.Proceed();
             }
-            catch(Exception e)
+            catch(T e)
             {
-				// only perform the custom catch if it's the right type
-                foreach (var type in _customCatches.Keys.Where(type => e.GetType() == type || e.GetType().IsSubclassOf(type)))
-                {
-                    var onCatch = _customCatches[type];
+                onCatch(e);
 
-                    onCatch(e);
+		        if(invocation.Method.ReturnType != typeof(void))
+					invocation.ReturnValue = GetDefault(invocation.Method.ReturnType);
 
-	                if (!Rethrow)
-	                {
-		                if(invocation.Method.ReturnType != typeof(void))
-							invocation.ReturnValue = GetDefault(invocation.Method.ReturnType);
-
-		                return;
-	                }
-                }
-
-                // if we didn't hit anything, re-throw the exception
-                throw;
+                // re-throw if desired
+                if(Rethrow) throw;
             }
         }
 
-	    private object GetDefault(Type type)
+	    private static object GetDefault(Type type)
 	    {
 		    return type.IsValueType ? Activator.CreateInstance(type) : null;
 	    }
