@@ -104,7 +104,7 @@ interface IFoo
 // modifying a single argument
 Func\<int, int> singleArgModifier = (n) => n + 1;
 
-var singleArgProxy = Proxii.Proxy<IFoo, Foo>()
+var singleArgProxy = Proxii.Proxy\<IFoo, Foo>()
                         .ChangeArguments(singleArgModifier)
                         .Create();
 
@@ -112,7 +112,7 @@ singleArgProxy.ReturnInt(1); // returns 2
 singleArgProxy.Add(2, 2); // returns 4
 
 // modifying multiple arguments
-Func\<int, int, Tuple<int, int>> multiArgModifier = (a, b)  =>
+Func\<int, int, Tuple\<int, int>> multiArgModifier = (a, b)  =>
     {
         return Tuple.Create(a * 2, b * 4);
     };
@@ -125,7 +125,7 @@ multiArgProxy.ReturnInt(1); // returns 1
 multiArgProxy.Add(2, 2); // returns 12
 ```
 
-## ChangeReturnValue(Func<T, T> modifier)
+## ChangeReturnValue(Func\<T, T> modifier)
 Changes the return value of any intercepted function which matches the input type of the given function. The given function must output the same type it takes in.
 ```csharp
 interface IFoo
@@ -142,7 +142,7 @@ var proxy = Proxii.Proxy\<IFoo, Foo>()
 proxy.Add(2, 2); // 40
 ```
 
-## OnReturn(Action<T> onReturn)
+## OnReturn(Action\<T> onReturn)
 Hooks into the function on return using the passed in Action. There are four versions of this function, which all pass different information into the action. All of the overloads differ only in the signature of the Action they take, and as such the information passed in. The data that can be passed out is: return value, MethodInfo and arguments. The overload parameter types are: Action<T>, Action<T, MethodInfo>, Action<T, object[]>, Action<T, MethodInfo, object[]> where T is the type of return value you'd like to intercept. Only functions with return types matching the given action will be intercepted.
 ```csharp
 interface IFoo
