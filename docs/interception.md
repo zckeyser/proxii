@@ -92,7 +92,7 @@ proxy.ThrowArgumentException(); // logs "Caught an exception :("
 proxy.ThrowIndexOutOfRangeException(); // doesn't get caught -- crashes
 ```
 
-## ChangeArguments(Func<T, T> modifier), ChangeArguments(Func<T1, T2, Tuple<T1, T2>> modifier)
+## ChangeArguments(Func\<T, T> modifier), ChangeArguments(Func\<T1, T2, Tuple\<T1, T2>> modifier)
 Changes the arguments of any intercepted function which matches the signature of the given function. The given function must take all of the arguments as input and output a tuple of all the modified arguments as output. Order of the original argument types must be maintained in the output tuple.
 ```csharp
 interface IFoo
