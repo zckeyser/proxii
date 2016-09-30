@@ -189,6 +189,21 @@ var returnWithArgsProxy = Proxii.Proxy()<IFoo, Foo>
 returnWithArgsProxy.Concat("foo", "bar", "buzz"); // logs "returned foobarbuzz from Concat with input foo bar buzz"
 ```
 
+## RejectNullArguments()
+Throws an ArgumentNullException when a null argument is passed to an intercepted method. The name of the null argument is included in the exception.
+```csharp
+interface IFoo
+{
+    void DoStuff(string bar);
+}
+
+var proxy = Proxii.Proxy<IFoo, Foo>()
+                  .RejectNullArguments()
+                  .Create();
+
+proxy.DoStuff(null); // throws new ArgumentNullException("bar")
+```
+
 ## Stop()
 Prevent the execution of all intercepted methods on this proxy.
 ```csharp

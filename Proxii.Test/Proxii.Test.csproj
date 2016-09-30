@@ -74,6 +74,7 @@
     <Compile Include="Integration\Interceptors\ArgumentInterceptorTest.cs" />
     <Compile Include="Integration\Interceptors\BeforeInvokeInterceptorTest.cs" />
     <Compile Include="Integration\Interceptors\ExceptionInterceptorTest.cs" />
+    <Compile Include="Integration\Interceptors\NullInterceptorTest.cs" />
     <Compile Include="Integration\Interceptors\OnReturnInterceptorTest.cs" />
     <Compile Include="Integration\Interceptors\ChangeReturnValueInterceptorTest.cs" />
     <Compile Include="Integration\Interceptors\StopMethodInterceptorTest.cs" />
