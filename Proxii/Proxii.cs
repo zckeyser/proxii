@@ -469,7 +469,7 @@ namespace Proxii
         /// throws a NullReferenceException whenever an intercepted method gets a null argument
         /// </summary>
         /// <returns></returns>
-        public Proxii<T> NoNullArguments()
+        public Proxii<T> RejectNullArguments()
         {
             _interceptors.Add(new NullInterceptor());
 
