@@ -24,8 +24,6 @@ namespace Proxii.Test.Integration.Interceptors
         [ExpectedException(typeof(ArgumentNullException))]
         public void Proxii_RejectNullArguments_ThrowsOnNullArgument()
         {
-            
-
             _proxy.Concat(null, null, null);
         }
 
@@ -33,13 +31,9 @@ namespace Proxii.Test.Integration.Interceptors
         [ExpectedException(typeof(ArgumentNullException))]
         public void Proxii_RejectNullArguments_GetsNullArgName_FirstArg()
         {
-            var proxy = Proxii.Proxy<IProxiiTester, ProxiiTester>()
-                            .RejectNullArguments()
-                            .Create();
-
             try
             {
-                proxy.Concat(null, "b", "c");
+                _proxy.Concat(null, "b", "c");
             }
             catch (ArgumentNullException e)
             {
@@ -55,13 +49,9 @@ namespace Proxii.Test.Integration.Interceptors
         [ExpectedException(typeof(ArgumentNullException))]
         public void Proxii_RejectNullArguments_GetsNullArgName_OtherArg()
         {
-            var proxy = Proxii.Proxy<IProxiiTester, ProxiiTester>()
-                            .RejectNullArguments()
-                            .Create();
-
             try
             {
-                proxy.Concat("a", null, "c");
+                _proxy.Concat("a", null, "c");
             }
             catch (ArgumentNullException e)
             {
@@ -76,11 +66,7 @@ namespace Proxii.Test.Integration.Interceptors
         [TestMethod]
         public void Proxii_RejectNullArguments_DoesNothingWhenNoNullArguments()
         {
-            var proxy = Proxii.Proxy<IProxiiTester, ProxiiTester>()
-                            .RejectNullArguments()
-                            .Create();
-
-            proxy.Concat("a", "b", "c");
+            _proxy.Concat("a", "b", "c");
         }
     }
 }
