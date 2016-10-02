@@ -20,6 +20,8 @@ namespace Proxii.Library.Interceptors
             for (var i = 0; i < args.Length; i++)
                 if (args[i] == null)
                     throw new ArgumentNullException(parameters[i].Name);
+
+            invocation.Proceed();
         }
     }
 }

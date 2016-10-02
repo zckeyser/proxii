@@ -24,7 +24,12 @@ namespace Proxii
             if (!interfaceType.IsInterface)
                 throw new ArgumentException("Proxii.Proxy<TInterface, TImplementation>() must be called with an interface type for TInterface");
 
-            return new Proxii<TInterface>().With<TImplementation>();
+            IProxii<TInterface> proxy = new Proxii<TInterface>().With<TImplementation>();
+
+            // add null checking layer to the proxy
+            proxy = new Proxii<IProxii<TInterface>>().With(proxy).RejectNullArguments().Create();
+
+            return proxy;
         }
 
         /// <summary>
@@ -37,7 +42,12 @@ namespace Proxii
             if (!interfaceType.IsInterface)
                 throw new ArgumentException("Proxii.Proxy<T>(T impl) must be called with an interface type for T");
 
-            return new Proxii<T>().With(impl);
+            IProxii<T> proxy = new Proxii<T>().With(impl);
+
+            // add null checking layer to the proxy
+            proxy = new Proxii<IProxii<T>>().With(proxy).RejectNullArguments().Create();
+
+            return proxy;
         }
 
         /// <summary>
@@ -55,7 +65,7 @@ namespace Proxii
         }
  	}
 
-    public sealed class Proxii<T> : IProxii<T>
+    internal sealed class Proxii<T> : IProxii<T>
         where T : class
     {
         #region Private Fields
@@ -100,13 +110,13 @@ namespace Proxii
         public IProxii<T> Group(Func<IProxii<T>, IProxii<T>> configFunction)
         {
             // make a new proxy with the current target
-            IProxii<T> proxy = new Proxii<T>().With(_target);
+            var proxy = Proxii.Proxy((T) _target);
 
             // configure the proxy as requested
             proxy = configFunction(proxy);
 
-            // add it to the list of proxies to combine in Create
-            _additionalProxiis.Add((Proxii<T>) proxy);
+            // create proxy layer for this group
+            _target = proxy.Create();
 
             return this;
         }
@@ -490,21 +500,7 @@ namespace Proxii
             // add interceptor to prevent "this" leaks
             _interceptors.Add(new ThisInterceptor());
 
-            // create the chain of Proxiis for grouping, 
-            // with the items in this Proxii being added last
-            // so that they're applied universally
-            var proxy = (T) _target;
-
-            foreach (var proxii in _additionalProxiis)
-            {
-                // if this is the first proxy in the chain, attach it to our actual object
-                // otherwise attach it to the most recently created proxy
-                proxii._target = proxy;
-
-                proxy = proxii.Create();
-            }
-
-            return (T) _generator.CreateInterfaceProxyWithTarget(typeof(T), proxy, options, _interceptors.ToArray());
+            return (T) _generator.CreateInterfaceProxyWithTarget(typeof(T), _target, options, _interceptors.ToArray());
         }
         #endregion
     }
