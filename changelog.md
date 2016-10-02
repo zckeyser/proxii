@@ -1,3 +1,7 @@
+# 1.4.2
+ - Fixed bug causing `IProxii<T>.RejectNullArguments()` to block all calls that went through it
+ - Moved all `Proxii\<T>` functionality behind the `IProxii\<T>` interface -- all IProxii\<T> methods now return an IProxii\<T> for chaining instead of a Proxii\<T>
+
 # 1.4.1
  - Added `Proxii.RejectNullArguments` interceptor: throws an ArgumentNullException whenever a null argument is passed to an intercepted method, including the name of the argument in the exception message
  - Changed internal implementation of `Catch()`
