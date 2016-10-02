@@ -92,10 +92,6 @@ namespace Proxii
 	    private IInterceptorSelector Selector => new CombinedSelector(_selectors);
         #endregion
 
-        #region Constructors
-        internal Proxii() { }
-        #endregion
-
         #region Grouping
         /// <summary>
         /// group together Proxii interceptors/selectors such that the given
@@ -221,42 +217,6 @@ namespace Proxii
 
         #region Interceptors
         /// <summary>
-        /// Executes the given action before an intercepted function is invoked
-        /// </summary>
-        public IProxii<T> BeforeInvoke(Action beforeHook)
-        {
-            // infoless hook
-            _interceptors.Add(new BeforeInvokeInterceptor(beforeHook));
-
-            return this;
-        }
-
-        /// <summary>
-        /// Executes the given action before an intercepted function is invoked,
-        /// using an action that is given the MethodInfo of the intercepted function
-        /// </summary>
-        public IProxii<T> BeforeInvoke(Action<MethodInfo> beforeHook)
-        {
-            // hook with method info
-            _interceptors.Add(new BeforeInvokeInterceptor(beforeHook));
-
-            return this;
-        }
-
-        /// <summary>
-        /// Executes the given action before an intercepted function is invoked,
-        /// using an action that is given the MethodInfo of the intercepted function
-        /// and the arguments it is being called with
-        /// </summary>
-        public IProxii<T> BeforeInvoke(Action<MethodInfo, object[]> beforeHook)
-        {
-            // hook with method info and args
-            _interceptors.Add(new BeforeInvokeInterceptor(beforeHook));
-
-            return this;
-        }
-
-        /// <summary>
         /// Executes the given action after an intercepted function is invoked
         /// </summary>
         public IProxii<T> AfterInvoke(Action afterHook)
@@ -293,57 +253,51 @@ namespace Proxii
         }
 
         /// <summary>
-        /// Execute the given action on the return value of intercepted functions.
-        ///
-        /// Only intercepts functions with a matching return value.
+        /// Executes the given action before an intercepted function is invoked
         /// </summary>
-        public IProxii<T> OnReturn<U>(Action<U> onReturn)
+        public IProxii<T> BeforeInvoke(Action beforeHook)
         {
-            // return value handler
-            _interceptors.Add(new OnReturnInterceptor<U>(onReturn));
+            // infoless hook
+            _interceptors.Add(new BeforeInvokeInterceptor(beforeHook));
 
             return this;
         }
 
         /// <summary>
-        /// Execute the given action on the return value of intercepted functions,
-        /// as well as the method info of the function being intercepted
-        ///
-        /// Only intercepts functions with a matching return value.
+        /// Executes the given action before an intercepted function is invoked,
+        /// using an action that is given the MethodInfo of the intercepted function
         /// </summary>
-        public IProxii<T> OnReturn<U>(Action<U, MethodInfo> onReturn)
+        public IProxii<T> BeforeInvoke(Action<MethodInfo> beforeHook)
         {
-            // return value and method info handler
-            _interceptors.Add(new OnReturnInterceptor<U>(onReturn));
+            // hook with method info
+            _interceptors.Add(new BeforeInvokeInterceptor(beforeHook));
 
             return this;
         }
 
         /// <summary>
-        /// Execute the given action on the return value of intercepted functions,
-        /// as well as the arguments that were passed into the function that was intercepted
-        ///
-        /// Only intercepts functions with a matching return value.
+        /// Executes the given action before an intercepted function is invoked,
+        /// using an action that is given the MethodInfo of the intercepted function
+        /// and the arguments it is being called with
         /// </summary>
-        public IProxii<T> OnReturn<U>(Action<U, object[]> onReturn)
+        public IProxii<T> BeforeInvoke(Action<MethodInfo, object[]> beforeHook)
         {
-            // return value and arguments handler
-            _interceptors.Add(new OnReturnInterceptor<U>(onReturn));
+            // hook with method info and args
+            _interceptors.Add(new BeforeInvokeInterceptor(beforeHook));
 
             return this;
         }
 
         /// <summary>
-        /// Execute the given action on the return value of intercepted functions,
-        /// as well as the method info of the function being intercepted
-        /// and the arguments that were passed into it
-        ///
-        /// Only intercepts functions with a matching return value.
-        /// </summary>
-        public IProxii<T> OnReturn<U>(Action<U, MethodInfo, object[]> onReturn)
+		/// Perform a custom action when the given type of interception is caught.
+		/// </summary>
+		public IProxii<T> Catch<TException>(Action<Exception> onCatch)
+            where TException : Exception
         {
-            // return value, method info, and arguments handler
-            _interceptors.Add(new OnReturnInterceptor<U>(onReturn));
+            if (onCatch == null)
+                throw new ArgumentNullException(nameof(onCatch));
+
+            _interceptors.Add(new ExceptionInterceptor<TException>(onCatch));
 
             return this;
         }
@@ -438,45 +392,100 @@ namespace Proxii
         /// Only intercepts functions which match the given function signature.
         /// </summary>
         public IProxii<T> ChangeReturnValue<TReturn>(Func<TReturn, TReturn> onReturn)
-	    {
-			_interceptors.Add(new ChangeReturnValueInterceptor<TReturn>(onReturn));
-
-		    return this;
-	    }
-
-		/// <summary>
-		/// Perform a custom action when the given type of interception is caught.
-		/// </summary>
-		public IProxii<T> Catch<TException>(Action<Exception> onCatch) 
-            where TException : Exception
-		{
-            if (onCatch == null)
-                throw new ArgumentNullException(nameof(onCatch));
-
-            _interceptors.Add(new ExceptionInterceptor<TException>(onCatch));
+        {
+            _interceptors.Add(new ChangeReturnValueInterceptor<TReturn>(onReturn));
 
             return this;
         }
 
         /// <summary>
-        /// prevent the execution of all methods caught by this interceptor
+        /// Only execute functions that are intercepted up 
+        /// until the Nth time, where N is the parameter passed in.
         /// 
-        /// causes methods that return things to return their defaults (null for reference types)
+        /// Call counters are maintained per function. 
+        /// Functions which are blocked return their default value (null for reference types)
+        /// </summary>
+        public IProxii<T> MaxCalls(int max)
+        {
+            _interceptors.Add(new MaxCallsInterceptor(max));
+
+            return this;
+        }
+
+        /// <summary>
+        /// Execute the given action on the return value of intercepted functions.
+        ///
+        /// Only intercepts functions with a matching return value.
+        /// </summary>
+        public IProxii<T> OnReturn<U>(Action<U> onReturn)
+        {
+            // return value handler
+            _interceptors.Add(new OnReturnInterceptor<U>(onReturn));
+
+            return this;
+        }
+
+        /// <summary>
+        /// Execute the given action on the return value of intercepted functions,
+        /// as well as the method info of the function being intercepted
+        ///
+        /// Only intercepts functions with a matching return value.
+        /// </summary>
+        public IProxii<T> OnReturn<U>(Action<U, MethodInfo> onReturn)
+        {
+            // return value and method info handler
+            _interceptors.Add(new OnReturnInterceptor<U>(onReturn));
+
+            return this;
+        }
+
+        /// <summary>
+        /// Execute the given action on the return value of intercepted functions,
+        /// as well as the arguments that were passed into the function that was intercepted
+        ///
+        /// Only intercepts functions with a matching return value.
+        /// </summary>
+        public IProxii<T> OnReturn<U>(Action<U, object[]> onReturn)
+        {
+            // return value and arguments handler
+            _interceptors.Add(new OnReturnInterceptor<U>(onReturn));
+
+            return this;
+        }
+
+        /// <summary>
+        /// Execute the given action on the return value of intercepted functions,
+        /// as well as the method info of the function being intercepted
+        /// and the arguments that were passed into it
+        ///
+        /// Only intercepts functions with a matching return value.
+        /// </summary>
+        public IProxii<T> OnReturn<U>(Action<U, MethodInfo, object[]> onReturn)
+        {
+            // return value, method info, and arguments handler
+            _interceptors.Add(new OnReturnInterceptor<U>(onReturn));
+
+            return this;
+        }
+
+        /// <summary>
+        /// Throws a NullReferenceException whenever an intercepted method gets a null argument
+        /// </summary>
+        public IProxii<T> RejectNullArguments()
+        {
+            _interceptors.Add(new NullInterceptor());
+
+            return this;
+        }
+
+        /// <summary>
+        /// Prevent the execution of all methods caught by this interceptor
+        /// 
+        /// Functions which are blocked return their default value (null for reference types)
         /// </summary>
         public IProxii<T> Stop()
         {
             _interceptors.Add(new StopMethodInterceptor());
-
-            return this;
-        }
-
-        /// <summary>
-        /// throws a NullReferenceException whenever an intercepted method gets a null argument
-        /// </summary>
-        /// <returns></returns>
-        public IProxii<T> RejectNullArguments()
-        {
-            _interceptors.Add(new NullInterceptor());
 
             return this;
         }
