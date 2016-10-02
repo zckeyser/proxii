@@ -1,12 +1,12 @@
 ﻿using Castle.DynamicProxy;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Proxii.Library.Interceptors;
-using Proxii.Test.Util.TestClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Proxii.Test.Util;
 
 namespace Proxii.Test.Integration.Interceptors
 {

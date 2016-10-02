@@ -1,8 +1,8 @@
 ﻿using Castle.DynamicProxy;
 
-namespace Proxii.Test.Util.TestClasses
+namespace Proxii.Test.Util
 {
-	public class LoggingInterceptor : IInterceptor
+    public class LoggingInterceptor : IInterceptor
 	{
 		private readonly Logger _logger;
 

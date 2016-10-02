@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Proxii.Test.Util.TestClasses;
+using Proxii.Test.Util;
 
 namespace Proxii.Test.e2e
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Proxii.Test.Util.TestClasses;
+using Proxii.Test.Util;
 
 namespace Proxii.Test.e2e
 {

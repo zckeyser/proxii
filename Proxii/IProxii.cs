@@ -25,7 +25,6 @@ namespace Proxii
         IProxii<T> ChangeArguments<U1, U2, U3, U4, U5, U6>(Func<U1, U2, U3, U4, U5, U6, Tuple<U1, U2, U3, U4, U5, U6>> modifier);
         IProxii<T> ChangeArguments<U1, U2, U3, U4, U5, U6, U7>(Func<U1, U2, U3, U4, U5, U6, U7, Tuple<U1, U2, U3, U4, U5, U6, U7>> modifier);
         IProxii<T> ChangeReturnValue<TReturn>(Func<TReturn, TReturn> onReturn);
-        T Create();
         IProxii<T> Group(Func<IProxii<T>, IProxii<T>> configFunction);
         IProxii<T> OnReturn<U>(Action<U, object[]> onReturn);
         IProxii<T> OnReturn<U>(Action<U> onReturn);
@@ -33,5 +32,6 @@ namespace Proxii
         IProxii<T> OnReturn<U>(Action<U, MethodInfo, object[]> onReturn);
         IProxii<T> RejectNullArguments();
         IProxii<T> Stop();
+        T Create();
     }
 }

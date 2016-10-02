@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Proxii.Test.Util.TestClasses;
 using System;
+using Proxii.Test.Util;
 
 namespace Proxii.Test.e2e
 {

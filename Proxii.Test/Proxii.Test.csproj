@@ -87,18 +87,13 @@
     <Compile Include="Unit\Selectors\ArgumentTypeSelectorTest.cs" />
     <Compile Include="Unit\Selectors\MethodNameSelectorTest.cs" />
     <Compile Include="Unit\Selectors\ReturnTypeSelectorTest.cs" />
-    <Compile Include="Util\TestClasses\ArgumentTester.cs" />
-    <Compile Include="Util\TestClasses\ArgumentTypeSelectorTester.cs" />
-    <Compile Include="Util\TestClasses\FreezeTester.cs" />
-    <Compile Include="Util\TestClasses\IArgumentTester.cs" />
-    <Compile Include="Util\TestClasses\IArgumentTypeSelectorTester.cs" />
-    <Compile Include="Util\TestClasses\IFreezeTester.cs" />
-    <Compile Include="Util\TestClasses\IInvokeHookTester.cs" />
-    <Compile Include="Util\TestClasses\InvokeHookTester.cs" />
-    <Compile Include="Util\TestClasses\IProxiiTester.cs" />
-    <Compile Include="Util\TestClasses\Logger.cs" />
-    <Compile Include="Util\TestClasses\LoggingInterceptor.cs" />
-    <Compile Include="Util\TestClasses\ProxiiTester.cs" />
+    <Compile Include="Util\ArgumentTester.cs" />
+    <Compile Include="Util\ArgumentTypeSelectorTester.cs" />
+    <Compile Include="Util\FreezeTester.cs" />
+    <Compile Include="Util\InvokeHookTester.cs" />
+    <Compile Include="Util\Logger.cs" />
+    <Compile Include="Util\LoggingInterceptor.cs" />
+    <Compile Include="Util\ProxiiTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Proxii.Library\Proxii.Library.csproj">

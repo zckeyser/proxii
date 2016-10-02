@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Proxii.Test.Util.TestClasses
+namespace Proxii.Test.Util
 {
-	public class Logger
+    public class Logger
 	{
 		private List<string> History { get; set; }
 

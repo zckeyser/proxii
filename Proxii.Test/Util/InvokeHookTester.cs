@@ -1,6 +1,12 @@
-﻿namespace Proxii.Test.Util.TestClasses
+﻿namespace Proxii.Test.Util
 {
-	public class InvokeHookTester : IInvokeHookTester
+    public interface IInvokeHookTester
+    {
+        int Value { get; set; }
+        void SetValue(int value);
+    }
+
+    public class InvokeHookTester : IInvokeHookTester
 	{
 		public const int DefaultValue = 5;
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Castle.DynamicProxy;
 using Proxii.Library.Interceptors;
-using Proxii.Test.Util.TestClasses;
+using Proxii.Test.Util;
 
 namespace Proxii.Test.Integration.Interceptors
 {

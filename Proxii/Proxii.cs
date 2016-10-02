@@ -90,11 +90,6 @@ namespace Proxii
 	    /// combined selector created from the current state of _selectors
 	    /// </summary>
 	    private IInterceptorSelector Selector => new CombinedSelector(_selectors);
-
-        /// <summary>
-        /// holds additional Proxii layers created with Group()
-        /// </summary>
-        private readonly List<Proxii<T>> _additionalProxiis = new List<Proxii<T>>();
         #endregion
 
         #region Constructors
