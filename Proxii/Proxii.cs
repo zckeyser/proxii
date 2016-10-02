@@ -17,7 +17,7 @@ namespace Proxii
         /// If a non-default constructor is desired, pass in an implementation object
         /// as an argument instead of an implementation type as a typeparam
         /// </summary>
-        public static Proxii<TInterface> Proxy<TInterface, TImplementation>() where TImplementation : TInterface where TInterface : class
+        public static IProxii<TInterface> Proxy<TInterface, TImplementation>() where TImplementation : TInterface where TInterface : class
         {
             var interfaceType = typeof(TInterface);
 
@@ -30,7 +30,7 @@ namespace Proxii
         /// <summary>
         /// Proxy interface T to given object
         /// </summary>
-        public static Proxii<T> Proxy<T>(T impl) where T : class
+        public static IProxii<T> Proxy<T>(T impl) where T : class
         {
             var interfaceType = typeof(T);
 
@@ -55,7 +55,7 @@ namespace Proxii
         }
  	}
 
-    public sealed class Proxii<T>
+    public sealed class Proxii<T> : IProxii<T>
         where T : class
     {
         #region Private Fields
@@ -97,16 +97,16 @@ namespace Proxii
         /// selectors only apply to the given interceptors and vice versa
         /// </summary>
         /// <param name="configFunction">Func to configure the Proxii sub-group</param>
-        public Proxii<T> Group(Func<Proxii<T>, Proxii<T>> configFunction)
+        public IProxii<T> Group(Func<IProxii<T>, IProxii<T>> configFunction)
         {
             // make a new proxy with the current target
-            var proxy = new Proxii<T>().With(_target);
+            IProxii<T> proxy = new Proxii<T>().With(_target);
 
             // configure the proxy as requested
             proxy = configFunction(proxy);
 
             // add it to the list of proxies to combine in Create
-            _additionalProxiis.Add(proxy);
+            _additionalProxiis.Add((Proxii<T>) proxy);
 
             return this;
         }
@@ -156,7 +156,7 @@ namespace Proxii
         /// only intercept methods with the given argument signature
         /// </summary>
         /// <param name="argumentTypes">Argument types of method signatures to select (order-sensitive)</param>
-        public Proxii<T> ByArgumentType(params Type[] argumentTypes)
+        public IProxii<T> ByArgumentType(params Type[] argumentTypes)
         {
             var selector = _selectors.Find(sel => sel is ArgumentTypeSelector) as ArgumentTypeSelector;
 
@@ -175,7 +175,7 @@ namespace Proxii
         /// <summary>
         /// only intercept methods with the given name
         /// </summary>
-        public Proxii<T> ByMethodName(params string[] methodNames)
+        public IProxii<T> ByMethodName(params string[] methodNames)
         {
             var nameSelector = _selectors.Find(selector => selector is MethodNameSelector) as MethodNameSelector;
 
@@ -190,7 +190,7 @@ namespace Proxii
         /// <summary>
         /// only interceept methods which match one of the given regex patterns
         /// </summary>
-        public Proxii<T> ByMethodNamePattern(params string[] patterns)
+        public IProxii<T> ByMethodNamePattern(params string[] patterns)
         {
             var selector = _selectors.Find(s => s is MethodNamePatternSelector) as MethodNamePatternSelector;
 
@@ -206,7 +206,7 @@ namespace Proxii
         /// only intercept methods that return one of the given types
         /// void methods can be specified by passing typeof(void) as an argument
         /// </summary>
-        public Proxii<T> ByReturnType(params Type[] types)
+        public IProxii<T> ByReturnType(params Type[] types)
         {
             _selectors.Add(new ReturnTypeSelector(types));
 
@@ -218,7 +218,7 @@ namespace Proxii
         /// <summary>
         /// Executes the given action before an intercepted function is invoked
         /// </summary>
-        public Proxii<T> BeforeInvoke(Action beforeHook)
+        public IProxii<T> BeforeInvoke(Action beforeHook)
         {
             // infoless hook
             _interceptors.Add(new BeforeInvokeInterceptor(beforeHook));
@@ -230,7 +230,7 @@ namespace Proxii
         /// Executes the given action before an intercepted function is invoked,
         /// using an action that is given the MethodInfo of the intercepted function
         /// </summary>
-        public Proxii<T> BeforeInvoke(Action<MethodInfo> beforeHook)
+        public IProxii<T> BeforeInvoke(Action<MethodInfo> beforeHook)
         {
             // hook with method info
             _interceptors.Add(new BeforeInvokeInterceptor(beforeHook));
@@ -243,7 +243,7 @@ namespace Proxii
         /// using an action that is given the MethodInfo of the intercepted function
         /// and the arguments it is being called with
         /// </summary>
-        public Proxii<T> BeforeInvoke(Action<MethodInfo, object[]> beforeHook)
+        public IProxii<T> BeforeInvoke(Action<MethodInfo, object[]> beforeHook)
         {
             // hook with method info and args
             _interceptors.Add(new BeforeInvokeInterceptor(beforeHook));
@@ -254,7 +254,7 @@ namespace Proxii
         /// <summary>
         /// Executes the given action after an intercepted function is invoked
         /// </summary>
-        public Proxii<T> AfterInvoke(Action afterHook)
+        public IProxii<T> AfterInvoke(Action afterHook)
         {
             // infoless hook
             _interceptors.Add(new AfterInvokeInterceptor(afterHook));
@@ -266,7 +266,7 @@ namespace Proxii
         /// Executes the given action after an intercepted function is invoked,
         /// using an action that is given the MethodInfo of the intercepted function
         /// </summary>
-        public Proxii<T> AfterInvoke(Action<MethodInfo> afterHook)
+        public IProxii<T> AfterInvoke(Action<MethodInfo> afterHook)
         {
             // hook with method info
             _interceptors.Add(new AfterInvokeInterceptor(afterHook));
@@ -279,7 +279,7 @@ namespace Proxii
         /// using an action that is given the MethodInfo of the intercepted function
         /// and the arguments it is being called with
         /// </summary>
-        public Proxii<T> AfterInvoke(Action<MethodInfo, object[]> afterHook)
+        public IProxii<T> AfterInvoke(Action<MethodInfo, object[]> afterHook)
         {
             // hook with method info and args
             _interceptors.Add(new AfterInvokeInterceptor(afterHook));
@@ -292,7 +292,7 @@ namespace Proxii
         ///
         /// Only intercepts functions with a matching return value.
         /// </summary>
-        public Proxii<T> OnReturn<U>(Action<U> onReturn)
+        public IProxii<T> OnReturn<U>(Action<U> onReturn)
         {
             // return value handler
             _interceptors.Add(new OnReturnInterceptor<U>(onReturn));
@@ -306,7 +306,7 @@ namespace Proxii
         ///
         /// Only intercepts functions with a matching return value.
         /// </summary>
-        public Proxii<T> OnReturn<U>(Action<U, MethodInfo> onReturn)
+        public IProxii<T> OnReturn<U>(Action<U, MethodInfo> onReturn)
         {
             // return value and method info handler
             _interceptors.Add(new OnReturnInterceptor<U>(onReturn));
@@ -320,7 +320,7 @@ namespace Proxii
         ///
         /// Only intercepts functions with a matching return value.
         /// </summary>
-        public Proxii<T> OnReturn<U>(Action<U, object[]> onReturn)
+        public IProxii<T> OnReturn<U>(Action<U, object[]> onReturn)
         {
             // return value and arguments handler
             _interceptors.Add(new OnReturnInterceptor<U>(onReturn));
@@ -335,7 +335,7 @@ namespace Proxii
         ///
         /// Only intercepts functions with a matching return value.
         /// </summary>
-        public Proxii<T> OnReturn<U>(Action<U, MethodInfo, object[]> onReturn)
+        public IProxii<T> OnReturn<U>(Action<U, MethodInfo, object[]> onReturn)
         {
             // return value, method info, and arguments handler
             _interceptors.Add(new OnReturnInterceptor<U>(onReturn));
@@ -348,7 +348,7 @@ namespace Proxii
         ///
         /// Only intercepts functions which match the given function signature.
         /// </summary>
-        public Proxii<T> ChangeArguments<U>(Func<U, U> modifier)
+        public IProxii<T> ChangeArguments<U>(Func<U, U> modifier)
         {
             _interceptors.Add(new ArgumentInterceptor<U>(modifier));
 
@@ -360,7 +360,7 @@ namespace Proxii
         ///
         /// Only intercepts functions which match the given function signature.
         /// </summary>
-        public Proxii<T> ChangeArguments<U1, U2>(Func<U1, U2, Tuple<U1, U2>> modifier)
+        public IProxii<T> ChangeArguments<U1, U2>(Func<U1, U2, Tuple<U1, U2>> modifier)
         {
             _interceptors.Add(new ArgumentInterceptor<U1, U2>(modifier));
 
@@ -372,7 +372,7 @@ namespace Proxii
         ///
         /// Only intercepts functions which match the given function signature.
         /// </summary>
-        public Proxii<T> ChangeArguments<U1, U2, U3>(Func<U1, U2, U3, Tuple<U1, U2, U3>> modifier)
+        public IProxii<T> ChangeArguments<U1, U2, U3>(Func<U1, U2, U3, Tuple<U1, U2, U3>> modifier)
         {
             _interceptors.Add(new ArgumentInterceptor<U1, U2, U3>(modifier));
 
@@ -384,7 +384,7 @@ namespace Proxii
         ///
         /// Only intercepts functions which match the given function signature.
         /// </summary>
-        public Proxii<T> ChangeArguments<U1, U2, U3, U4>(Func<U1, U2, U3, U4, Tuple<U1, U2, U3, U4>> modifier)
+        public IProxii<T> ChangeArguments<U1, U2, U3, U4>(Func<U1, U2, U3, U4, Tuple<U1, U2, U3, U4>> modifier)
         {
             _interceptors.Add(new ArgumentInterceptor<U1, U2, U3, U4>(modifier));
 
@@ -396,7 +396,7 @@ namespace Proxii
         ///
         /// Only intercepts functions which match the given function signature.
         /// </summary>
-        public Proxii<T> ChangeArguments<U1, U2, U3, U4, U5>(Func<U1, U2, U3, U4, U5, Tuple<U1, U2, U3, U4, U5>> modifier)
+        public IProxii<T> ChangeArguments<U1, U2, U3, U4, U5>(Func<U1, U2, U3, U4, U5, Tuple<U1, U2, U3, U4, U5>> modifier)
         {
             _interceptors.Add(new ArgumentInterceptor<U1, U2, U3, U4, U5>(modifier));
 
@@ -408,7 +408,7 @@ namespace Proxii
         ///
         /// Only intercepts functions which match the given function signature.
         /// </summary>
-        public Proxii<T> ChangeArguments<U1, U2, U3, U4, U5, U6>(Func<U1, U2, U3, U4, U5, U6, Tuple<U1, U2, U3, U4, U5, U6>> modifier)
+        public IProxii<T> ChangeArguments<U1, U2, U3, U4, U5, U6>(Func<U1, U2, U3, U4, U5, U6, Tuple<U1, U2, U3, U4, U5, U6>> modifier)
         {
             _interceptors.Add(new ArgumentInterceptor<U1, U2, U3, U4, U5, U6>(modifier));
 
@@ -420,7 +420,7 @@ namespace Proxii
         ///
         /// Only intercepts functions which match the given function signature.
         /// </summary>
-        public Proxii<T> ChangeArguments<U1, U2, U3, U4, U5, U6, U7>(Func<U1, U2, U3, U4, U5, U6, U7, Tuple<U1, U2, U3, U4, U5, U6, U7>> modifier)
+        public IProxii<T> ChangeArguments<U1, U2, U3, U4, U5, U6, U7>(Func<U1, U2, U3, U4, U5, U6, U7, Tuple<U1, U2, U3, U4, U5, U6, U7>> modifier)
         {
             _interceptors.Add(new ArgumentInterceptor<U1, U2, U3, U4, U5, U6, U7>(modifier));
 
@@ -432,7 +432,7 @@ namespace Proxii
         ///
         /// Only intercepts functions which match the given function signature.
         /// </summary>
-        public Proxii<T> ChangeReturnValue<TReturn>(Func<TReturn, TReturn> onReturn)
+        public IProxii<T> ChangeReturnValue<TReturn>(Func<TReturn, TReturn> onReturn)
 	    {
 			_interceptors.Add(new ChangeReturnValueInterceptor<TReturn>(onReturn));
 
@@ -442,7 +442,7 @@ namespace Proxii
 		/// <summary>
 		/// Perform a custom action when the given type of interception is caught.
 		/// </summary>
-		public Proxii<T> Catch<TException>(Action<Exception> onCatch) 
+		public IProxii<T> Catch<TException>(Action<Exception> onCatch) 
             where TException : Exception
 		{
             if (onCatch == null)
@@ -458,7 +458,7 @@ namespace Proxii
         /// 
         /// causes methods that return things to return their defaults (null for reference types)
         /// </summary>
-        public Proxii<T> Stop()
+        public IProxii<T> Stop()
         {
             _interceptors.Add(new StopMethodInterceptor());
 
@@ -469,7 +469,7 @@ namespace Proxii
         /// throws a NullReferenceException whenever an intercepted method gets a null argument
         /// </summary>
         /// <returns></returns>
-        public Proxii<T> RejectNullArguments()
+        public IProxii<T> RejectNullArguments()
         {
             _interceptors.Add(new NullInterceptor());
 
