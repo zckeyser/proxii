@@ -1,5 +1,5 @@
 # Interception Methods
-These are methods which allow you to hook in new behavior in some way on any methods called on the proxy object. To limit what methods get intercepted, you can use [selection]() methods.
+These are methods which allow you to hook in new behavior in some way on any methods called on the proxy object. To limit what methods get intercepted, you can use [selection](https://github.com/zckeyser/proxii/blob/master/docs/selection.md) methods.
 
 ## AfterInvoke(Action action), AfterInvoke(Action<MethodInfo> action), AfterInvoke(Action<MethodInfo, object[]> action)
 Provides three different ways to hook an action after the intercepted function has been invoked. Depending on what the signature of the action passed into `AfterInvoke` is, you can call a function with either no arguments, the `MethodInfo` of the intercepted function, or the `MethodInfo` *and* an array of the arguments passed into the function.
