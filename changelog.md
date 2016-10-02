@@ -1,6 +1,6 @@
 # 1.4.1
  - Added `Proxii.RejectNullArguments` interceptor: throws an ArgumentNullException whenever a null argument is passed to an intercepted method, including the name of the argument in the exception message
- - Changed internal implementation of Catch()
+ - Changed internal implementation of `Catch()`
 
 # 1.4.0
  - Added grouping method `Proxii.Group` to allow grouping of selectors and interceptors on an object, so you can isolate the affects of an interceptor(s) to a given group of selectors. See the documentation [here](https://github.com/zckeyser/proxii/blob/master/docs/grouping.md).
