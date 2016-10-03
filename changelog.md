@@ -1,3 +1,7 @@
+# 1.4.3
+ - Updated `IProxii` to block all null arguments passed into any of its methods
+ - Added `MaxCalls` interceptor, which blocks any repeated calls to a method after the first N times it is called
+
 # 1.4.2
  - Fixed bug causing `IProxii<T>.RejectNullArguments()` to block all calls that went through it
  - Moved all `Proxii\<T>` functionality behind the `IProxii\<T>` interface -- all IProxii\<T> methods now return an IProxii\<T> for chaining instead of a Proxii\<T>
