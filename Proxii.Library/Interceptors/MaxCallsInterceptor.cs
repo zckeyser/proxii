@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 using Castle.DynamicProxy;
+using System.Reflection;
 
 namespace Proxii.Library.Interceptors
 {
@@ -31,12 +31,18 @@ namespace Proxii.Library.Interceptors
                 // only proceed it we're under the max # of calls
                 if (_callCounts[invocation.Method] >= _maxCalls)
                 {
+                    // no need to set a return value if it's a void
+                    if (invocation.Method.ReturnType == typeof(void)) return;
+
                     // we need to make sure the return value gets set if we aren't executing
                     var retval = invocation.Method.ReturnType.IsValueType
                         ? Activator.CreateInstance(invocation.Method.ReturnType)
                         : null;
 
                     invocation.ReturnValue = retval;
+
+                    // don't actually invoke the method
+                    return;
                 }
 
                 invocation.Proceed();

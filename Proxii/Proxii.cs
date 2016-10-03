@@ -504,7 +504,7 @@ namespace Proxii
             // add interceptor to prevent "this" leaks
             _interceptors.Add(new ThisInterceptor());
 
-            return (T) _generator.CreateInterfaceProxyWithTarget(typeof(T), _target, options, _interceptors.ToArray());
+            return _generator.CreateInterfaceProxyWithTarget((T) _target, options, _interceptors.ToArray());
         }
         #endregion
     }

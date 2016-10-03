@@ -67,6 +67,7 @@
     <Compile Include="e2e\ProxiiFreezeTest.cs" />
     <Compile Include="e2e\ProxiiGroupTest.cs" />
     <Compile Include="e2e\ProxiiInitializationTest.cs" />
+    <Compile Include="e2e\ProxiiMaxCallsTest.cs" />
     <Compile Include="e2e\ProxiiOnReturnTest.cs" />
     <Compile Include="e2e\ProxiiRejectNullArgumentsTest.cs" />
     <Compile Include="e2e\ProxiiStopTest.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Integration\Interceptors\ArgumentInterceptorTest.cs" />
     <Compile Include="Integration\Interceptors\BeforeInvokeInterceptorTest.cs" />
     <Compile Include="Integration\Interceptors\ExceptionInterceptorTest.cs" />
+    <Compile Include="Integration\Interceptors\MaxCallsInterceptorTest.cs" />
     <Compile Include="Integration\Interceptors\NullInterceptorTest.cs" />
     <Compile Include="Integration\Interceptors\OnReturnInterceptorTest.cs" />
     <Compile Include="Integration\Interceptors\ChangeReturnValueInterceptorTest.cs" />
