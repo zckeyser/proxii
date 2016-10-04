@@ -207,7 +207,10 @@ proxy.DoStuff(null); // throws new ArgumentNullException("bar")
 ## Stop()
 Prevent the execution of all intercepted methods on this proxy.
 ```csharp
-var proxy = Proxii.Proxy\<IFoo, Foo>().ByMethodName("Bar").Stop();
+var proxy = Proxii.Proxy\<IFoo, Foo>()
+                  .ByMethodName("Bar")
+                  .Stop()
+                  .Create();
 
 proxy.Bar(); // does nothing
 proxy.Buzz(); // acts normally
