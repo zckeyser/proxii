@@ -1,14 +1,14 @@
 # Interception Methods
 These are methods which allow you to hook in new behavior in some way on any methods called on the proxy object. To limit what methods get intercepted, you can use [selection](https://github.com/zckeyser/proxii/blob/master/docs/selection.md) methods.
 
- - [AfterInvoke](#after-invoke)
- - [BeforeInvoke](#before-invoke)
+ - [AfterInvoke](#afterinvoke)
+ - [BeforeInvoke](#beforeinvoke)
  - [Catch](#catch)
- - [ChangeArguments](#change-arguments)
- - [ChangeReturnValue](#change-return-value)
- - [OnReturn](#on-return)
- - [RejectNullArguments](#reject-null-arguments)
- - [SetDefault](#set-default)
+ - [ChangeArguments](#changearguments)
+ - [ChangeReturnValue](#changereturnvalue)
+ - [OnReturn](#onreturn)
+ - [RejectNullArguments](#rejectnullarguments)
+ - [SetDefault](#setdefault)
 
 ## AfterInvoke
 `AfterInvoke(Action action)`, `AfterInvoke(Action<MethodInfo> action)`, `AfterInvoke(Action<MethodInfo, object[]> action)`
