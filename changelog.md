@@ -1,3 +1,6 @@
+# 1.4.4
+ - Added `SetDefault` interceptor, which sets default values for null arguments either by factory method or by direct reference
+
 # 1.4.3
  - Updated `IProxii` to block all null arguments passed into any of its methods
  - Added `MaxCalls` interceptor, which blocks any repeated calls to a method after the first N times it is called
