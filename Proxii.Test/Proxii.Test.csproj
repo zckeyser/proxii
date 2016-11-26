@@ -74,6 +74,7 @@
     <Compile Include="Integration\Interceptors\AfterInvokeInterceptorTest.cs" />
     <Compile Include="Integration\Interceptors\ArgumentInterceptorTest.cs" />
     <Compile Include="Integration\Interceptors\BeforeInvokeInterceptorTest.cs" />
+    <Compile Include="Integration\Interceptors\DefaultValueInterceptor.cs" />
     <Compile Include="Integration\Interceptors\ExceptionInterceptorTest.cs" />
     <Compile Include="Integration\Interceptors\MaxCallsInterceptorTest.cs" />
     <Compile Include="Integration\Interceptors\NullInterceptorTest.cs" />
