@@ -21,19 +21,19 @@ interface IFoo
 }
 
 // simple no-argument hook
-var noArgProxy = Proxii.Proxy\<IFoo, Foo>()
+var noArgProxy = Proxii.Proxy<IFoo, Foo>()
                        .AfterInvoke(() => Console.WriteLine("I'm hit!"))
                        .Create();
 
 noArgProxy.Bar(1, 2, 3); // logs "I'm hit!"
 
-var methodInfoProxy = Proxii.Proxy\<IFoo, Foo>()
+var methodInfoProxy = Proxii.Proxy<IFoo, Foo>()
                        .AfterInvoke((method) => Console.WriteLine("{0} is hit!", method.Name))
                        .Create();
 
 methodInfoProxy.Bar(1, 2, 3); // logs "Bar is hit!"
 
-var methodInfoArgsProxy = Proxii.Proxy\<IFoo, Foo>()
+var methodInfoArgsProxy = Proxii.Proxy<IFoo, Foo>()
                             .AfterInvoke((method, args) =>
                                 {
                                     // all args combined into a single space delimited string
@@ -60,19 +60,19 @@ interface IFoo
 }
 
 // simple no-argument hook
-var noArgProxy = Proxii.Proxy\<IFoo, Foo>()
+var noArgProxy = Proxii.Proxy<IFoo, Foo>()
                        .BeforeInvoke(() => Console.WriteLine("I'm hit!"))
                        .Create();
 
 noArgProxy.Bar(1, 2, 3); // logs "I'm hit!"
 
-var methodInfoProxy = Proxii.Proxy\<IFoo, Foo>()
+var methodInfoProxy = Proxii.Proxy<IFoo, Foo>()
                        .BeforeInvoke((method) => Console.WriteLine("{0} is hit!", method.Name))
                        .Create();
 
 methodInfoProxy.Bar(1, 2, 3); // logs "Bar is hit!"
 
-var methodInfoArgsProxy = Proxii.Proxy\<IFoo, Foo>()
+var methodInfoArgsProxy = Proxii.Proxy<IFoo, Foo>()
                             .BeforeInvoke((method, args) =>
                                 {
                                     // all args combined into a single space delimited string
@@ -99,8 +99,8 @@ interface IFoo
     void ThrowIndexOutOfRangeException();
 }
 
-var proxy = Proxii.Proxy\<IFoo, Foo>()
-                .Catch\<ArgumentException>((e) => Console.WriteLine("Caught an exception :("))
+var proxy = Proxii.Proxy<IFoo, Foo>()
+                .Catch<ArgumentException>((e) => Console.WriteLine("Caught an exception :("))
                 .Create();
 
 proxy.ThrowArgumentException(); // logs "Caught an exception :("
@@ -121,7 +121,7 @@ interface IFoo
 // modifying a single argument
 Func<int, int> singleArgModifier = (n) => n + 1;
 
-var singleArgProxy = Proxii.Proxy\<IFoo, Foo>()
+var singleArgProxy = Proxii.Proxy<IFoo, Foo>()
                         .ChangeArguments(singleArgModifier)
                         .Create();
 
@@ -174,18 +174,18 @@ interface IFoo
 }
 
 // hook with return value
-Action\<string> onReturnOnly = (s) => Console.WriteLine("returned {0}", s);
+Action<string> onReturnOnly = (s) => Console.WriteLine("returned {0}", s);
 
-var returnProxy = Proxii.Proxy()\<IFoo, Foo>
+var returnProxy = Proxii.Proxy()<IFoo, Foo>
                         .OnReturn(onReturnOnly)
                         .Create();
 
 returnProxy.Concat("foo", "bar", "buzz"); // logs "returned foobarbuzz"
 
 // hook with return value and method information
-Action\<string, MethodInfo> onReturnWithMethod = (s, method) => Console.WriteLine("returned {0} from {1}", s, method.Name);
+Action<string, MethodInfo> onReturnWithMethod = (s, method) => Console.WriteLine("returned {0} from {1}", s, method.Name);
 
-var returnWithMethodProxy = Proxii.Proxy()\<IFoo, Foo>
+var returnWithMethodProxy = Proxii.Proxy()<IFoo, Foo>
                                   .OnReturn(onReturnWithMethod)
                                   .Create();
 
@@ -194,16 +194,16 @@ returnWithMethodProxy.Concat("foo", "bar", "buzz"); // logs "returned foobarbuzz
 // hook with return value and arguments
 Action<string, object[]> onReturnWithArgs = (s, args) => Console.WriteLine("returned {0} with input {1}", s, args.Select(arg => arg.ToString()).Aggregate("", (total, next) => total + next + " ")).Trim();
 
-var returnWithArgsProxy = Proxii.Proxy()\<IFoo, Foo>
+var returnWithArgsProxy = Proxii.Proxy()<IFoo, Foo>
                                 .OnReturn(onReturnWithArgs)
                                 .Create();
 
 returnWithArgsProxy.Concat("foo", "bar", "buzz"); // logs "returned foobarbuzz with input foo bar buzz"
 
 // hook with return value, method info and arguments
-Action\<string, MethodInfo, object[]> onReturnWithArgs = (s, method, args) => Console.WriteLine("returned {0} from {1} with input {2}", s, method.Name, args.Select(arg => arg.ToString()).Aggregate("", (total, next) => total + next + " ")).Trim();
+Action<string, MethodInfo, object[]> onReturnWithArgs = (s, method, args) => Console.WriteLine("returned {0} from {1} with input {2}", s, method.Name, args.Select(arg => arg.ToString()).Aggregate("", (total, next) => total + next + " ")).Trim();
 
-var returnWithArgsProxy = Proxii.Proxy()\<IFoo, Foo>
+var returnWithArgsProxy = Proxii.Proxy()<IFoo, Foo>
                                 .OnReturn(onReturnWithArgs)
                                 .Create();
 
@@ -220,7 +220,7 @@ interface IFoo
     void DoStuff(string bar);
 }
 
-var proxy = Proxii.Proxy\<IFoo, Foo>()
+var proxy = Proxii.Proxy<IFoo, Foo>()
                   .RejectNullArguments()
                   .Create();
 
