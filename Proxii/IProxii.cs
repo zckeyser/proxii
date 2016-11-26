@@ -188,6 +188,20 @@ namespace Proxii
         /// Functions which are blocked return their default value (null for reference types)
         /// </summary>
         IProxii<T> Stop();
+
+        /// <summary>
+        /// Replaces null arguments with the given name object returned by the given function
+        /// </summary>
+        /// <param name="argName">name of the argument to replace</param>
+        /// <param name="factory">called to get the replacement object to use as a default</param>
+        IProxii<T> SetDefault<U>(string argName, Func<U> factory);
+
+        /// <summary>
+        /// Replaces null arguments with the given name with an object
+        /// </summary>
+        /// <param name="argName">name of the argument to replace</param>
+        /// <param name="defaultValue">the replacement object to use as a default</param>
+        IProxii<T> SetDefault<U>(string argName, U defaultValue);
         #endregion
 
         #region Finalization

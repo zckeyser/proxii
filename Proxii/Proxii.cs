@@ -1,6 +1,7 @@
 ﻿using Castle.DynamicProxy;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Proxii.Library.Interceptors;
 using Proxii.Library.Selectors;
 using System.Reflection;
@@ -489,6 +490,55 @@ namespace Proxii
 
             return this;
         }
+
+        /// <summary>
+        /// Replaces null arguments with the given name object returned by the given function
+        /// </summary>
+        /// <param name="argName">name of the argument to replace</param>
+        /// <param name="factory">called to get the replacement object to use as a default</param>
+        public IProxii<T> SetDefault<U>(string argName, Func<U> factory)
+        {
+            // find an interceptor with the right generic type, if there is one
+            var interceptor = _interceptors.FirstOrDefault(i => i is DefaultValueInterceptor<U>);
+
+            if (interceptor == null)
+            {
+                interceptor = new DefaultValueInterceptor<U>();
+                ((DefaultValueInterceptor<U>) interceptor).AddDefaultForArgument(argName, factory);
+                _interceptors.Add(interceptor);
+            }
+            else
+            {
+                ((DefaultValueInterceptor<U>)interceptor).AddDefaultForArgument(argName, factory);
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Replaces null arguments with the given name with an object
+        /// </summary>
+        /// <param name="argName">name of the argument to replace</param>
+        /// <param name="defaultValue">the replacement object to use as a default</param>
+        public IProxii<T> SetDefault<U>(string argName, U defaultValue)
+        {
+            // find an interceptor with the right generic type, if there is one
+            var interceptor = _interceptors.FirstOrDefault(i => i is DefaultValueInterceptor<U>);
+
+            if (interceptor == null)
+            {
+                interceptor = new DefaultValueInterceptor<U>();
+                ((DefaultValueInterceptor<U>)interceptor).AddDefaultForArgument(argName, defaultValue);
+                _interceptors.Add(interceptor);
+            }
+            else
+            {
+                ((DefaultValueInterceptor<U>)interceptor).AddDefaultForArgument(argName, defaultValue);
+            }
+
+            return this;
+        }
+
         #endregion
 
         #region Finalization

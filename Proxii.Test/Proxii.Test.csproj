@@ -70,6 +70,7 @@
     <Compile Include="e2e\ProxiiMaxCallsTest.cs" />
     <Compile Include="e2e\ProxiiOnReturnTest.cs" />
     <Compile Include="e2e\ProxiiRejectNullArgumentsTest.cs" />
+    <Compile Include="e2e\ProxiiSetDefaultTest.cs" />
     <Compile Include="e2e\ProxiiStopTest.cs" />
     <Compile Include="Integration\Interceptors\AfterInvokeInterceptorTest.cs" />
     <Compile Include="Integration\Interceptors\ArgumentInterceptorTest.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Unit\Selectors\ReturnTypeSelectorTest.cs" />
     <Compile Include="Util\ArgumentTester.cs" />
     <Compile Include="Util\ArgumentTypeSelectorTester.cs" />
+    <Compile Include="Util\DefaultValueTester.cs" />
     <Compile Include="Util\FreezeTester.cs" />
     <Compile Include="Util\InvokeHookTester.cs" />
     <Compile Include="Util\Logger.cs" />
