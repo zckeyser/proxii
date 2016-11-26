@@ -35,7 +35,7 @@ var methodInfoArgsProxy = Proxii.Proxy\<IFoo, Foo>()
                             )
                             .Create();
 
-methodInfoArgsProxy.Bar(1, 2, 3); // logs "Bar is hit by 1 2 3"
+methodInfoArgsProxy.Bar(1, 2, 3); // logs "Bar is hit by 1 2 3!"
 ```
 
 ## BeforeInvoke(Action action), BeforeInvoke(Action\<MethodInfo> action), BeforeInvoke(Action\<MethodInfo, object[]> action)
@@ -72,7 +72,7 @@ var methodInfoArgsProxy = Proxii.Proxy\<IFoo, Foo>()
                             )
                             .Create();
 
-methodInfoArgsProxy.Bar(1, 2, 3); // logs "Bar is hit by 1 2 3"
+methodInfoArgsProxy.Bar(1, 2, 3); // logs "Bar is hit by 1 2 3!"
 ```
 
 ## Catch<T>(Action\<Exception> onCatch) where T : Exception
@@ -207,7 +207,10 @@ proxy.DoStuff(null); // throws new ArgumentNullException("bar")
 ## Stop()
 Prevent the execution of all intercepted methods on this proxy.
 ```csharp
-var proxy = Proxii.Proxy\<IFoo, Foo>().ByMethodName("Bar").Stop();
+var proxy = Proxii.Proxy\<IFoo, Foo>()
+                  .ByMethodName("Bar")
+                  .Stop()
+                  .Create();
 
 proxy.Bar(); // does nothing
 proxy.Buzz(); // acts normally
