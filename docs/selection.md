@@ -5,7 +5,7 @@ Selection methods filter what methods get intercepted, which is useful if you on
 - [ByMethodName](#bymethodname)
 - [ByMethodNamePattern](#bymethodnamepattern)
 - [ByReturnType](#byreturntype)
-- [Combining Selectors](#combiningselectors)
+- [Combining Selectors](#combiningSelectors)
 
 ## ByArgumentType
 `ByArgumentType(params Type[] type)`
