@@ -1,10 +1,11 @@
 # Selection Methods
 Selection methods filter what methods get intercepted, which is useful if you only want to proxy some methods from an interface while others act normally. Each selector can be stacked with multiple calls to accept multiple different criteria for a single selector.
 
-- [ByArgumentType](#byArgumentType)
-- [ByMethodName](#byMethodName)
-- [ByMethodNamePattern](#byMethodNamePattern)
-- [ByReturnType](#byReturnType)
+- [ByArgumentType](#byargumenttype)
+- [ByMethodName](#bymethodname)
+- [ByMethodNamePattern](#bymethodnamepattern)
+- [ByReturnType](#byreturntype)
+- [Combining Selectors](#combiningselectors)
 
 ## ByArgumentType
 `ByArgumentType(params Type[] type)`
