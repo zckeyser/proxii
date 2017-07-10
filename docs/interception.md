@@ -3,6 +3,7 @@ These are methods which allow you to hook in new behavior in some way on any met
 
  - [AfterInvoke](#afterinvoke)
  - [BeforeInvoke](#beforeinvoke)
+ - [Benchmark](#benchmark)
  - [Catch](#catch)
  - [ChangeArguments](#changearguments)
  - [ChangeReturnValue](#changereturnvalue)
@@ -86,6 +87,38 @@ var methodInfoArgsProxy = Proxii.Proxy<IFoo, Foo>()
                             .Create();
 
 methodInfoArgsProxy.Bar(1, 2, 3); // logs "Bar is hit by 1 2 3!"
+```
+
+## Benchmark
+`Benchmark(Action<double> timingAction)`, `Benchmark(Action<double, MethodInfo> timingAction)`
+
+Times all intercepted methods, and calls the given action with each timing. The timing is given in milliseconds, and an optional second parameter can be passed to give the action the method info of the method being timed.
+
+```cs
+interface IFoo
+{
+    void DoStuff();
+}
+
+Action<double> simpleTimingAction = timing => Console.WriteLine($"Call took {timing.ToString("F2")} ms");
+
+// simple callback taking just the timing in ms
+var simpleTimingProxy = Proxii.Proxy<IFoo, Foo>()
+                  .Benchmark(simpleTimingAction)
+                  .Create();
+
+// will log a message with the timing to console (e.g. "Call took 101.12 ms")
+simpleTimingProxy.DoStuff();
+
+Action<double, MethodInfo> methodInfoTimingAction = (timing, method) => Console.WriteLine($"{method.Name} took {timing.ToString("F2")} ms");
+
+// detailed callback taking method info
+var methodInfoTimingProxy = Proxii.Proxy<IFoo, Foo>()
+                              .Benchmark(methodInfoTimingAction)
+                              .Create();
+
+// will log a message with the timing and method name to console (e.g. "DoStuff took 101.12 ms")
+methodInfoTimingProxy.DoStuff();
 ```
 
 ## Catch
