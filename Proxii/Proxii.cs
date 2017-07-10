@@ -222,7 +222,6 @@ namespace Proxii
         /// </summary>
         public IProxii<T> AfterInvoke(Action afterHook)
         {
-            // infoless hook
             _interceptors.Add(new AfterInvokeInterceptor(afterHook));
 
             return this;
@@ -234,7 +233,6 @@ namespace Proxii
         /// </summary>
         public IProxii<T> AfterInvoke(Action<MethodInfo> afterHook)
         {
-            // hook with method info
             _interceptors.Add(new AfterInvokeInterceptor(afterHook));
 
             return this;
@@ -247,7 +245,6 @@ namespace Proxii
         /// </summary>
         public IProxii<T> AfterInvoke(Action<MethodInfo, object[]> afterHook)
         {
-            // hook with method info and args
             _interceptors.Add(new AfterInvokeInterceptor(afterHook));
 
             return this;
@@ -258,7 +255,6 @@ namespace Proxii
         /// </summary>
         public IProxii<T> BeforeInvoke(Action beforeHook)
         {
-            // infoless hook
             _interceptors.Add(new BeforeInvokeInterceptor(beforeHook));
 
             return this;
@@ -270,7 +266,6 @@ namespace Proxii
         /// </summary>
         public IProxii<T> BeforeInvoke(Action<MethodInfo> beforeHook)
         {
-            // hook with method info
             _interceptors.Add(new BeforeInvokeInterceptor(beforeHook));
 
             return this;
@@ -283,8 +278,29 @@ namespace Proxii
         /// </summary>
         public IProxii<T> BeforeInvoke(Action<MethodInfo, object[]> beforeHook)
         {
-            // hook with method info and args
             _interceptors.Add(new BeforeInvokeInterceptor(beforeHook));
+
+            return this;
+        }
+
+        /// <summary>
+        /// Benchmarks intercepted method calls and calls the given action with
+        /// the timing in milliseconds
+        /// </summary>
+        public IProxii<T> Benchmark(Action<double> timingAction)
+        {
+            _interceptors.Add(new BenchmarkInterceptor(timingAction));
+
+            return this;
+        }
+
+        /// <summary>
+        /// Benchmarks intercepted method calls and calls the given action with
+        /// the timing in milliseconds and the MethodInfo of the method being called
+        /// </summary>
+        public IProxii<T> Benchmark(Action<double, MethodInfo> timingAction)
+        {
+            _interceptors.Add(new BenchmarkInterceptor(timingAction));
 
             return this;
         }

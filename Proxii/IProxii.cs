@@ -76,6 +76,18 @@ namespace Proxii
         IProxii<T> BeforeInvoke(Action beforeHook);
 
         /// <summary>
+        /// Benchmarks intercepted method calls and calls the given action with
+        /// the timing in milliseconds
+        /// </summary>
+        IProxii<T> Benchmark(Action<double> timingAction);
+
+        /// <summary>
+        /// Benchmarks intercepted method calls and calls the given action with
+        /// the timing in milliseconds and the MethodInfo of the method being called
+        /// </summary>
+        IProxii<T> Benchmark(Action<double, MethodInfo> timingAction);
+
+        /// <summary>
 		/// Perform a custom action when the given type of interception is caught.
 		/// </summary>
         IProxii<T> Catch<TException>(Action<Exception> onCatch) where TException : Exception;

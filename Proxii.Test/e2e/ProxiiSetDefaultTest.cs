@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Castle.DynamicProxy;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Proxii.Library.Interceptors;
-using Proxii.Test.Integration.Interceptors;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Proxii.Test.Util;
 
 namespace Proxii.Test.e2e

@@ -48,6 +48,7 @@
     <Compile Include="Interceptors\AfterInvokeInterceptor.cs" />
     <Compile Include="Interceptors\ArgumentInterceptor.cs" />
     <Compile Include="Interceptors\BeforeInvokeInterceptor.cs" />
+    <Compile Include="Interceptors\BenchmarkInterceptor.cs" />
     <Compile Include="Interceptors\DefaultValueInterceptor.cs" />
     <Compile Include="Interceptors\ExceptionInterceptor.cs" />
     <Compile Include="Interceptors\MaxCallsInterceptor.cs" />
