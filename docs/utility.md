@@ -1,8 +1,10 @@
 # Utility Methods
 The methods in this section aren't directly related to the primary Proxii functionality, but they instead provide useful behavior using the same methodology as the rest of Proxii behind the scenes.
 
-## Freeze\<T>(T obj, params string[] patterns)
-Freezes the given object, such that Property set methods no longer change the object. When given strings as parameters after the object, Freeze will also block the execution of any of those methods. Use these to block the execution of any other methods that affect internal state that you'd like to present
+## Freeze
+`Freeze<T>(T obj, params string[] patterns)`
+
+Freezes the given object, such that Property set methods no longer change the object. When given strings as parameters after the object, Freeze will also block the execution of any of those methods. Use these to block the execution of any other methods that affect internal state that you'd like to prevent. Note that `Freeze` cannot stop fields from changing, due to the limitations of proxying where only methods can be intercepted.
 ```csharp
 interface IFoo
 {
