@@ -1,7 +1,14 @@
 # Selection Methods
 Selection methods filter what methods get intercepted, which is useful if you only want to proxy some methods from an interface while others act normally. Each selector can be stacked with multiple calls to accept multiple different criteria for a single selector.
 
-## ByArgumentType(params Type[] type)
+- [ByArgumentType](#byArgumentType)
+- [ByMethodName](#byMethodName)
+- [ByMethodNamePattern](#byMethodNamePattern)
+- [ByReturnType](#byReturnType)
+
+## ByArgumentType
+`ByArgumentType(params Type[] type)`
+
 Only intercept arguments with the given argument types (order-sensitive).
 ```csharp
 IFoo proxy = Proxii.Proxy<IFoo, Foo>()
@@ -14,7 +21,9 @@ proxy.Buzz(10L, 1.0); // logs nothing
 proxy.Bazz("foobar", 10); // logs nothing -- incorrect argument order
 ```
 
-## ByMethodName(params string[] names)
+## ByMethodName
+`ByMethodName(params string[] names)`
+
 Only intercept methods with one of the given names.
 ```csharp
 IFoo proxy = Proxii.Proxy<IFoo, Foo>()
@@ -27,8 +36,10 @@ proxy.Buzz(); // logs "I'm hit!"
 proxy.Bazz(); // logs nothing
 ```
 
-## ByMethodNamePattern(params string[] patterns)
-Only intercept methods whose name matches one of the given patterns.
+## ByMethodNamePattern
+`ByMethodNamePattern(params string[] patterns)`
+
+Only intercept methods whose name matches one of the given patterns, as described by the [.NET regular expression specification](https://docs.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference).
 ```csharp
 IFoo proxy = Proxii.Proxy<IFoo, Foo>()
                 .ByMethodNamePattern("^B.+z$")
@@ -40,7 +51,9 @@ proxy.Buzz(); // logs "I'm hit!"
 proxy.Bazz(); // logs nothing
 ```
 
-## ByReturnType(Type type)
+## ByReturnType
+`ByReturnType(Type type)`
+
 Only intercept methods with the given return type.
 ```csharp
 interface IFoo
