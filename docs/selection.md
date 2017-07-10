@@ -73,7 +73,7 @@ proxy.Buzz(); // logs nothing
 ```
 
 ## Combining Selectors
-You can stack multiple instances of the same selector to allow multiple of whatever is being selected to pass through. Stacking selectors works for any of the selectors. If multiple different selectors are used, functions must match all of the given selectors to be used.
+You can stack multiple instances of the same selector to allow multiple of whatever is being selected to pass through. Stacking selectors works for any of the selectors. If multiple different selectors are used, functions must match all of the given selector types to be intercepted.
 ```csharp
 interface IFoo
 {
