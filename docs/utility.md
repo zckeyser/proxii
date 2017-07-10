@@ -34,6 +34,6 @@ foo.ChangeMyDouble(11.0);
 
 foo.MyString == "foo";
 foo.MyInt == 10;
-foo.GetMyBool(false); // would be true if we didn't pass the "^Set.*" arg to Freeze
-foo.GetMyDouble(5.5); // would be 5.5 if we didn't pass the "^Change.*" arg to Freeze
+foo.GetMyBool() == false; // would be true if we didn't pass the "^Set.*" arg to Freeze
+foo.GetMyDouble() == 11.0; // would be 5.5 if we didn't pass the "^Change.*" arg to Freeze
 ```
