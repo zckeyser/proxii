@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="e2e\ProxiiAfterInvokeTest.cs" />
     <Compile Include="e2e\ProxiiBeforeInvokeTest.cs" />
+    <Compile Include="e2e\ProxiiBenchmarkTest.cs" />
     <Compile Include="e2e\ProxiiByArgumentTypeTest.cs" />
     <Compile Include="e2e\ProxiiByMethodNamePatternTest.cs" />
     <Compile Include="e2e\ProxiiByMethodNameTest.cs" />
