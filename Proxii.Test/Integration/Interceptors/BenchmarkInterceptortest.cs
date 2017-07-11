@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Castle.DynamicProxy;
@@ -39,7 +38,7 @@ namespace Proxii.Test.Integration.Interceptors
             normalTiming = TakeDoTiming(normalObject);
 
             // ensure the interceptor at least called the action
-            Assert.AreNotEqual(0, proxyTiming);
+            Assert.AreNotEqual(0, proxyTiming, "proxy timing is set");
 
             // ensure the interceptor gave an accurate timing
             Assert.IsTrue(EpsilonEqual(TimingEpsilon, normalTiming, proxyTiming));
@@ -62,28 +61,19 @@ namespace Proxii.Test.Integration.Interceptors
         }
 
         [TestMethod]
-        public void BenchmarkInterceptor_EfficiencyTest()
+        public void BenchmarkInterceptor_CallsWithCorrectMethodInfoAndArguments()
         {
-            // test to make sure there isn't too much of a performance hit from the interceptor
-            const int runs = 1000;
+            string result = null;
 
-            // no-op since we're verifying the intercepting/timing code's speed, rather than how fast logging is
-            Action<double, MethodInfo> proxyTimingAction = (d, m) => { };
-            
-            var normalObject = new BenchmarkTestObject();
+            Action<double, MethodInfo, object[]> proxyTimingAction = (d, m, args) => result = $"called method {m.Name} with arguments ({string.Join(", ", args)})";
 
             // create a proxy
-            var interceptors = new IInterceptor[] {new BenchmarkInterceptor(proxyTimingAction)};
-            var proxy =
-                (IBenchmarkTestObject)
-                    _generator.CreateInterfaceProxyWithTarget(typeof(IBenchmarkTestObject), new BenchmarkTestObject(),
-                        interceptors);
-            
-            var proxyTiming = TakeDoFastTiming(proxy, runs);
-            var normalTiming = TakeDoFastTiming(normalObject, runs);
-            
-            // should take a performance hit of 2% or less
-            Assert.IsTrue(EpsilonEqual(normalTiming * .02, normalTiming, proxyTiming));
+            var interceptors = new IInterceptor[] { new BenchmarkInterceptor(proxyTimingAction) };
+            var proxy = (IBenchmarkTestObject)_generator.CreateInterfaceProxyWithTarget(typeof(IBenchmarkTestObject), new BenchmarkTestObject(), interceptors);
+
+            proxy.Do(1, "foo");
+
+            Assert.AreEqual("called method Do with arguments (1, foo)", result);
         }
 
         /// <summary>
@@ -96,29 +86,6 @@ namespace Proxii.Test.Integration.Interceptors
         private bool EpsilonEqual(double epsilon, double a, double b)
         {
             return Math.Abs(a - b) <= epsilon;
-        }
-
-        private double TakeDoFastTiming(IBenchmarkTestObject obj, int times)
-        {
-            double timing;
-
-            var stopwatch = Stopwatch.StartNew();
-
-            // time the proxy
-            try
-            {
-                foreach (var _ in Enumerable.Repeat(0, 1000))
-                {
-                    obj.DoFast();
-                }
-            }
-            finally
-            {
-                stopwatch.Stop();
-                timing = stopwatch.ElapsedMilliseconds;
-            }
-
-            return timing;
         }
 
         private double TakeDoTiming(IBenchmarkTestObject obj, int times = 1)
@@ -148,9 +115,9 @@ namespace Proxii.Test.Integration.Interceptors
                 Thread.Sleep(300);
             }
 
-            public void DoFast()
+            public void Do(int i, string s)
             {
-                Thread.Sleep(1);
+                Thread.Sleep(300);
             }
         }
 
@@ -158,7 +125,7 @@ namespace Proxii.Test.Integration.Interceptors
         {
             void Do();
 
-            void DoFast();
+            void Do(int i, string s);
         }
     }
 }

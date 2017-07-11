@@ -98,6 +98,7 @@ Times all intercepted methods, and calls the given action with each timing. The 
 interface IFoo
 {
     void DoStuff();
+    void DoStuff(int i, string s);
 }
 
 Action<double> simpleTimingAction = timing => Console.WriteLine($"Call took {timing.ToString("F2")} ms");
@@ -119,6 +120,16 @@ var methodInfoTimingProxy = Proxii.Proxy<IFoo, Foo>()
 
 // will log a message with the timing and method name to console (e.g. "DoStuff took 101.12 ms")
 methodInfoTimingProxy.DoStuff();
+
+// full detail callback taking timing, method info and arguments
+Action<double, MethodInfo, object[]> argumentListTimingAction = (timing, method, args) => Console.WriteLine($"{method.Name} with arguments ({string.Join(", ", args)}) took {timing.ToString("F2")} ms" );
+
+var methodInfoTimingProxy = Proxii.Proxy<IFoo, Foo>()
+                              .Benchmark(methodInfoTimingAction)
+                              .Create();
+
+// will log a message with the timing, method name and args to console (e.g. "DoStuff with arguments (1, foo) took 101.12 ms")
+methodInfoTimingProxy.DoStuff(1, "foo");
 ```
 
 ## Catch

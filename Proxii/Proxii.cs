@@ -306,6 +306,18 @@ namespace Proxii
         }
 
         /// <summary>
+        /// Benchmarks intercepted method calls and calls the given action with
+        /// the timing in milliseconds, the MethodInfo of the method being called
+        /// and the arguments the method was called
+        /// </summary>
+        public IProxii<T> Benchmark(Action<double, MethodInfo, object[]> timingAction)
+        {
+            _interceptors.Add(new BenchmarkInterceptor(timingAction));
+
+            return this;
+        }
+
+        /// <summary>
 		/// Perform a custom action when the given type of interception is caught.
 		/// </summary>
 		public IProxii<T> Catch<TException>(Action<Exception> onCatch)
