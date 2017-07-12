@@ -95,6 +95,7 @@
     <Compile Include="Unit\Selectors\ReturnTypeSelectorTest.cs" />
     <Compile Include="Util\ArgumentTester.cs" />
     <Compile Include="Util\ArgumentTypeSelectorTester.cs" />
+    <Compile Include="Util\BenchmarkTestObject.cs" />
     <Compile Include="Util\DefaultValueTester.cs" />
     <Compile Include="Util\FreezeTester.cs" />
     <Compile Include="Util\InvokeHookTester.cs" />
