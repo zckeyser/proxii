@@ -1,3 +1,6 @@
+# 1.5.0
+- Added `Benchmark` interceptor, which times intercepted method calls and calls a callback with the timing, MethodInfo (optional) and argument list (optional.)
+
 # 1.4.4
  - Added `SetDefault` interceptor, which sets default values for null arguments either by factory method or by direct reference
 
