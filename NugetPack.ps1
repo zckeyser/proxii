@@ -1,16 +1,31 @@
 Function UpdateAssemblyVersions($rootFolder) {
   # matches things that look like AssemblyInfo("1.2.3.4")
-  $regex = 'AssemblyVersion\("(\d+\.){3}\d+"\)'
+  $regex = 'AssemblyVersion\("(\d+\.){2}\d+"\)'
 
   # retrieve assembly version from nuspec
-  $assemblyVersion = "AssemblyVersion(`"$major.$minor.$revision.$build`")"
+  [xml] $spec = Get-Content $rootFolder\Proxii\Proxii.nuspec
+  $version = $spec.package.metadata.version
 
-  $assemblyInfoFile = "$rootFolder\SharedAssemblyInfo.cs"
+  Write-Host "Setting assembly version to $version"
 
-  (Get-Content $assemblyInfoFile) -replace $regex, $assemblyVersion | Out-File $assemblyInfoFile
+  $assemblyVersion = "AssemblyVersion(`"$version`")"
+
+  $assemblyInfoFile = "$rootFolder\Proxii\Properties\AssemblyInfo.cs"
+
+  $assemblyInfo = Get-Content $assemblyInfoFile
+
+  $assemblyInfo -replace $regex, $assemblyVersion | Out-File $assemblyInfoFile
 }
 
-$rootFolder = $PSScriptRoot
+try {
+    pushd $PSScriptRoot
 
-UpdateAssemblyVersions $rootFolder
+    $rootFolder = $PSScriptRoot
 
+    Write-Host "Updating assembly versions..."
+    UpdateAssemblyVersions $rootFolder
+
+    # nuget pack ./Proxii/proxii.csproj
+} finally {
+    popd
+}
