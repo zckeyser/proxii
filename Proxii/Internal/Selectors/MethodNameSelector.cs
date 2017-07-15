@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Reflection;
-using Castle.DynamicProxy;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using Castle.DynamicProxy;
 
-namespace Proxii.Library.Selectors
+namespace Proxii.Internal.Selectors
 {
     public class MethodNameSelector : IInterceptorSelector
     {

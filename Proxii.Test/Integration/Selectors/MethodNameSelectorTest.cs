@@ -1,7 +1,7 @@
 ﻿using System;
 using Castle.DynamicProxy;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Proxii.Library.Selectors;
+using Proxii.Internal.Selectors;
 using Proxii.Test.Util;
 
 namespace Proxii.Test.Integration.Selectors

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Castle.DynamicProxy;
 
-namespace Proxii.Library.Interceptors
+namespace Proxii.Internal.Interceptors
 {
     /// <summary>
     /// injects default values in place of passed nulls

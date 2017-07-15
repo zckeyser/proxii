@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Reflection;
 using Castle.DynamicProxy;
 
-namespace Proxii.Library.Interceptors
+namespace Proxii.Internal.Interceptors
 {
     public class BenchmarkInterceptor : IInterceptor
     {

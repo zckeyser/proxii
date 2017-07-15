@@ -1,7 +1,7 @@
 ﻿using System;
 using Castle.DynamicProxy;
 
-namespace Proxii.Library.Interceptors
+namespace Proxii.Internal.Interceptors
 {
 	public class ChangeReturnValueInterceptor<T> : IInterceptor
 	{

@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Proxii.Library.Selectors;
 using System;
 using System.Collections.Generic;
+using Proxii.Internal.Selectors;
 
 namespace Proxii.Test.Unit.Selectors
 {

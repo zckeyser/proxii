@@ -1,8 +1,8 @@
 ﻿using System;
 using Castle.DynamicProxy;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Proxii.Library.Interceptors;
-using Proxii.Library.Selectors;
+using Proxii.Internal.Interceptors;
+using Proxii.Internal.Selectors;
 using Proxii.Test.Util;
 
 namespace Proxii.Test.Integration.Selectors

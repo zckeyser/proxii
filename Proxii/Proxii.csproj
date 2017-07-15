@@ -45,18 +45,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Internal\Interceptors\AfterInvokeInterceptor.cs" />
+    <Compile Include="Internal\Interceptors\ArgumentInterceptor.cs" />
+    <Compile Include="Internal\Interceptors\BeforeInvokeInterceptor.cs" />
+    <Compile Include="Internal\Interceptors\BenchmarkInterceptor.cs" />
+    <Compile Include="Internal\Interceptors\ChangeReturnValueInterceptor.cs" />
+    <Compile Include="Internal\Interceptors\DefaultValueInterceptor.cs" />
+    <Compile Include="Internal\Interceptors\ExceptionInterceptor.cs" />
+    <Compile Include="Internal\Interceptors\MaxCallsInterceptor.cs" />
+    <Compile Include="Internal\Interceptors\NullInterceptor.cs" />
+    <Compile Include="Internal\Interceptors\OnReturnInterceptor.cs" />
+    <Compile Include="Internal\Interceptors\StopMethodInterceptor.cs" />
+    <Compile Include="Internal\Interceptors\ThisInterceptor.cs" />
+    <Compile Include="Internal\Other\FrozenProxy.cs" />
+    <Compile Include="Internal\Selectors\ArgumentTypeSelector.cs" />
+    <Compile Include="Internal\Selectors\CombinedSelector.cs" />
+    <Compile Include="Internal\Selectors\MethodNamePatternSelector.cs" />
+    <Compile Include="Internal\Selectors\MethodNameSelector.cs" />
+    <Compile Include="Internal\Selectors\ReturnTypeSelector.cs" />
     <Compile Include="IProxii.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxii.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Proxii.Library\Proxii.Library.csproj">
-      <Project>{fc33ec37-73e7-4279-ae54-76ac1a814378}</Project>
-      <Name>Proxii.Library</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

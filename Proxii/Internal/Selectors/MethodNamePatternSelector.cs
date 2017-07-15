@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using Castle.DynamicProxy;
 
-namespace Proxii.Library.Selectors
+namespace Proxii.Internal.Selectors
 {
     public class MethodNamePatternSelector : IInterceptorSelector
     {

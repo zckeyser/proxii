@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Proxii.Library.Other;
+using Proxii.Internal.Other;
 using Proxii.Test.Util;
 
 namespace Proxii.Test.Integration.Other

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Castle.DynamicProxy;
 
-namespace Proxii.Library.Selectors
+namespace Proxii.Internal.Selectors
 {
 	/// <summary>
 	/// only intercept methods with the given return types

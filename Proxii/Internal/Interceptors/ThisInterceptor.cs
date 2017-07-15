@@ -1,6 +1,6 @@
 ﻿using Castle.DynamicProxy;
 
-namespace Proxii.Library.Interceptors
+namespace Proxii.Internal.Interceptors
 {
 	/// <summary>
 	/// Interceptor put at the end of the interceptor chain to

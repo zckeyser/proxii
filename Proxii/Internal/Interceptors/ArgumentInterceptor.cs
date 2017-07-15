@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
-using Castle.DynamicProxy;
 using System.Reflection;
+using Castle.DynamicProxy;
 
-namespace Proxii.Library.Interceptors
+namespace Proxii.Internal.Interceptors
 {
     /// <summary>
     /// modifies input arguments using the given function, 

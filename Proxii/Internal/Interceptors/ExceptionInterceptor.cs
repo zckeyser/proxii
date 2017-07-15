@@ -1,7 +1,7 @@
-﻿using Castle.DynamicProxy;
-using System;
+﻿using System;
+using Castle.DynamicProxy;
 
-namespace Proxii.Library.Interceptors
+namespace Proxii.Internal.Interceptors
 {
     public class ExceptionInterceptor<T> : IInterceptor
         where T : Exception

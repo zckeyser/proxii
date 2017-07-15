@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Castle.DynamicProxy;
 using System.Reflection;
+using Castle.DynamicProxy;
 
-namespace Proxii.Library.Interceptors
+namespace Proxii.Internal.Interceptors
 {
     public class MaxCallsInterceptor : IInterceptor
     {

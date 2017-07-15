@@ -2,7 +2,7 @@
 using System.Reflection;
 using Castle.DynamicProxy;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Proxii.Library.Interceptors;
+using Proxii.Internal.Interceptors;
 using Proxii.Test.Util;
 
 namespace Proxii.Test.Integration.Interceptors

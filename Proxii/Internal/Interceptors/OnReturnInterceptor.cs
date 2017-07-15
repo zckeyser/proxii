@@ -1,8 +1,8 @@
-﻿using Castle.DynamicProxy;
-using System;
+﻿using System;
 using System.Reflection;
+using Castle.DynamicProxy;
 
-namespace Proxii.Library.Interceptors
+namespace Proxii.Internal.Interceptors
 {
     public class OnReturnInterceptor<T> : IInterceptor
     {

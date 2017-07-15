@@ -1,9 +1,9 @@
 ﻿using System;
 using Castle.DynamicProxy;
-using Proxii.Library.Interceptors;
-using Proxii.Library.Selectors;
+using Proxii.Internal.Interceptors;
+using Proxii.Internal.Selectors;
 
-namespace Proxii.Library.Other
+namespace Proxii.Internal.Other
 {
     /// <summary>
     /// Creates a proxy of the given object

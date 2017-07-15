@@ -2,10 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Proxii.Library.Interceptors;
-using Proxii.Library.Selectors;
 using System.Reflection;
-using Proxii.Library.Other;
+using Proxii.Internal.Interceptors;
+using Proxii.Internal.Other;
+using Proxii.Internal.Selectors;
 
 namespace Proxii
 {

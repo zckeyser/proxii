@@ -104,10 +104,6 @@
     <Compile Include="Util\ProxiiTester.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Proxii.Library\Proxii.Library.csproj">
-      <Project>{fc33ec37-73e7-4279-ae54-76ac1a814378}</Project>
-      <Name>Proxii.Library</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Proxii\Proxii.csproj">
       <Project>{6fdcd6c8-228c-4633-8dbd-a7b795ec3ba8}</Project>
       <Name>Proxii</Name>
