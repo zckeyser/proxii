@@ -6,8 +6,8 @@ namespace Proxii.Test.Util
 {
     public class BenchmarkTestObject : IBenchmarkTestObject
     {
-        // ensure it's within 5 microseconds of the correct timing
-        public const double TimingEpsilon = .005;
+        // ensure it's within 1 ms of the correct timing
+        public const double TimingEpsilon = 1;
 
         public void Do()
         {
@@ -33,7 +33,7 @@ namespace Proxii.Test.Util
             finally
             {
                 stopwatch.Stop();
-                timing = stopwatch.ElapsedMilliseconds;
+                timing = stopwatch.Elapsed.TotalMilliseconds;
             }
 
             return timing;

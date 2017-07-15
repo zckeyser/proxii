@@ -38,7 +38,7 @@ namespace Proxii.Internal.Interceptors
             {
                 t.Stop();
 
-                var timing = t.ElapsedMilliseconds;
+                var timing = t.Elapsed.TotalMilliseconds;
 
                 _action(timing, invocation.Method, invocation.Arguments);
             }
